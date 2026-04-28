@@ -1,0 +1,11 @@
+# Shopify CLI theme environments — https://shopify.dev/docs/api/shopify-cli/theme
+# Use with: shopify theme dev -e development (or pull/push with -e development).
+# This repo’s npm scripts pass --store directly; the TOML is optional but useful for -e workflows.
+
+[environments.development]
+# Use the shop’s myshopify domain or store prefix (e.g. "airtulip" or "airtulip.myshopify.com").
+# Confirm in Shopify admin → Settings → Domains if unsure.
+store = "airtulip.myshopify.com"
+
+# Optional: pin a remote theme id or name (e.g. staging) instead of the default dev theme:
+# theme = "000000000000"

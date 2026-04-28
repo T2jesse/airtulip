@@ -4,5 +4,8 @@ Thumbs.db
 .env
 .env.*
 
+# Node (npm scripts wrapper; add dependencies only if needed)
+node_modules/
+
 # Stray business/docs files sometimes included in theme ZIP exports
 /*.pdf

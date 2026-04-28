@@ -1,0 +1,87 @@
+---
+description: Airtulip (airtulip.com) Shopify theme — project context for every session
+alwaysApply: true
+---
+
+# Airtulip — project context (read every session)
+
+## What this repo is
+
+- **Client / storefront:** [https://airtulip.com](https://airtulip.com) (Shopify).
+- **Stack:** Shopify **Online Store 2.0** theme only — Liquid, JSON templates, theme `assets/`. There is **no** Hydrogen/React app, **no** `package.json` CSS/JS build pipeline; the storefront is rendered by Shopify’s **Online Store** theme system.
+- **Workflow:** Git repo → GitHub → **staging** theme on the Shopify store (do **not** treat changes as production-safe until the team publishes).
+- **Installed apps (admin):** See **`.cursor/rules/airtulip-apps.mdc`** — inventory + overlap notes; apps affect live theme behavior beyond this Git repo.
+- **Shopify CLI `theme push`:** See **`.cursor/rules/airtulip-cli-theme-push.mdc`** — `visible_if` schema patches required for RoarTheme Concept to upload via CLI (avoid PDP 404 on dev themes).
+- **Theme product & styling (vendor baseline):** See **Theme product & CSS foundations** below.
+
+## Theme product & CSS foundations
+
+### Is this a Shopify theme?
+
+- **Yes — platform-wise.** It is a standard **Shopify Online Store theme** (ZIP / Git theme: `layout`, `templates`, `sections`, `snippets`, `assets`, `config`, `locales`). It runs in **admin → Online Store → Themes**. It uses **Online Store 2.0** (JSON templates, section groups, app blocks).
+- **No — not a Shopify-built free theme.** It is **not** Dawn / Horizon / etc. The **product** is **Concept** by **RoarTheme** — a **third‑party commercial** theme. Proof: `config/settings_schema.json` → `theme_info` → `theme_name: "Concept"`, `theme_author: "RoarTheme"`, `theme_version: "4.3.0"`. Vendor hub: [https://roartheme.co/blogs/concept](https://roartheme.co/blogs/concept). Support link in schema: haloroar.ticksy.com.
+
+### Main CSS used “before you” (global cascade)
+
+Load order follows `layout/theme.liquid` unless noted:
+
+1. **`snippets/css-variables.liquid`** — Renders a `<style>` block: **Theme Editor settings → `:root` CSS custom properties** (colors, spacing scale `--sp-*`, radii, typography-related variables) plus Shopify **`font_face`** output from `settings.type_header_font` and `settings.type_body_font` (fonts hosted via Shopify/font pipeline).
+2. **`assets/theme.css`** — **Primary stylesheet** (large compiled file, on the order of **~16k lines**). Layout, components, and **utility-style** class naming; many **`--tw-*`** variables match **Tailwind v3-style compiled output**. There is **no** `tailwind.config` or CSS source tree in this repo — treat **`theme.css` as RoarTheme’s shipped bundle** (edit carefully or introduce a deliberate build pipeline if the team standardizes one).
+3. **`assets/rtl.css`** — Loaded when the locale direction is RTL (same layout as `theme.liquid`).
+4. **`assets/apps.css`** — **Deferred** (loads with `media="print"` + `onload` → `all`) for lighter first paint. Targets **app embeds** and related UI (file also styles Shopify’s cookie banner selectors, etc.).
+
+**Password and gift card layouts:** `layout/password.liquid` loads `theme.css` + `password.css` (+ `rtl.css`); `templates/gift_card.liquid` loads `theme.css` + `giftcard.css` (+ `rtl.css`).
+
+### Feature / on-demand CSS (`assets/*.css`)
+
+Sections and snippets pull these in with `stylesheet_tag` when needed (non-exhaustive): `cart.css`, `customer.css`, `blog.css`, `article.css`, `search.css`, `product-bundle.css`, `quick-order-list.css`, `volume-pricing.css`, `newsletter-popup.css`, `mobile-dock.css`, `cookie-banner.css`, `age-verifier.css`, `pickup-availability.css`, `model-viewer.css`. **3D model viewer:** sections link both Shopify CDN `model-viewer-ui` CSS and local **`model-viewer-ui.css`**.
+
+### Global JavaScript baseline
+
+- **`assets/vendor.js`** then **`assets/theme.js`** (see `layout/theme.liquid`). Customer account templates also load **`shopify_common.js`** (Shopify-hosted). Settings may enable **`tab-attention.js`**, **`instant-page.js`** (speculative preload).
+
+### Layout / behavior hooks themes rely on
+
+- **`body`** classes and **`data-*`** attributes (`data-rounded-button`, `data-lazy-image`, `data-page-transition`, etc.) come from `settings` in `theme.liquid` — CSS/JS in `theme.css` / `theme.js` often depend on them.
+
+## Shopify docs first (current best practice)
+
+- For **any** task touching this store—theme/Liquid, JSON templates, CLI, Theme Check, metafields, performance, accessibility, or checkout boundaries—**check [Shopify developer documentation](https://shopify.dev)** for the **current** guidance, not outdated third-party posts or model training alone.
+- Primary entry points: [Online Store themes](https://shopify.dev/docs/storefronts/themes), [Shopify CLI — Theme commands](https://shopify.dev/docs/api/shopify-cli/theme), and the specific guide or API page for the feature (search on `shopify.dev` when unsure).
+- Vendor/theme-author articles (e.g. RoarTheme) are for **Concept-specific** setup only; default to Shopify when they conflict with official docs.
+
+## `shopify.theme.toml` (what it is, and when to use it)
+
+- **Purpose:** Official **Shopify Theme CLI** config at the theme root. Under `[environments.<name>]` you set things like **`store`**, optional **`theme`** (remote id/name), **`password`** (Theme Access / token), **`path`**, etc. Commands use it via **`shopify theme <cmd> -e <name>`**; values merge with flags, and **CLI flags override** the file when both are set.
+- **Still recommended in 2026?** Yes—it remains the **documented** way to define environments for `theme dev`, `pull`, `push`, multi-store workflows, CI, and shared defaults so everyone does not rely only on long shell flags. It is **optional** in a repo that already passes `--store=…` in `package.json` (both patterns are valid; pick one or use TOML for `-e` and scripts for quick aliases).
+- **This repo / solo workflow:** `package.json` passes `--store=airtulip.myshopify.com`; that is enough day to day. `shopify.theme.toml` is **optional** (many single-dev repos skip it—harmless to keep for CLI `-e development` or if you ever add another environment; delete anytime if you prefer parity with other client folders).
+
+## Directory map (Shopify theme)
+
+| Path | Role |
+|------|------|
+| `layout/` | Root layouts (`theme.liquid`, `password.liquid`). |
+| `templates/` | JSON templates (+ some `.liquid`); assign sections per route. |
+| `sections/` | Page regions (~99 files); heavy customization here. |
+| `blocks/` | Nested section blocks (OS2), e.g. accordion, heading. |
+| `snippets/` | Reusable partials (`render 'snippet-name'`). |
+| `assets/` | CSS/JS/static files. **Core:** `theme.css`, `theme.js`, `vendor.js`; see **Theme product & CSS foundations** for the full CSS story. |
+| `config/` | `settings_schema.json`, `settings_data.json`; theme settings. |
+| `locales/` | Translations and schema strings (`*.json`, `*.schema.json`). |
+
+## Local preview (developer-owned)
+
+- **Store flag:** Scripts use `--store=airtulip.myshopify.com` (same pattern as other client theme repos on this machine). See **`shopify.theme.toml`** above for the CLI environment file.
+- **Commands:** `npm run dev` and `npm run storefront` both run `shopify theme dev --store=airtulip.myshopify.com` (local preview + hot reload against that shop). `npm run pull` runs `shopify theme pull` for the same store.
+- **Important for the agent:** The developer runs these locally. **Do not** start `shopify theme dev` or `npm run dev` / `npm run storefront` unless they explicitly ask you to run the dev server.
+
+## Conventions when editing
+
+- Prefer **existing RoarTheme patterns** (section schema, spacing, `{% render %}`, `{% liquid %}` blocks) over one-off hacks.
+- Respect **OS2** structure: JSON templates + section/`block` schemas; avoid breaking `settings_schema` / translation keys unnecessarily.
+- After substantive Liquid/CSS/JS changes, **Theme Check** / visual verification is on the preview the merchant runs locally or on staging.
+- For Liquid/theme API questions, use the **Shopify Liquid** skill; this is not Storefront GraphQL app code.
+
+## Store / CLI troubleshooting
+
+- If auth or the wrong shop is used, confirm **`--store`** / `shopify.theme.toml` match the shop’s **`.myshopify.com`** domain or **store prefix** (see `shopify theme dev --help` and Shopify’s CLI theme docs).

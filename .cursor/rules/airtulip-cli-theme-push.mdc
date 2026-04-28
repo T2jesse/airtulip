@@ -1,0 +1,46 @@
+---
+description: Airtulip — Shopify CLI theme push, schema validation, and visible_if patches (RoarTheme Concept)
+alwaysApply: true
+---
+
+# Airtulip — `shopify theme push` / CLI schema compatibility
+
+## Why this rule exists
+
+**Shopify CLI** (e.g. 3.88.x) validates `{% schema %}` JSON when you run **`shopify theme push`** or rely on full theme sync to a **development** theme. That validation can be **stricter** than the **online theme editor** on the same store.
+
+**RoarTheme Concept** (this codebase) used **`visible_if`** on some setting types the CLI **rejects**. When validation failed, entire section files **did not upload** — notably **`sections/main-product.liquid`**.
+
+**Symptoms on the remote Development / staging theme (not in Git):**
+
+- **`product.json`** / PDP URLs **404** even though templates exist locally.
+- Theme editor **Products** dropdown: **“No templates found for products.”**
+- Push logs: `Invalid schema ... 'visible_if' is not a valid attribute` and cascading **`Section type 'main-product' does not refer to an existing section file`**.
+
+**Root cause:** Without **`main-product.liquid`** on Shopify, JSON templates referencing `"type": "main-product"` cannot resolve.
+
+Official CLI context: [Shopify CLI Theme commands](https://shopify.dev/docs/api/shopify-cli/theme).
+
+## Patches applied (do not revert without re-testing `theme push`)
+
+| File | Change |
+|------|--------|
+| `sections/cart-drawer.liquid` | Removed **`visible_if`** from the **`product_list`** setting **`cart_recommendations_products`**. CLI disallows `visible_if` on that setting type. |
+| `sections/main-product.liquid` | Removed **`visible_if`** from **`share`** block settings (incl. **`page`** / **`help_page`**) and from **`help_desk`** block **`help_page`** / **`help_page_external`**. |
+| `sections/featured-product.liquid` | Removed **`visible_if`** from **`share`** block settings (same pattern as main product; featured PDP uses simpler share markup). |
+| `sections/main-product-modal.liquid` | Removed **`visible_if`** from **`share`** block settings. |
+
+**Storefront behavior:** Unchanged for normal shopping; **Liquid** logic was not removed.
+
+**Theme editor UX:** Some fields that used to **hide** until a checkbox / select changed may **always show** in customize. Merchants can ignore unused fields when `help_type` is drawer, etc.
+
+## Agent / developer guidelines
+
+- **Before** copying RoarTheme updates from vendor ZIP, **run `shopify theme push --theme=<dev_id>`** (or dry-run if available) and fix new `visible_if` violations the same way.
+- **Do not** reintroduce **`visible_if`** on **`product_list`** or on **`page`** settings inside **`share`** / **`help_desk`** without confirming the CLI accepts it.
+- Prefer **vendor theme updates** long-term so RoarTheme aligns with current CLI validators; until then, treat this diff as a **required compat layer** for Git → CLI → Development theme workflows.
+
+## Related project rules
+
+- **`.cursor/rules/airtulip-project.mdc`** — overall theme context.
+- **`.cursor/rules/airtulip-apps.mdc`** — installed apps (unrelated to this schema issue).

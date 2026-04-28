@@ -1,0 +1,46 @@
+---
+description: Airtulip — installed Shopify apps (admin inventory) for theme/script awareness
+alwaysApply: true
+---
+
+# Airtulip — installed Shopify apps
+
+Use this list when debugging **extra scripts**, **layout shifts**, **checkout/subscription** behavior, or **template** issues. Apps inject via `{{ content_for_header }}`, app embeds, app blocks, ScriptTags, and theme app extensions — not always visible in Git until you inspect **Online Store → Themes → Customize → App embeds** and live HTML.
+
+**Inventory** (from Shopify admin → **Apps**, as shared for this client — update this file if apps change):
+
+| App |
+|-----|
+| Collective |
+| Collabs |
+| Subscriptions *(Shopify native)* |
+| Utterbond Subscriptions |
+| PayWhirl Subscriptions |
+| Appstle Subscription |
+| Translate & Adapt *(Shopify native)* |
+| Judge.me Reviews |
+| GA Ultimate Trust Badges Icons |
+| BEE Logo showcase |
+| Klaviyo: Email Marketing & SMS |
+| Data Feed Watch Shopping Feeds |
+| Shipping & Delivery - ShipZip |
+| Mailchimp: Email & SMS |
+| UpPromote Affiliate |
+| PageFly Page Builder |
+| Messaging *(Shopify native)* |
+
+## Redundancy / consolidation (worth confirming with the merchant)
+
+- **Four subscription solutions** on one store: Shopify Subscriptions + Utterbond + PayWhirl + Appstle. Expect overlapping widgets, cart/checkout scripts, and support burden. Long-term, **one** subscription stack is usually ideal unless each serves a distinct business case.
+- **Two email/SMS marketing platforms:** Klaviyo and Mailchimp. Often only **one** is needed; duplicates can mean duplicate popups, tracking, and list logic.
+- **Affiliate / partnerships:** Collabs (Shopify) and UpPromote both present — confirm both are intentional.
+
+## Theme repo touchpoints
+
+- **PageFly:** Can add **alternate templates** and heavy **CSS/JS**; repo already includes `snippets/pagefly-main-js.liquid` and PageFly-related locale keys. When editing layout or performance, check whether PageFly pages bypass standard JSON templates.
+- **Judge.me, Klaviyo, trust badges, etc.:** Often add storefront snippets or rely on app blocks — if something “mysterious” appears in the DOM, check app embeds before patching `theme.js` / `theme.css`.
+
+## When working on this project
+
+- Prefer **Shopify.dev** and each **app’s official docs** for integration limits (e.g. Online Store 2.0 vs checkout).
+- After app install/uninstall, expect **orphaned** references in `config/settings_data.json` or templates — Theme Check and manual QA on staging.

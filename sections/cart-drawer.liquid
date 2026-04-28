@@ -776,6 +776,10 @@
   </cart-drawer>
 {%- endif -%}
 
+{% comment %}
+  CLI theme push: `visible_if` on `cart_recommendations_products` (product_list) fails Shopify CLI
+  schema validation — removed 2026-04. Full context: .cursor/rules/airtulip-cli-theme-push.mdc
+{% endcomment %}
 {% schema %}
 {
   "name": "t:sections.cart-drawer.name",
@@ -882,7 +886,6 @@
       "default": true
     },
     {
-      "visible_if": "{{ section.settings.cart_recommendations_enabled == true }}",
       "type": "product_list",
       "id": "cart_recommendations_products",
       "label": "t:sections.cart-drawer.settings.cart_recommendations_products.label",

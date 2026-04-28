@@ -1061,6 +1061,11 @@
   </script>
 </div>
 
+{% comment %}
+  CLI theme push: `visible_if` on share/help_desk `page` settings and share block page fields
+  fails Shopify CLI validation (blocks entire section upload → PDP 404 on dev). Patched 2026-04.
+  Details: .cursor/rules/airtulip-cli-theme-push.mdc
+{% endcomment %}
 {% schema %}
 {
   "name": "t:sections.main-product.name",
@@ -2062,14 +2067,12 @@
           "default": true
         },
         {
-          "visible_if": "{{ block.settings.show_help_desk == true }}",
           "type": "text",
           "id": "help_label",
           "label": "t:sections.main-product.blocks.help_desk.settings.help_label.label",
           "default": "Need help?"
         },
         {
-          "visible_if": "{{ block.settings.show_help_desk == true }}",
           "type": "select",
           "id": "help_type",
           "options": [
@@ -2086,13 +2089,11 @@
           "label": "t:sections.main-product.blocks.help_desk.settings.help_type.label"
         },
         {
-          "visible_if": "{{ block.settings.show_help_desk == true and block.settings.help_type == 'page' }}",
           "type": "page",
           "id": "help_page",
           "label": "t:sections.main-product.blocks.help_desk.settings.help_page.label"
         },
         {
-          "visible_if": "{{ block.settings.show_help_desk == true and block.settings.help_type == 'page' }}",
           "type": "checkbox",
           "id": "help_page_external",
           "label": "t:sections.global.settings.button_external.label",
@@ -2128,13 +2129,11 @@
           "label": "t:sections.main-product.blocks.help_desk.settings.help_type.label"
         },
         {
-          "visible_if": "{{ block.settings.help_type == 'page' }}",
           "type": "page",
           "id": "help_page",
           "label": "t:sections.main-product.blocks.help_desk.settings.help_page.label"
         },
         {
-          "visible_if": "{{ block.settings.help_type == 'page' }}",
           "type": "checkbox",
           "id": "help_page_external",
           "label": "t:sections.global.settings.button_external.label",

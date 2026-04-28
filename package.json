@@ -1,0 +1,10 @@
+{
+  "name": "airtulip-theme",
+  "private": true,
+  "description": "Shopify Online Store theme for airtulip.com (Concept / RoarTheme)",
+  "scripts": {
+    "dev": "shopify theme dev --store=airtulip.myshopify.com",
+    "storefront": "shopify theme dev --store=airtulip.myshopify.com",
+    "pull": "shopify theme pull --store=airtulip.myshopify.com"
+  }
+}

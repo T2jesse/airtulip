@@ -1,0 +1,8 @@
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+
+# Stray business/docs files sometimes included in theme ZIP exports
+/*.pdf

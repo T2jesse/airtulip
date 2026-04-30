@@ -28,6 +28,10 @@
       }
     }
   {% endif -%}
+
+  #shopify-section-{{ section.id }} .banner__title--glow {
+    isolation: isolate;
+  }
 </style>
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}"{% if section.settings.transparent_header %} allow-transparent-header{% endif %}>
@@ -98,7 +102,18 @@
                   {%- when 'heading' -%}
                     {%- if block.settings.heading != blank -%}
                       {%- assign delay = delay | plus: 1 -%}
-                      <{{ block.settings.heading_tag }} class="banner__title heading leading-none {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                      {%- liquid
+                        assign heading_glow_active = false
+                        assign g_col = ''
+                        if block.settings.heading_glow_enable and block.settings.heading_glow_opacity > 0
+                          if block.settings.heading_glow_color != blank and block.settings.heading_glow_color != 'rgba(0,0,0,0)'
+                            assign heading_glow_active = true
+                            assign g_op = block.settings.heading_glow_opacity | times: 0.01
+                            assign g_col = block.settings.heading_glow_color | color_modify: 'alpha', g_op
+                          endif
+                        endif
+                      -%}
+                      <{{ block.settings.heading_tag }} class="banner__title heading leading-none {{ block.settings.heading_size }}{% if heading_glow_active %} banner__title--glow{% endif %}"{% if heading_glow_active %} style="filter: drop-shadow(0 0 {{ block.settings.heading_glow_width }}px {{ g_col }}) drop-shadow(0 0 calc({{ block.settings.heading_glow_width }}px * 0.65) {{ g_col }});"{% endif %} {{ block.shopify_attributes }}>
                         {%- if block.settings.highlighted_text == 'none' -%}
                           <split-words class="split-words js-invisible block" data-animate="fade-up-large" data-animate-delay="{{ delay | times: 250 }}">{{ block.settings.heading }}</split-words>
                         {%- else -%}
@@ -739,6 +754,47 @@
           "default": "circle",
           "label": "t:sections.global.settings.highlighted_scribble.label",
           "info": "t:sections.global.settings.highlighted_scribble.info"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.image-with-text-overlay.blocks.heading.settings.header__glow.content"
+        },
+        {
+          "type": "checkbox",
+          "id": "heading_glow_enable",
+          "label": "t:sections.image-with-text-overlay.blocks.heading.settings.heading_glow_enable.label",
+          "default": false
+        },
+        {
+          "visible_if": "{{ block.settings.heading_glow_enable }}",
+          "type": "color",
+          "id": "heading_glow_color",
+          "label": "t:sections.image-with-text-overlay.blocks.heading.settings.heading_glow_color.label",
+          "default": "#FFFFFF"
+        },
+        {
+          "visible_if": "{{ block.settings.heading_glow_enable }}",
+          "type": "range",
+          "id": "heading_glow_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "t:sections.image-with-text-overlay.blocks.heading.settings.heading_glow_opacity.label",
+          "info": "t:sections.image-with-text-overlay.blocks.heading.settings.heading_glow_opacity.info",
+          "default": 70
+        },
+        {
+          "visible_if": "{{ block.settings.heading_glow_enable }}",
+          "type": "range",
+          "id": "heading_glow_width",
+          "min": 4,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "t:sections.image-with-text-overlay.blocks.heading.settings.heading_glow_width.label",
+          "info": "t:sections.image-with-text-overlay.blocks.heading.settings.heading_glow_width.info",
+          "default": 28
         }
       ]
     },

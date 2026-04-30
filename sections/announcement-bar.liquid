@@ -23,6 +23,7 @@
       --color-background: {{ section.settings.color_background.rgb }};
       --color-foreground: {{ section.settings.color_text.rgb }};
       --color-highlight: {{ section.settings.color_highlight.rgb }};
+      --announcement-nav-arrow-opacity: {{ section.settings.nav_arrow_opacity | default: 90 | times: 0.01 }};
     }
   </style>
 
@@ -97,12 +98,12 @@
         </announcement-bar>
         {%- if section.settings.show_navigation and announcements_count > 1 -%}
           <button type="button" is="previous-button" class="fader left relative flex items-center justify-start h-full" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}">
-            <svg class="icon icon-arrow-left icon-xs transform" viewBox="0 0 15 14" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <svg class="icon icon-arrow-left icon-xs transform" viewBox="0 0 15 14" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" style="opacity: var(--announcement-nav-arrow-opacity, 1);">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.33333 2.91675L2.25 7.00004M2.25 7.00004L6.33333 11.0834M2.25 7.00004H12.75"></path>
             </svg>
           </button>
           <button type="button" is="next-button" class="fader right relative flex items-center justify-end h-full" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.next' | t | escape }}">
-            <svg class="icon icon-arrow-right icon-xs transform" viewBox="0 0 15 14" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <svg class="icon icon-arrow-right icon-xs transform" viewBox="0 0 15 14" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" style="opacity: var(--announcement-nav-arrow-opacity, 1);">
               <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 7.00004H12.75M12.75 7.00004L8.66667 2.91675M12.75 7.00004L8.66667 11.0834"></path>
             </svg>
           </button>
@@ -298,6 +299,18 @@
       "id": "show_navigation",
       "default": false,
       "label": "t:sections.announcement-bar.settings.show_navigation.label"
+    },
+    {
+      "visible_if": "{{ section.settings.show_navigation == true }}",
+      "type": "range",
+      "id": "nav_arrow_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "t:sections.announcement-bar.settings.nav_arrow_opacity.label",
+      "info": "t:sections.announcement-bar.settings.nav_arrow_opacity.info",
+      "default": 90
     },
     {
       "type": "header",

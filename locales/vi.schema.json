@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "categories": {
     "banners": "Banner",
@@ -2376,7 +2385,30 @@
       }
     },
     "image-with-text-overlay": {
-      "name": "Hình ảnh có lớp phủ văn bản"
+      "name": "Hình ảnh có lớp phủ văn bản",
+      "blocks": {
+        "heading": {
+          "settings": {
+            "header__glow": {
+              "content": "Phát sáng tiêu đề"
+            },
+            "heading_glow_enable": {
+              "label": "Bật phát sáng"
+            },
+            "heading_glow_color": {
+              "label": "Màu phát sáng"
+            },
+            "heading_glow_opacity": {
+              "label": "Độ mờ phát sáng",
+              "info": "Giá trị thấp hơn làm hiệu ứng nhẹ hơn. 0% thì tắt."
+            },
+            "heading_glow_width": {
+              "label": "Độ rộng phát sáng",
+              "info": "Bán kính làm mờ (lớn hơn = quầng mềm và rộng hơn)."
+            }
+          }
+        }
+      }
     },
     "images-with-text-overlay": {
       "name": "Nhiều hình ảnh có lớp phủ văn bản",

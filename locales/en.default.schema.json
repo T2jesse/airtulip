@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "categories": {
     "banners": "Banners",
@@ -2376,7 +2385,30 @@
       }
     },
     "image-with-text-overlay": {
-      "name": "Image with text overlay"
+      "name": "Image with text overlay",
+      "blocks": {
+        "heading": {
+          "settings": {
+            "header__glow": {
+              "content": "Heading glow"
+            },
+            "heading_glow_enable": {
+              "label": "Enable glow"
+            },
+            "heading_glow_color": {
+              "label": "Glow color"
+            },
+            "heading_glow_opacity": {
+              "label": "Glow opacity",
+              "info": "Lower values soften the effect. At 0% the glow is off."
+            },
+            "heading_glow_width": {
+              "label": "Glow width",
+              "info": "Blur radius (larger = softer, wider halo)."
+            }
+          }
+        }
+      }
     },
     "images-with-text-overlay": {
       "name": "Images with text overlay",

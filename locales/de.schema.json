@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "categories": {
     "banners": "Banner",
@@ -2376,7 +2385,30 @@
       }
     },
     "image-with-text-overlay": {
-      "name": "Bild mit Textüberlagerung"
+      "name": "Bild mit Textüberlagerung",
+      "blocks": {
+        "heading": {
+          "settings": {
+            "header__glow": {
+              "content": "Überschrift-Leuchten"
+            },
+            "heading_glow_enable": {
+              "label": "Leuchten aktivieren"
+            },
+            "heading_glow_color": {
+              "label": "Leuchtfarbe"
+            },
+            "heading_glow_opacity": {
+              "label": "Leuchtdeckkraft",
+              "info": "Niedrigere Werte machen das Leuchten dezenter. Bei 0 % ist es aus."
+            },
+            "heading_glow_width": {
+              "label": "Leuchtbereich",
+              "info": "Unschärferadius (größer = weicher, breiterer Halo)."
+            }
+          }
+        }
+      }
     },
     "images-with-text-overlay": {
       "name": "Bildern mit Textüberlagerung",

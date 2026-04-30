@@ -1,0 +1,1024 @@
+﻿{%- comment -%}
+  Featured reviews carousel. Judge.me does not expose per-review title/body/author to Liquid;
+  populate slides manually (e.g. from Judge.me dashboard / PDP widget) or reuse your best quotes.
+  JS: assets/top-testimonials.js (Flickity via vendor.js), loaded below after vendor.js + theme.js (defer order).
+{%- endcomment -%}
+{%- liquid
+  assign tt_shadow_on = section.settings.card_shadow_enable | default: true
+  assign tt_blur = section.settings.card_shadow_blur | default: 28
+  assign tt_spread = section.settings.card_shadow_spread | default: 0
+  assign tt_opacity = section.settings.card_shadow_opacity | default: 14
+  assign tt_angle = section.settings.card_shadow_angle | default: 135
+  assign tt_distance = section.settings.card_shadow_distance | default: 10
+  if section.settings.star_color != blank
+    assign tt_star_rgb = section.settings.star_color.rgb
+  else
+    assign tt_star_rgb = '18, 18, 18'
+  endif
+  assign tt_star_fs = '--text-xs'
+  case section.settings.star_size
+    when 'text-sm'
+      assign tt_star_fs = '--text-sm'
+    when 'text-base'
+      assign tt_star_fs = '--text-base'
+    when 'text-lg'
+      assign tt_star_fs = '--text-lg'
+  endcase
+  if tt_shadow_on
+    assign tt_spread_abs = tt_spread | abs
+    assign tt_vp_pad_y = tt_blur | plus: tt_distance | plus: tt_spread_abs | plus: 16
+    assign tt_vp_pad_x = tt_blur | plus: tt_distance | plus: tt_spread_abs | plus: 12
+  else
+    assign tt_vp_pad_y = 0
+    assign tt_vp_pad_x = 0
+  endif
+  assign tt_overlap = section.settings.overlap_above | default: 0
+  if section.settings.testimonial_text_color != blank
+    assign tt_testimonial_text_rgb = section.settings.testimonial_text_color.rgb
+  endif
+-%}
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --tt-slide-gap: clamp(var(--sp-4), 2.1vw, var(--sp-8));
+    --tt-pv-mobile: {{ section.settings.slides_mobile }};
+    --tt-pv-tablet: {{ section.settings.slides_tablet }};
+    --tt-pv-desktop: {{ section.settings.slides_desktop }};
+    --tt-card-blur: {{ tt_blur }}px;
+    --tt-card-spread: {{ tt_spread }}px;
+    --tt-card-opacity: {{ tt_opacity | times: 0.01 }};
+    --tt-viewport-pad-y: {{ tt_vp_pad_y }}px;
+    --tt-viewport-pad-x: {{ tt_vp_pad_x }}px;
+    --tt-star-rgb: {{ tt_star_rgb }};
+    --tt-star-fs: var({{ tt_star_fs }});
+    {%- if tt_overlap > 0 -%}
+    position: relative;
+    z-index: 2;
+    margin-block-start: -{{ tt_overlap }}px;
+    {%- endif -%}
+    {%- render 'section-variables', section: section -%}
+  }
+
+  /* One Flickity cell = one review; width controls how many are visible. */
+  #shopify-section-{{ section.id }} .top-testimonials-carousel__track .top-testimonials__slide {
+    padding-inline-end: var(--tt-slide-gap);
+    width: calc(
+      (100% - (var(--tt-pv-mobile) - 1) * var(--tt-slide-gap)) / var(--tt-pv-mobile)
+    );
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .top-testimonials-carousel__track .top-testimonials__slide {
+      width: calc(
+        (100% - (var(--tt-pv-tablet) - 1) * var(--tt-slide-gap)) / var(--tt-pv-tablet)
+      );
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .top-testimonials-carousel__track .top-testimonials__slide {
+      width: calc(
+        (100% - (var(--tt-pv-desktop) - 1) * var(--tt-slide-gap)) / var(--tt-pv-desktop)
+      );
+    }
+  }
+
+  {%- if tt_shadow_on -%}
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner {
+    box-shadow: var(--tt-card-sx, 0px) var(--tt-card-sy, 0px) var(--tt-card-blur) var(--tt-card-spread)
+      rgba(0, 0, 0, var(--tt-card-opacity));
+  }
+  {%- else -%}
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner {
+    box-shadow: none;
+  }
+  {%- endif -%}
+
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: clamp(var(--sp-6), 2.63vw, var(--sp-10));
+    border-radius: var(--rounded-card);
+  }
+
+  #shopify-section-{{ section.id }} .top-testimonials-carousel__track {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /*
+    Flickity sets viewport height to the tallest cell. With border-box, padding eats that height and clips content.
+    content-box + width calc keeps the slider area full cell height; padding sits outside the height Flickity sets.
+  */
+  #shopify-section-{{ section.id }} .top-testimonials-carousel__track .flickity-viewport {
+    flex-shrink: 0;
+    box-sizing: content-box;
+    width: calc(100% - 2 * var(--tt-viewport-pad-x));
+    margin-inline: auto;
+    padding-block: var(--tt-viewport-pad-y);
+    padding-inline: var(--tt-viewport-pad-x);
+  }
+
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote {
+    position: relative;
+    margin: 0;
+    padding-block-start: 0;
+    text-align: start;
+  }
+
+  /* Quote heading: fixed px sizes (theme title-* utilities run larger). */
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote p.heading.title-sm {
+    font-size: 18px;
+  }
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote p.heading.title-md {
+    font-size: 24px;
+  }
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote p.heading.title-lg {
+    font-size: 30px;
+  }
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote p.heading.title-xl {
+    font-size: 36px;
+  }
+
+  {%- if tt_testimonial_text_rgb != blank -%}
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote .rte,
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote .rte p,
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote cite {
+    color: rgb({{ tt_testimonial_text_rgb }});
+  }
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote .rte a {
+    color: inherit;
+  }
+  {%- endif -%}
+
+  /*
+    Stars: theme .testimonial sets unicode in ::before; global .rte blockquote::before adds a huge quote mask.
+    This section is .not-rte on the host; these rules normalize star row size and layout.
+  */
+  #shopify-section-{{ section.id }} .testimonial:is(.with-5-stars, .with-4-stars, .with-3-stars, .with-2-stars, .with-1-star) blockquote::before {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    display: block;
+    width: auto !important;
+    height: auto !important;
+    margin-block: 0 var(--sp-3);
+    padding: 0;
+    background: none !important;
+    background-color: transparent !important;
+    font-size: var(--tt-star-fs);
+    line-height: 1;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    color: rgb(var(--tt-star-rgb));
+  }
+
+  #shopify-section-{{ section.id }} .top-testimonials__nav {
+    gap: var(--sp-3);
+    margin-block-start: var(--sp-6);
+  }
+
+  #shopify-section-{{ section.id }} .top-testimonials-carousel__track .flickity-page-dots {
+    margin-block-start: clamp(var(--sp-6), 2.105vw, var(--sp-10));
+  }
+
+  #shopify-section-{{ section.id }} .top-testimonials-carousel__track .flickity-viewport.is-pointer-down {
+    cursor: grabbing;
+  }
+</style>
+
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+  <div class="page-width{% if section.settings.full_width %} page-width--full{% elsif section.settings.narrow %} page-width--narrow{% endif %} relative">
+    {%- render 'section-heading', section: section -%}
+
+    {%- if section.blocks.size > 0 -%}
+      {%- liquid
+        assign with_gradient = false
+        if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
+          assign with_gradient = true
+        endif
+        assign quote_heading_size = section.settings.quote_heading_size | default: 'title-sm'
+        assign quote_text_size = section.settings.quote_text_size | default: 'text-base'
+        assign quote_author_size = section.settings.quote_author_size | default: 'text-sm'
+        if section.settings.autoplay_desktop == false
+          assign tt_autoplay_desktop_attr = false
+        else
+          assign tt_autoplay_desktop_attr = true
+        endif
+      -%}
+      <div class="top-testimonials relative z-1">
+        <top-testimonials-carousel
+          class="top-testimonials-carousel block w-full not-rte"
+          data-page-dots="{% if section.settings.show_dots %}true{% else %}false{% endif %}"
+          data-wrap-around="{% if section.settings.wrap_around %}true{% else %}false{% endif %}"
+          data-autoplay-desktop="{% if tt_autoplay_desktop_attr %}true{% else %}false{% endif %}"
+          data-autoplay-delay="{{ section.settings.autoplay_delay | default: 15 | times: 1000 }}"
+          data-shadow-enabled="{% if tt_shadow_on %}true{% else %}false{% endif %}"
+          data-shadow-angle="{{ tt_angle }}"
+          data-shadow-distance="{{ tt_distance }}"
+        >
+          {%- comment -%}
+            Flickity attaches to __track only. Slides-per-view is CSS width; arrows/dots move one block at a time (no groupCells).
+          {%- endcomment -%}
+          <div class="top-testimonials-carousel__track relative w-full outline-none" tabindex="0">
+            {%- for block in section.blocks -%}
+              <div
+                class="top-testimonials__slide testimonial with-{{ block.settings.star_rating }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="top-testimonials__slide-inner">
+                  <blockquote class="grid gap-4 m-0">
+                    {%- if block.settings.heading != blank -%}
+                      <p class="heading {{ quote_heading_size }} font-semibold leading-snug tracking-tight m-0">
+                        {%- render 'highlighted-text',
+                          content: block.settings.heading,
+                          style: block.settings.highlighted_text,
+                          scribble: block.settings.highlighted_scribble,
+                          gradient: with_gradient
+                        -%}
+                      </p>
+                    {%- endif -%}
+
+                    {%- if block.settings.text != blank -%}
+                      <div class="rte {{ quote_text_size }} leading-normal">
+                        {{- block.settings.text -}}
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.author != blank -%}
+                      <cite class="block not-italic font-medium {{ quote_author_size }} mt-auto pt-2">
+                        <span class="opacity-70">—&nbsp;</span>
+                        {%- if block.settings.author_url != blank -%}
+                          <a href="{{ block.settings.author_url }}" class="reversed-link">{{ block.settings.author }}</a>
+                        {%- else -%}
+                          {{- block.settings.author -}}
+                        {%- endif -%}
+                      </cite>
+                    {%- endif -%}
+                  </blockquote>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- if section.settings.show_arrows and section.blocks.size > 1 -%}
+            <div class="top-testimonials__nav flex justify-center items-center{% unless section.settings.show_arrows_mobile %} hidden md:flex{% endunless %}">
+              <button
+                type="button"
+                class="btn btn--secondary !w-12 !h-12 !min-h-0 !px-0 shrink-0"
+                data-top-testimonials-prev
+                aria-label="{{ 'general.pagination.previous' | t }}"
+              >
+                <span class="sr-only">{{ 'general.pagination.previous' | t }}</span>
+                {%- render 'icon', icon: 'chevron-left', size: 'sm' -%}
+              </button>
+              <button
+                type="button"
+                class="btn btn--secondary !w-12 !h-12 !min-h-0 !px-0 shrink-0"
+                data-top-testimonials-next
+                aria-label="{{ 'general.pagination.next' | t }}"
+              >
+                <span class="sr-only">{{ 'general.pagination.next' | t }}</span>
+                {%- render 'icon', icon: 'chevron-right', size: 'sm' -%}
+              </button>
+            </div>
+          {%- endif -%}
+        </top-testimonials-carousel>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script src="{{ 'top-testimonials.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Top testimonials",
+  "class": "section-top-testimonials",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Judge.me does not expose review text to Liquid. Add quotes manually (for example from your Judge.me dashboard or product pages) so they stay consistent with PDP widgets."
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why people love AirTulip"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "title-sm",
+          "label": "Small"
+        },
+        {
+          "value": "title-md",
+          "label": "Medium"
+        },
+        {
+          "value": "title-lg tracking-heading",
+          "label": "Large"
+        },
+        {
+          "value": "title-xl tracking-heading",
+          "label": "Extra large"
+        }
+      ],
+      "default": "title-md",
+      "label": "Heading size"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "text-left md:items-end md:flex-row",
+          "label": "Left"
+        },
+        {
+          "value": "text-center md:items-center",
+          "label": "Center"
+        },
+        {
+          "value": "text-right md:items-end md:flex-row-reverse",
+          "label": "Right"
+        }
+      ],
+      "default": "text-center md:items-center"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        }
+      ],
+      "default": "h2",
+      "label": "Heading tag",
+      "info": "Specify heading code types for SEO and search engines for crawling purposes."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave the label blank to hide the button."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "visible_if": "{{ section.settings.button_label != blank }}",
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "Open link in new tab",
+      "default": false
+    },
+    {
+      "visible_if": "{{ section.settings.button_label != blank }}",
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "Show button icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1,
+      "label": "Slides visible on mobile",
+      "info": "Number of testimonial cards visible at once on small screens."
+    },
+    {
+      "type": "range",
+      "id": "slides_tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2,
+      "label": "Slides visible on tablet",
+      "info": "Number of cards visible from the tablet breakpoint (768px) until desktop."
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Slides visible on desktop",
+      "info": "Number of cards visible from 1024px and up."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show pagination dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Show arrows on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "wrap_around",
+      "label": "Loop carousel",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_desktop",
+      "label": "Auto-advance on desktop",
+      "info": "Smooth continuous scroll on viewports 768px and up. Always loops while this is on. Pauses on hover; smaller widths are unchanged.",
+      "default": true
+    },
+    {
+      "visible_if": "{{ section.settings.autoplay_desktop != false }}",
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "unit": "s",
+      "label": "Seconds per card width",
+      "info": "How long it takes the carousel to drift by one full card width on desktop (higher = slower). Only when auto-advance on desktop is on.",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Quote cards"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "testimonial_text_color",
+      "label": "Quote text color",
+      "info": "Applies to the review body and author line. Leave empty to use the section text color."
+    },
+    {
+      "type": "select",
+      "id": "star_size",
+      "label": "Star size",
+      "default": "text-xs",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "Extra small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "quote_heading_size",
+      "label": "Quote heading size",
+      "default": "title-sm",
+      "options": [
+        {
+          "value": "title-sm",
+          "label": "Small"
+        },
+        {
+          "value": "title-md",
+          "label": "Medium"
+        },
+        {
+          "value": "title-lg tracking-heading",
+          "label": "Large"
+        },
+        {
+          "value": "title-xl tracking-heading",
+          "label": "Extra large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "quote_text_size",
+      "label": "Quote text size",
+      "default": "text-base",
+      "options": [
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "quote_author_size",
+      "label": "Author line size",
+      "default": "text-sm",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "Extra small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Card shadow"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_shadow_enable",
+      "label": "Enable card shadow",
+      "default": true
+    },
+    {
+      "visible_if": "{{ section.settings.card_shadow_enable }}",
+      "type": "range",
+      "id": "card_shadow_angle",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "label": "Shadow angle",
+      "info": "Direction of the shadow in degrees.",
+      "default": 135
+    },
+    {
+      "visible_if": "{{ section.settings.card_shadow_enable }}",
+      "type": "range",
+      "id": "card_shadow_distance",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow distance",
+      "info": "How far the shadow is offset from the card.",
+      "default": 10
+    },
+    {
+      "visible_if": "{{ section.settings.card_shadow_enable }}",
+      "type": "range",
+      "id": "card_shadow_blur",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow blur",
+      "info": "Softens the edge of the shadow.",
+      "default": 28
+    },
+    {
+      "visible_if": "{{ section.settings.card_shadow_enable }}",
+      "type": "range",
+      "id": "card_shadow_spread",
+      "min": -8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow spread",
+      "info": "Expands or shrinks the shadow before blur.",
+      "default": 0
+    },
+    {
+      "visible_if": "{{ section.settings.card_shadow_enable }}",
+      "type": "range",
+      "id": "card_shadow_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Shadow opacity",
+      "info": "How strong the shadow appears.",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Highlighted text",
+      "info": "To add an animated highlight to text, simply wrap it in italics. Click the \"I\" button in the editor to toggle italics when highlighting text."
+    },
+    {
+      "type": "select",
+      "id": "highlighted_text",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "text",
+          "label": "Text color"
+        },
+        {
+          "value": "full_text",
+          "label": "Text background cover"
+        },
+        {
+          "value": "half_text",
+          "label": "Fancy underline"
+        },
+        {
+          "value": "underline",
+          "label": "Regular underline"
+        },
+        {
+          "value": "stencil",
+          "label": "Stencil text"
+        },
+        {
+          "value": "scribble",
+          "label": "Hand-drawn scribble"
+        }
+      ],
+      "default": "none",
+      "label": "Highlighted text"
+    },
+    {
+      "visible_if": "{{ section.settings.highlighted_text == 'scribble' }}",
+      "type": "select",
+      "id": "highlighted_scribble",
+      "options": [
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "basic-underline",
+          "label": "Basic underline"
+        },
+        {
+          "value": "sketch-underline",
+          "label": "Sketch underline"
+        },
+        {
+          "value": "squiggle-underline",
+          "label": "Squiggle underline"
+        },
+        {
+          "value": "squiggle-underline-2",
+          "label": "Squiggle underline 2"
+        }
+      ],
+      "default": "circle",
+      "label": "Highlighted scribble",
+      "info": "Requires highlighted text style to be set to \"Hand-drawn scribble\"."
+    },
+    {
+      "type": "header",
+      "content": "Colors",
+      "info": "Gradient replaces solid colors when set."
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "Background gradient"
+    },
+    {
+      "type": "color",
+      "id": "color_highlight",
+      "label": "Highlight"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_highlight",
+      "label": "Highlight gradient"
+    },
+    {
+      "type": "color",
+      "id": "color_button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "color_button_background",
+      "label": "Button background"
+    },
+    {
+      "type": "color_background",
+      "id": "color_button_gradient",
+      "label": "Button background gradient"
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Make section full width",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "narrow",
+      "label": "Make section narrow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 72
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "Show section divider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded",
+      "default": true,
+      "label": "Make section rounded"
+    },
+    {
+      "visible_if": "{{ section.settings.rounded }}",
+      "type": "range",
+      "id": "overlap_above",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Overlap section above",
+      "info": "Pulls this section up over the previous section (negative top margin). Works best with rounded section style.",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "select",
+          "id": "star_rating",
+          "label": "Star rating",
+          "default": "5-stars",
+          "options": [
+            {
+              "value": "5-stars",
+              "label": "5 stars"
+            },
+            {
+              "value": "4-stars",
+              "label": "4 stars"
+            },
+            {
+              "value": "3-stars",
+              "label": "3 stars"
+            },
+            {
+              "value": "2-stars",
+              "label": "2 stars"
+            },
+            {
+              "value": "1-star",
+              "label": "1 star"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Quote heading",
+          "default": "A customer favorite"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add the review quote here. Match your best Judge.me reviews for consistency across PDP and homepage.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Happy customer"
+        },
+        {
+          "type": "url",
+          "id": "author_url",
+          "label": "Author URL"
+        },
+        {
+          "type": "header",
+          "content": "Highlighted text",
+          "info": "To add an animated highlight to text, simply wrap it in italics. Click the \"I\" button in the editor to toggle italics when highlighting text."
+        },
+        {
+          "type": "select",
+          "id": "highlighted_text",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "text",
+              "label": "Text color"
+            },
+            {
+              "value": "full_text",
+              "label": "Text background cover"
+            },
+            {
+              "value": "half_text",
+              "label": "Fancy underline"
+            },
+            {
+              "value": "underline",
+              "label": "Regular underline"
+            },
+            {
+              "value": "stencil",
+              "label": "Stencil text"
+            },
+            {
+              "value": "scribble",
+              "label": "Hand-drawn scribble"
+            }
+          ],
+          "default": "none",
+          "label": "Highlighted text"
+        },
+        {
+          "visible_if": "{{ block.settings.highlighted_text == 'scribble' }}",
+          "type": "select",
+          "id": "highlighted_scribble",
+          "options": [
+            {
+              "value": "circle",
+              "label": "Circle"
+            },
+            {
+              "value": "basic-underline",
+              "label": "Basic underline"
+            },
+            {
+              "value": "sketch-underline",
+              "label": "Sketch underline"
+            },
+            {
+              "value": "squiggle-underline",
+              "label": "Squiggle underline"
+            },
+            {
+              "value": "squiggle-underline-2",
+              "label": "Squiggle underline 2"
+            }
+          ],
+          "default": "circle",
+          "label": "Highlighted scribble",
+          "info": "Requires highlighted text style to be set to \"Hand-drawn scribble\"."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top testimonials",
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer", "header", "custom.overlay"]
+  }
+}
+{% endschema %}
+

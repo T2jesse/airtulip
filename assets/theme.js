@@ -1358,103 +1358,6 @@ class AnimatePicture extends HTMLPictureElement {
 }
 customElements.define('animate-picture', AnimatePicture, { extends: 'picture' });
 
-class AnnouncementBar extends HTMLElement {
-  constructor() {
-    super();
-    
-    this.selectedIndex = this.selectedIndex;
-
-    if (!theme.config.isTouch || Shopify.designMode) {
-      Motion.inView(this, this.init.bind(this), { margin: '200px 0px 200px 0px' });
-    }
-    else {
-      new theme.initWhenVisible(this.init.bind(this));
-    }
-  }
-
-  static get observedAttributes() {
-    return ['selected-index'];
-  }
-
-  get selectedIndex() {
-    return parseInt(this.getAttribute('selected-index')) || 0;
-  }
-
-  set selectedIndex(index) {
-    this.setAttribute('selected-index', Math.min(Math.max(index, 0), this.items.length - 1).toString());
-  }
-
-  get items() {
-    return this._items = this._items || Array.from(this.children);
-  }
-
-  get autoplay() {
-    return this.hasAttribute('autoplay');
-  }
-
-  get speed() {
-    return this.hasAttribute('autoplay') ? parseInt(this.getAttribute('autoplay-speed')) * 1000 : 5000;
-  }
-
-  init() {
-    if (this.initialized) return;
-    this.initialized = true;
-
-    if (this.items.length > 1) {
-      this.slider = new Flickity(this, {
-        accessibility: false,
-        fade: true,
-        pageDots: false,
-        prevNextButtons: false,
-        wrapAround: true,
-        rightToLeft: theme.config.rtl,
-        autoPlay: this.autoplay ? this.speed : false,
-        on: {
-          ready: function() {
-            setTimeout(() => this.element.setAttribute('loaded', ''));
-          }
-        }
-      });
-  
-      this.slider.on('change', this.onChange.bind(this));
-      this.addEventListener('slider:previous', () => this.slider.previous());
-      this.addEventListener('slider:next', () => this.slider.next());
-      this.addEventListener('slider:play', () => this.slider.playPlayer());
-      this.addEventListener('slider:pause', () => this.slider.pausePlayer());
-      
-      if (Shopify.designMode) {
-        this.addEventListener('shopify:block:select', (event) => this.slider.select(this.items.indexOf(event.target)));
-      }
-    }
-  }
-
-  disconnectedCallback() {
-    if (this.slider) this.slider.destroy();
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'selected-index' && oldValue !== null && oldValue !== newValue) {
-      const focusableEvents = 'button, [href]';
-      
-      const fromElement = this.items[parseInt(oldValue)];
-      const toElement = this.items[parseInt(newValue)];
-      
-      fromElement.querySelectorAll(focusableEvents).forEach((el) => {
-        el.setAttribute('tabindex', '-1');
-      });
-      toElement.querySelectorAll(focusableEvents).forEach((el) => {
-        el.removeAttribute('tabindex');
-      });
-    }
-  }
-
-  onChange() {
-    this.selectedIndex = this.slider.selectedIndex;
-    this.dispatchEvent(new CustomEvent('slider:change', { bubbles: true, detail: { currentPage: this.slider.selectedIndex } }));
-  }
-}
-customElements.define('announcement-bar', AnnouncementBar);
-
 class AccordionsDetails extends HTMLElement {
   constructor() {
     super();
@@ -2763,24 +2666,35 @@ class SplitWords extends HTMLElement {
   }
 
   connectedCallback() {
-    if (theme.config.motionReduced) return;
-    if (!document.body.hasAttribute('data-title-animation')) return;
-    
-    const splitting = Splitting({ target: this, by: 'words' });
+    // Keep headings visible when title animation is off or reduced motion is preferred.
+    // `.js .js-invisible` in theme.css hides these until `js-invisible` is removed.
+    if (theme.config.motionReduced || !document.body.hasAttribute('data-title-animation')) {
+      this.classList.remove('js-invisible');
+      return;
+    }
 
-    splitting[0].words.forEach((item, index) => {
-      const wrapper = document.createElement('animate-element');
-      wrapper.className = 'block';
-      wrapper.setAttribute('data-animate', this.getAttribute('data-animate'));
-      wrapper.setAttribute('data-animate-delay', (this.hasAttribute('data-animate-delay') ? parseInt(this.getAttribute('data-animate-delay')) : 0) + (index * 30));
+    try {
+      const splitting = Splitting({ target: this, by: 'words' });
+      const first = splitting[0];
+      if (!first?.words?.length) return;
 
-      for (const itemContent of item.childNodes) {
-        wrapper.appendChild(itemContent);
-      }
+      first.words.forEach((item, index) => {
+        const wrapper = document.createElement('animate-element');
+        wrapper.className = 'block';
+        wrapper.setAttribute('data-animate', this.getAttribute('data-animate'));
+        wrapper.setAttribute('data-animate-delay', (this.hasAttribute('data-animate-delay') ? parseInt(this.getAttribute('data-animate-delay')) : 0) + (index * 30));
 
-      item.appendChild(wrapper);
-    });
-    this.classList.remove('js-invisible');
+        for (const itemContent of item.childNodes) {
+          wrapper.appendChild(itemContent);
+        }
+
+        item.appendChild(wrapper);
+      });
+    } catch (_) {
+      /* Splitting failed; reveal plain text */
+    } finally {
+      this.classList.remove('js-invisible');
+    }
   }
 }
 customElements.define('split-words', SplitWords);

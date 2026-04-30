@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "categories": {
     "banners": "Bannières",
@@ -2376,7 +2385,30 @@
       }
     },
     "image-with-text-overlay": {
-      "name": "Image avec superposition de texte"
+      "name": "Image avec superposition de texte",
+      "blocks": {
+        "heading": {
+          "settings": {
+            "header__glow": {
+              "content": "Lueur du titre"
+            },
+            "heading_glow_enable": {
+              "label": "Activer la lueur"
+            },
+            "heading_glow_color": {
+              "label": "Couleur de la lueur"
+            },
+            "heading_glow_opacity": {
+              "label": "Opacité de la lueur",
+              "info": "Des valeurs plus basses adoucissent l’effet. À 0 %, la lueur est désactivée."
+            },
+            "heading_glow_width": {
+              "label": "Largeur de la lueur",
+              "info": "Rayon de flou (plus grand = halo plus doux et plus large)."
+            }
+          }
+        }
+      }
     },
     "images-with-text-overlay": {
       "name": "Images avec superposition de texte",

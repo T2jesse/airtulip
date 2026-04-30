@@ -1,1 +1,90 @@
-{"type":"header","name":"t:sections.header-group.name","sections":{"announcement-bar":{"type":"announcement-bar","blocks":{"announcement-2":{"type":"announcement","settings":{"icon":"none","text":"AirTulip is featured on <a href=\"https:\/\/abc.com\/episode\/0c007adc-1d90-4582-b5ab-a6064c91e1af\/playlist\/PL553044961\" target=\"_blank\" title=\"https:\/\/abc.com\/episode\/0c007adc-1d90-4582-b5ab-a6064c91e1af\/playlist\/PL553044961\"><strong>SHARK TANK<\/strong><\/a><strong> 🌟<\/strong>","link":"https:\/\/abc.com\/show\/535e2b07-18a9-4d94-9803-9ed8257b9d23","hide_icon_mobile":true,"text_mobile":"","highlighted_text":"none","highlighted_scribble":"circle"}}},"block_order":["announcement-2"],"disabled":true,"settings":{"show_social":false,"enable_language_selector":true,"enable_country_selector":true,"invert_icons_selectors":false,"announcement_position":"center","autoplay":true,"autoplay_speed":5,"show_navigation":true,"color_text":"#fafafa","color_background":"#1f1f1f","gradient_background":"","color_highlight":"#ffddbf","gradient_highlight":"","hide_homepage":false,"full_width":true,"rounded":true}},"header":{"type":"header","settings":{"logo_h1":true,"menu":"main-menu","menu_mobile":"","menu_active":"block","hover_menu":true,"header_layout":"left-center","sticky_header_type":"always","enable_language_selector_desktop":false,"enable_country_selector_desktop":false,"show_country_name_dekstop":false,"show_country_flag_desktop":false,"logo_position_mobile":"center","accordion_menu_mobile":false,"show_social":true,"enable_language_selector":true,"enable_country_selector":true,"transparent_color_text":"#171717","color_text":"#171717","color_background":"#ffffff","padding_top":32,"padding_bottom":32,"full_width":true,"rounded":true}}},"order":["announcement-bar","header"]}
+{
+  "type": "header",
+  "name": "t:sections.header-group.name",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-2": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "text": "AirTulip is featured on SHARK TANK<strong>🌟</strong>",
+            "link": "https://abc.com/show/535e2b07-18a9-4d94-9803-9ed8257b9d23",
+            "hide_icon_mobile": true,
+            "text_mobile": "",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "announcement_dQtrRm": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "text": "Pay over time with 0% interest, starting at $103/Mo",
+            "link": "",
+            "hide_icon_mobile": true,
+            "text_mobile": "",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "announcement-2",
+        "announcement_dQtrRm"
+      ],
+      "settings": {
+        "show_social": false,
+        "enable_language_selector": true,
+        "enable_country_selector": true,
+        "invert_icons_selectors": false,
+        "announcement_position": "center",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_navigation": true,
+        "nav_arrow_opacity": 50,
+        "color_text": "#fafafa",
+        "color_background": "#1f1f1f",
+        "gradient_background": "",
+        "color_highlight": "#ffddbf",
+        "gradient_highlight": "",
+        "hide_homepage": false,
+        "full_width": true,
+        "rounded": true
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_h1": true,
+        "menu": "main-menu",
+        "menu_mobile": "",
+        "menu_active": "block",
+        "hover_menu": true,
+        "header_layout": "left-center",
+        "sticky_header_type": "always",
+        "enable_language_selector_desktop": false,
+        "enable_country_selector_desktop": false,
+        "show_country_name_dekstop": false,
+        "show_country_flag_desktop": false,
+        "logo_position_mobile": "center",
+        "accordion_menu_mobile": false,
+        "show_social": true,
+        "enable_language_selector": true,
+        "enable_country_selector": true,
+        "transparent_color_text": "#171717",
+        "color_text": "#171717",
+        "color_background": "#ffffff",
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "full_width": true,
+        "rounded": true
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

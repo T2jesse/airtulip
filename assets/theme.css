@@ -5763,19 +5763,19 @@ ol {
     max-width: unset;
   }
 
-  .announcement-bar.without-nav :is(.flickity-slider, .announcement__slide) {
+  .announcement-bar.without-nav announcement-bar:not(.flickity-enabled) :is(.flickity-slider, .announcement__slide) {
     transform: none !important;
   }
 
-  .announcement-bar.without-nav .announcement__slide {
+  .announcement-bar.without-nav announcement-bar:not(.flickity-enabled) .announcement__slide {
     width: 100%;
   }
 
-  .announcement-bar.without-nav.lg\:justify-center .announcement__slide {
+  .announcement-bar.without-nav.lg\:justify-center announcement-bar:not(.flickity-enabled) .announcement__slide {
     justify-content: center;
   }
 
-  .announcement-bar.without-nav.lg\:justify-end .announcement__slide {
+  .announcement-bar.without-nav.lg\:justify-end announcement-bar:not(.flickity-enabled) .announcement__slide {
     justify-content: flex-end;
   }
 }
@@ -5833,6 +5833,16 @@ ol {
 
 .announcement__slides>.announcement__slide~.announcement__slide {
   display: none;
+}
+
+announcement-bar.flickity-enabled .flickity-slider > .announcement__slide:not(.is-selected) .announcement__content {
+  opacity: 0 !important;
+  transform: translateY(0);
+}
+
+announcement-bar.flickity-enabled .flickity-slider > .is-selected .announcement__content {
+  opacity: 1 !important;
+  transform: translateY(0);
 }
 
 [loaded] .announcement__content {

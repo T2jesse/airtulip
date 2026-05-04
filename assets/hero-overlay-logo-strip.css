@@ -1,0 +1,181 @@
+/*!
+ * Bottom logo marquee for Image with text overlay (AirTulip).
+ * Relies on CSS variables set on #shopify-section-* in the section Liquid.
+ */
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip {
+  padding-inline: var(--page-padding, var(--sp-5));
+  padding-block: var(--iwto-strip-pad-y, 16px);
+  background: none;
+  pointer-events: none;
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip__inner {
+  pointer-events: auto;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+}
+
+@media screen and (min-width: 768px) {
+  .shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip__inner {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip logo-list {
+  display: flex;
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo-bar {
+  align-items: center;
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  /* Let wide logos extend naturally at the target height (do not shrink or clip). */
+  min-width: min-content;
+  overflow: visible;
+  transition: transform var(--animation-nav);
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo__media:is(:hover, :focus-within) {
+  transform: translateY(-1px);
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip[data-shadow='true'] .logo__media {
+  border-radius: calc(var(--rounded-card) * 0.85);
+  background-color: rgb(255 255 255 / 0.04);
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .hero-overlay-logo-strip__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 2.75rem;
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: calc(var(--rounded-card) * 0.65);
+}
+
+/* Uniform-height colored plate behind linked and non-linked logos */
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip[data-plate-bg='true'] .hero-overlay-logo-strip__link,
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip[data-plate-bg='true'] .hero-overlay-logo-strip__plate {
+  box-sizing: border-box;
+  min-height: var(--iwto-logo-plate-h, 68px);
+  height: var(--iwto-logo-plate-h, 68px);
+  padding-inline: 8px;
+  padding-block: var(--sp-3);
+  background-color: var(--iwto-logo-plate-bg, #ffffff);
+  border-radius: calc(var(--rounded-card) * 0.65);
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip[data-plate-bg='true'][data-shadow='true'] .logo__media {
+  background-color: transparent;
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .hero-overlay-logo-strip__link:focus-visible {
+  outline: 2px solid rgb(var(--color-keyboard-focus));
+  outline-offset: 2px;
+}
+
+/* Fixed visual height per logo height setting; width is intrinsic (horizontal marks grow wider). */
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo__media > .hero-overlay-logo-strip__link > :is(img, svg),
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo__media > .hero-overlay-logo-strip__plate > :is(img, svg) {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: calc(var(--iwto-logo-h, 44px) * 0.78);
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media screen and (min-width: 1024px) {
+  .shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo__media > .hero-overlay-logo-strip__link > :is(img, svg),
+  .shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo__media > .hero-overlay-logo-strip__plate > :is(img, svg) {
+    height: var(--iwto-logo-h, 44px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo__media {
+    transition: none;
+  }
+
+  .shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .logo__media:is(:hover, :focus-within) {
+    transform: none;
+  }
+}
+
+/* Custom min-width + plate: avoid items-center on the pill (see Liquid); absolute mat fills fixed-height pill. */
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip[data-plate-bg='true'] .hero-overlay-logo-strip__link.hero-overlay-logo-strip__link--plate-custom,
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip[data-plate-bg='true'] .hero-overlay-logo-strip__plate.hero-overlay-logo-strip__plate--plate-custom {
+  position: relative;
+  align-items: stretch;
+  justify-content: center;
+  min-width: var(--iwto-custom-logo-w);
+  overflow: hidden;
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip[data-plate-bg='true'] .hero-overlay-logo__fit.hero-overlay-logo__fit--plate-custom {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip[data-plate-bg='true'] .hero-overlay-logo__fit--plate-custom img.hero-overlay-logo__img--plate-custom {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Custom-width strip only (no plate): min width from --iwto-custom-logo-w */
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip:not([data-plate-bg='true']) .logo__media.hero-overlay-logo--custom-w > .hero-overlay-logo-strip__link,
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip:not([data-plate-bg='true']) .logo__media.hero-overlay-logo--custom-w > .hero-overlay-logo-strip__plate {
+  min-width: var(--iwto-custom-logo-w);
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip:not([data-plate-bg='true']) .logo__media.hero-overlay-logo--custom-w .hero-overlay-logo__fit {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--iwto-custom-logo-w);
+  width: 100%;
+}
+
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip .hero-overlay-logo__img--sized:not(.hero-overlay-logo__img--plate-custom) {
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* Marquee without plate */
+.shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip:not([data-plate-bg='true']) img.hero-overlay-logo__img--strip-h {
+  height: calc(var(--iwto-logo-h, 44px) * 0.78);
+}
+
+@media screen and (min-width: 1024px) {
+  .shopify-section.section-image-with-text-overlay .hero-overlay-logo-strip:not([data-plate-bg='true']) img.hero-overlay-logo__img--strip-h {
+    height: var(--iwto-logo-h, 44px);
+  }
+}

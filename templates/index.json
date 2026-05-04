@@ -12,6 +12,54 @@
     "image_with_text_overlay_xAGVpd": {
       "type": "image-with-text-overlay",
       "blocks": {
+        "overlay_logo_UFeMQ8": {
+          "type": "overlay_logo",
+          "settings": {
+            "image": "shopify://shop_images/fast-company-logo-png-transparent.jpg",
+            "link": "",
+            "logo_custom_width": 192
+          }
+        },
+        "overlay_logo_ngdRPb": {
+          "type": "overlay_logo",
+          "settings": {
+            "image": "shopify://shop_images/shark-tank-logo-png_seeklogo-447416_1.png",
+            "link": "",
+            "logo_custom_width": 0
+          }
+        },
+        "overlay_logo_K6Dicg": {
+          "type": "overlay_logo",
+          "settings": {
+            "image": "shopify://shop_images/Haute_Living_Logo.png",
+            "link": "",
+            "logo_custom_width": 0
+          }
+        },
+        "overlay_logo_CGqrfw": {
+          "type": "overlay_logo",
+          "settings": {
+            "image": "shopify://shop_images/images_1.png",
+            "link": "",
+            "logo_custom_width": 0
+          }
+        },
+        "overlay_logo_3rrrDP": {
+          "type": "overlay_logo",
+          "settings": {
+            "image": "shopify://shop_images/apartment-therapy-logo-vector_1.png",
+            "link": "",
+            "logo_custom_width": 0
+          }
+        },
+        "overlay_logo_zHyk9c": {
+          "type": "overlay_logo",
+          "settings": {
+            "image": "shopify://shop_images/design-milk-logo-vector.png",
+            "link": "",
+            "logo_custom_width": 0
+          }
+        },
         "heading_q7Q3W7": {
           "type": "heading",
           "settings": {
@@ -54,6 +102,12 @@
         }
       },
       "block_order": [
+        "overlay_logo_UFeMQ8",
+        "overlay_logo_ngdRPb",
+        "overlay_logo_K6Dicg",
+        "overlay_logo_CGqrfw",
+        "overlay_logo_3rrrDP",
+        "overlay_logo_zHyk9c",
         "heading_q7Q3W7",
         "text_Dk8PTE",
         "button_ixYipm"
@@ -76,6 +130,21 @@
         "color_button_gradient": "",
         "color_overlay": "#171717",
         "overlay_opacity": 15,
+        "show_bottom_logo_marquee": true,
+        "logo_marquee_section_padding_bottom": 0,
+        "logo_strip_padding_y": 4,
+        "logo_strip_height": 40,
+        "logo_strip_gap": 32,
+        "logo_strip_speed": 4,
+        "logo_strip_shadow_enable": false,
+        "logo_strip_shadow_color": "#121212",
+        "logo_strip_shadow_opacity": 90,
+        "logo_strip_shadow_blur": 22,
+        "logo_strip_shadow_spread": 8,
+        "logo_strip_shadow_offset_y": 18,
+        "logo_strip_plate_background_enable": true,
+        "logo_strip_plate_background": "#ffffff",
+        "logo_strip_plate_height": 40,
         "padding_top": 0,
         "padding_bottom": 0,
         "divider": false,
@@ -88,13 +157,40 @@
     "top_testimonials_DeNDcE": {
       "type": "top-testimonials",
       "blocks": {
+        "review_TinqWM": {
+          "type": "review",
+          "settings": {
+            "star_rating": "5-stars",
+            "heading": "Sinus headaches from pollen allergies disappeared with AirTulip",
+            "text": "<p>I get sinus headaches triggered by pollen allergies that can last for days. With the AirTulip, my headaches have been much more likely to clear up overnight. I don't use a sleep tracker, but I think it does also help with my sleep quality. </p>",
+            "quote_text_color": "",
+            "author": "Nathan R.",
+            "author_url": "",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "review_g7KbFN": {
+          "type": "review",
+          "settings": {
+            "star_rating": "5-stars",
+            "heading": "Finally, a Night of Restful Sleep",
+            "text": "<p>I love the AirTulip! I am allergic to everything outside and dog/cat. I have cats and a dog so I create my own misery, I know. I also live in an old house were dust is never ending. I feel with the AirTulip my sleep is deeper and more restful. I feel refreshed when I get up and I am not having allergen issues while sleeping - eye irritation, sneezing, congestion. I am thankful to have found this product! </p>",
+            "quote_text_color": "",
+            "author": "S.K.",
+            "author_url": "",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
         "review_pbRaDB": {
           "type": "review",
           "settings": {
             "star_rating": "5-stars",
-            "heading": "A customer favorite",
-            "text": "<p>Add the review quote here. Match your best Judge.me reviews for consistency across PDP and homepage.</p>",
-            "author": "Happy customer",
+            "heading": "Deeper sleep!",
+            "text": "<p>We both like the headboard. We both have much deeper sleep! </p>",
+            "quote_text_color": "",
+            "author": "J.K.",
             "author_url": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -104,9 +200,10 @@
           "type": "review",
           "settings": {
             "star_rating": "5-stars",
-            "heading": "Favorite",
-            "text": "<p>amazing product!</p>",
-            "author": "Happy customer",
+            "heading": "Wonderfully quiet!",
+            "text": "<p>We’re really happy with it. The fan works great and is wonderfully quiet on the low setting, which makes it a pleasure to sleep with. And the headboard itself looks great! </p>",
+            "quote_text_color": "",
+            "author": "K.P.",
             "author_url": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -116,9 +213,10 @@
           "type": "review",
           "settings": {
             "star_rating": "5-stars",
-            "heading": "A customer favorite",
-            "text": "<p>Amazing!</p>",
-            "author": "Happy customer",
+            "heading": "Noticeable difference after just one night",
+            "text": "<p>Before using AirTulip Sleep, I had wheezing in my lungs due to asthmatic bronchitis. After just one night of sleep, I noticed a difference, I woke up without lung issues. Very happy with it!  </p>",
+            "quote_text_color": "",
+            "author": "G.A.",
             "author_url": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -128,9 +226,10 @@
           "type": "review",
           "settings": {
             "star_rating": "5-stars",
-            "heading": "Too good",
-            "text": "<p>Pricey but so worth it, I can't even explain.</p>",
-            "author": "Happy customer",
+            "heading": "Senstional",
+            "text": "<p>The AirTulip Headboard is sensational. The setup was a breeze.</p>",
+            "quote_text_color": "",
+            "author": "N.F.",
             "author_url": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -138,6 +237,8 @@
         }
       },
       "block_order": [
+        "review_TinqWM",
+        "review_g7KbFN",
         "review_pbRaDB",
         "review_tzebWE",
         "review_DyP8Cd",
@@ -162,11 +263,12 @@
         "show_arrows": true,
         "show_arrows_mobile": false,
         "wrap_around": true,
-        "autoplay_desktop": true,
+        "autoplay_desktop": false,
         "autoplay_delay": 8,
         "star_color": "#0b61cd",
+        "testimonial_text_color": "#5d5d5d",
         "star_size": "text-lg",
-        "quote_heading_size": "title-lg tracking-heading",
+        "quote_heading_size": "title-md",
         "quote_text_size": "text-base",
         "quote_author_size": "text-sm",
         "card_shadow_enable": true,
@@ -186,12 +288,162 @@
         "color_button_background": "",
         "color_button_gradient": "",
         "full_width": false,
-        "narrow": true,
+        "section_width": "narrow",
         "padding_top": 72,
         "padding_bottom": 72,
         "divider": false,
         "rounded": true,
         "overlap_above": 14
+      }
+    },
+    "highlight_text_4N3FJy": {
+      "type": "highlight-text",
+      "blocks": {
+        "heading_QzqV6K": {
+          "type": "heading",
+          "settings": {
+            "heading": "Experience Clean Air in 4 Seconds",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_QzqV6K"
+      ],
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-sm",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": false,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 20,
+        "padding_bottom": 8,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "video_wkwnCX": {
+      "type": "video",
+      "settings": {
+        "transparent_header": false,
+        "video": "shopify://files/videos/AirTulip Sleep Laser Footage (Cropped).mp4",
+        "video_url": "",
+        "description": "",
+        "enable_video_autoplay": true,
+        "enable_video_looping": true,
+        "image_height": "600px",
+        "video_mobile": "shopify://files/videos/AirTulip Sleep Laser Footage Optimized.mp4",
+        "video_url_mobile": "",
+        "image_height_mobile": "300px",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "divider": false,
+        "full_width": false,
+        "rounded": true
+      }
+    },
+    "logo_list_PN4b9x": {
+      "type": "logo-list",
+      "blocks": {
+        "logo_WJMVWA": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/shark-tank-logo-png_seeklogo-447416_1.png",
+            "height": 60,
+            "link": "https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961"
+          }
+        },
+        "logo_YEkT47": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/images_1.png",
+            "height": 80,
+            "link": "https://www.forbes.com/sites/forbes-personal-shopper/article/air-quality-and-sleep/"
+          }
+        },
+        "logo_UV8VAR": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/apartment-therapy-logo-vector_1.png",
+            "height": 80,
+            "link": "https://www.apartmenttherapy.com/air-tulip-air-purifying-headboard-review-37481462"
+          }
+        },
+        "logo_apRwTV": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/design-milk-logo-vector.png",
+            "height": 80,
+            "link": "https://design-milk.com/this-headboard-cleans-the-air-near-you-as-you-sleep/"
+          }
+        },
+        "logo_nEJwaH": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Fast_Company_logo_high_res.png",
+            "height": 60,
+            "link": "https://www.fastcompany.com/90781651/this-clever-headboard-is-an-air-filter-in-disguise"
+          }
+        }
+      },
+      "block_order": [
+        "logo_WJMVWA",
+        "logo_YEkT47",
+        "logo_UV8VAR",
+        "logo_apRwTV",
+        "logo_nEJwaH"
+      ],
+      "settings": {
+        "layout": "marquee",
+        "grid_horizontal": 70,
+        "direction": "left",
+        "speed": 5,
+        "heading": "As Seen On",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": true,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
       }
     },
     "rich_text_qpRKkp": {
@@ -396,156 +648,6 @@
         "divider": false,
         "narrow": false,
         "rounded": false
-      }
-    },
-    "logo_list_PN4b9x": {
-      "type": "logo-list",
-      "blocks": {
-        "logo_WJMVWA": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/shark-tank-logo-png_seeklogo-447416_1.png",
-            "height": 60,
-            "link": "https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961"
-          }
-        },
-        "logo_YEkT47": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/images_1.png",
-            "height": 80,
-            "link": "https://www.forbes.com/sites/forbes-personal-shopper/article/air-quality-and-sleep/"
-          }
-        },
-        "logo_UV8VAR": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/apartment-therapy-logo-vector_1.png",
-            "height": 80,
-            "link": "https://www.apartmenttherapy.com/air-tulip-air-purifying-headboard-review-37481462"
-          }
-        },
-        "logo_apRwTV": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/design-milk-logo-vector.png",
-            "height": 80,
-            "link": "https://design-milk.com/this-headboard-cleans-the-air-near-you-as-you-sleep/"
-          }
-        },
-        "logo_nEJwaH": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Fast_Company_logo_high_res.png",
-            "height": 60,
-            "link": "https://www.fastcompany.com/90781651/this-clever-headboard-is-an-air-filter-in-disguise"
-          }
-        }
-      },
-      "block_order": [
-        "logo_WJMVWA",
-        "logo_YEkT47",
-        "logo_UV8VAR",
-        "logo_apRwTV",
-        "logo_nEJwaH"
-      ],
-      "settings": {
-        "layout": "default",
-        "grid_horizontal": 70,
-        "direction": "left",
-        "speed": 5,
-        "heading": "As seen on",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": true,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "highlight_text_4N3FJy": {
-      "type": "highlight-text",
-      "blocks": {
-        "heading_QzqV6K": {
-          "type": "heading",
-          "settings": {
-            "heading": "Experience clean air in only 4 seconds",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "heading_QzqV6K"
-      ],
-      "settings": {
-        "text_alignment": "center",
-        "text_alignment_mobile": "center",
-        "heading": "",
-        "heading_size": "title-sm",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": false,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 20,
-        "padding_bottom": 8,
-        "divider": false,
-        "narrow": true,
-        "rounded": false
-      }
-    },
-    "video_wkwnCX": {
-      "type": "video",
-      "settings": {
-        "transparent_header": false,
-        "video": "shopify://files/videos/AirTulip Sleep Laser Footage (Cropped).mp4",
-        "video_url": "",
-        "description": "",
-        "enable_video_autoplay": true,
-        "enable_video_looping": true,
-        "image_height": "adapt",
-        "video_mobile": "shopify://files/videos/AirTulip Sleep Laser Footage (Cropped).mp4",
-        "video_url_mobile": "",
-        "image_height_mobile": "auto",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "divider": false,
-        "full_width": false,
-        "rounded": true
       }
     },
     "multicolumn_with_icons_Di4fLz": {
@@ -755,131 +857,24 @@
         "text_PgV3Ak",
         "form_ekPfrG"
       ],
+      "disabled": true,
       "settings": {
         "content_width": "large",
         "text_alignment": "center",
         "text_alignment_mobile": "center",
-        "color_text": "",
-        "color_background": "",
+        "color_text": "#ffffff",
+        "color_background": "#171717",
         "gradient_background": "",
         "color_highlight": "",
         "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
+        "color_button_text": "#ffffff",
+        "color_button_background": "#ffffff",
         "color_button_gradient": "",
         "padding_top": 72,
         "padding_bottom": 72,
         "divider": false,
         "narrow": true,
         "rounded": false
-      }
-    },
-    "top_testimonials_aXzJtj": {
-      "type": "top-testimonials",
-      "blocks": {
-        "review_KjtNbm": {
-          "type": "review",
-          "settings": {
-            "star_rating": "5-stars",
-            "heading": "Years of allergies, finally under control",
-            "text": "<p>I've had allergy symptoms for 25 years. With AirTulip, my symptoms have reduced enormously. I've even reduced  the medication I take daily.</p>",
-            "author": "Maartje Mentzel",
-            "author_url": "",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "review_tiFM8Q": {
-          "type": "review",
-          "settings": {
-            "star_rating": "5-stars",
-            "heading": "Beautiful in the bedroom, better sleep at night",
-            "text": "<p>The AirTulip headboard looks very nice. We are super pleased with the color and finish materials. We had a great night sleep!</p>",
-            "author": "Elliot",
-            "author_url": "",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "review_na3aD8": {
-          "type": "review",
-          "settings": {
-            "star_rating": "5-stars",
-            "heading": "Wake up clearer, sleep deeper",
-            "text": "<p>I experience more restful sleep, with less congestion when I wake up.</p>",
-            "author": "Paul",
-            "author_url": "",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "review_gFrehw": {
-          "type": "review",
-          "settings": {
-            "star_rating": "5-stars",
-            "heading": "Fewer asthma nights for our family",
-            "text": "<p>My pre-school son now has no wheeze, no coughing fits and is sleeping significantly better since using AirTulip. This is a huge improvement to our lives given we used to have at least monthly hospital trips caused by his asthma.</p>",
-            "author": "Andy",
-            "author_url": "",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "review_KjtNbm",
-        "review_tiFM8Q",
-        "review_na3aD8",
-        "review_gFrehw"
-      ],
-      "settings": {
-        "heading": "Testimonials",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "slides_mobile": 1,
-        "slides_tablet": 2,
-        "slides_desktop": 3,
-        "show_dots": true,
-        "show_arrows": true,
-        "show_arrows_mobile": false,
-        "wrap_around": false,
-        "autoplay_desktop": true,
-        "autoplay_delay": 8,
-        "star_color": "#121212",
-        "star_size": "text-xs",
-        "quote_heading_size": "title-sm",
-        "quote_text_size": "text-base",
-        "quote_author_size": "text-sm",
-        "card_shadow_enable": true,
-        "card_shadow_angle": 135,
-        "card_shadow_distance": 10,
-        "card_shadow_blur": 28,
-        "card_shadow_spread": 0,
-        "card_shadow_opacity": 14,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "full_width": false,
-        "narrow": true,
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "rounded": true,
-        "overlap_above": 0
       }
     },
     "images_with_text_T9rEXy": {
@@ -1351,17 +1346,16 @@
   "order": [
     "image_with_text_overlay_xAGVpd",
     "top_testimonials_DeNDcE",
+    "highlight_text_4N3FJy",
+    "video_wkwnCX",
+    "logo_list_PN4b9x",
     "rich_text_qpRKkp",
     "countdown_timer_KVHK76",
     "rich-text",
-    "logo_list_PN4b9x",
-    "highlight_text_4N3FJy",
-    "video_wkwnCX",
     "multicolumn_with_icons_Di4fLz",
     "video_3MUXjz",
     "rich_text_JNxpha",
     "newsletter_9QCrN3",
-    "top_testimonials_aXzJtj",
     "images_with_text_T9rEXy",
     "images_with_text_X6nrYD",
     "images_with_text_WGTQpi",

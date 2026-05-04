@@ -4108,6 +4108,10 @@
             },
             "author_url": {
               "label": "URL de l'auteur"
+            },
+            "quote_text_color": {
+              "label": "Couleur du texte du témoignage",
+              "info": "S’applique uniquement au texte de la citation de ce témoignage. Laissez vide pour utiliser la couleur de texte de la section."
             }
           }
         }

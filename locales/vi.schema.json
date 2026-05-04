@@ -4108,6 +4108,10 @@
             },
             "author_url": {
               "label": "URL tác giả"
+            },
+            "quote_text_color": {
+              "label": "Màu chữ trích dẫn",
+              "info": "Chỉ áp dụng cho nội dung trích dẫn của lời chứng thực này. Để trống để dùng màu chữ của section."
             }
           }
         }

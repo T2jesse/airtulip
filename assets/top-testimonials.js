@@ -182,6 +182,8 @@
       this.stopDriftLoop();
       this._driftPaused = false;
       this._driftTs = 0;
+      this._slideHoverPaused = false;
+      this._focusPaused = false;
 
       const onVis = () => {
         this._driftPaused = document.hidden;
@@ -190,17 +192,45 @@
       document.addEventListener('visibilitychange', onVis);
       this._vis = onVis;
 
-      const onEnter = () => {
-        this._driftPaused = true;
+      const onSlideEnter = () => {
+        this._slideHoverPaused = true;
       };
-      const onLeave = () => {
-        this._driftPaused = false;
+      const onSlideLeave = (e) => {
+        const rel = e.relatedTarget;
+        if (
+          rel &&
+          typeof rel.closest === 'function' &&
+          this.contains(rel) &&
+          rel.closest('.top-testimonials__slide')
+        ) {
+          return;
+        }
+        this._slideHoverPaused = false;
         this._driftTs = 0;
       };
-      this.addEventListener('mouseenter', onEnter);
-      this.addEventListener('mouseleave', onLeave);
-      this._me = onEnter;
-      this._ml = onLeave;
+      this._slidePauseHandlers = [];
+      this.slides.forEach((slide) => {
+        slide.addEventListener('mouseenter', onSlideEnter);
+        slide.addEventListener('mouseleave', onSlideLeave);
+        this._slidePauseHandlers.push([slide, onSlideEnter, onSlideLeave]);
+      });
+
+      const onFocusIn = () => {
+        this._focusPaused = true;
+      };
+      const onFocusOut = () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (!this.matches(':focus-within')) {
+              this._focusPaused = false;
+              this._driftTs = 0;
+            }
+          });
+        });
+      };
+      this.addEventListener('focusin', onFocusIn, true);
+      this.addEventListener('focusout', onFocusOut, true);
+      this._focusPauseHandlers = [onFocusIn, onFocusOut];
 
       const onDragEnd = () => {
         clearTimeout(this._driftResumeTimer);
@@ -217,7 +247,7 @@
         this._raf = null;
         if (!this.carousel || !this.autoplayOn()) return;
 
-        if (this._driftPaused) {
+        if (this._driftPaused || this._slideHoverPaused || this._focusPaused) {
           this._raf = requestAnimationFrame(tick);
           return;
         }
@@ -258,11 +288,21 @@
         document.removeEventListener('visibilitychange', this._vis);
         this._vis = null;
       }
-      if (this._me) {
-        this.removeEventListener('mouseenter', this._me);
-        this.removeEventListener('mouseleave', this._ml);
-        this._me = this._ml = null;
+      if (this._slidePauseHandlers && this._slidePauseHandlers.length) {
+        this._slidePauseHandlers.forEach(([slide, en, le]) => {
+          slide.removeEventListener('mouseenter', en);
+          slide.removeEventListener('mouseleave', le);
+        });
+        this._slidePauseHandlers = null;
       }
+      if (this._focusPauseHandlers) {
+        const [fi, fo] = this._focusPauseHandlers;
+        this.removeEventListener('focusin', fi, true);
+        this.removeEventListener('focusout', fo, true);
+        this._focusPauseHandlers = null;
+      }
+      this._slideHoverPaused = false;
+      this._focusPaused = false;
       if (this.carousel && this._dragEnd) {
         this.carousel.off('dragEnd', this._dragEnd);
         this._dragEnd = null;

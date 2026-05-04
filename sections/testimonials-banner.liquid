@@ -16,6 +16,22 @@
       }
     }
   {% endif -%}
+
+  #shopify-section-{{ section.id }} .testimonial-quote {
+    font-weight: 300;
+  }
+
+  {%- for block in section.blocks -%}
+    {%- if block.settings.quote_text_color != blank -%}
+  #shopify-section-{{ section.id }} #shopify-block-{{ block.id }} .testimonial-quote,
+  #shopify-section-{{ section.id }} #shopify-block-{{ block.id }} .testimonial-quote :is(p, li, ul, ol) {
+    color: rgb({{ block.settings.quote_text_color.rgb }});
+  }
+  #shopify-section-{{ section.id }} #shopify-block-{{ block.id }} .testimonial-quote a {
+    color: inherit;
+  }
+    {%- endif -%}
+  {%- endfor -%}
 </style>
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}"{% if section.settings.transparent_header %} allow-transparent-header{% endif %}>
@@ -54,9 +70,11 @@
                   endif
                 -%}
                 {%- for block in section.blocks -%}
-                  <div class="testimonial with-{{ block.settings.icon }} flex flex-col w-full" {{ block.shopify_attributes }}>
+                  <div id="shopify-block-{{ block.id }}" class="testimonial with-{{ block.settings.icon }} flex flex-col w-full" {{ block.shopify_attributes }}>
                     <blockquote>
-                      {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
+                      <div class="testimonial-quote">
+                        {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
+                      </div>
                       
                       {%- if block.settings.image != blank -%}
                         <figure class="inline-block media media--{{ block.settings.image_ratio }} media--transparent relative overflow-hidden">
@@ -456,6 +474,12 @@
           "id": "text",
           "label": "t:sections.global.settings.text.label",
           "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+        },
+        {
+          "type": "color",
+          "id": "quote_text_color",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.quote_text_color.label",
+          "info": "t:sections.testimonials.blocks.testimonial.settings.quote_text_color.info"
         },
         {
           "type": "text",

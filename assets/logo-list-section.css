@@ -1,0 +1,222 @@
+/*!
+ * Logo list ("As seen on") — refreshed layout for Concept / AirTulip.
+ * Scoped to `.shopify-section.section-logo-list` only.
+ */
+
+.shopify-section.section-logo-list .logo-list-pro {
+  position: relative;
+}
+
+/* Optional inset rails — editorial press strip */
+.shopify-section.section-logo-list .logo-list-pro--inset {
+  margin-inline: auto;
+  max-width: min(100%, var(--page-container, 92rem));
+  padding-block: clamp(var(--sp-6), 3vw, var(--sp-10));
+  padding-inline: clamp(var(--sp-4), 4vw, var(--sp-12));
+  border-radius: var(--rounded-block);
+  border: 1px solid rgb(var(--color-foreground)/ 0.075);
+  background-color: rgb(var(--color-foreground)/ 0.03);
+}
+
+@media screen and (min-width: 1024px) {
+  .shopify-section.section-logo-list .logo-list-pro--inset {
+    padding-block: clamp(var(--sp-7), 2.5vw, var(--sp-12));
+    padding-inline: clamp(var(--sp-8), 5vw, var(--sp-14));
+  }
+}
+
+/* Heading: press / awards eyebrow */
+.shopify-section.section-logo-list .logo-list-pro__heading-wrap--press {
+  margin-block-end: clamp(var(--sp-5), 3vw, var(--sp-9));
+}
+
+.shopify-section.section-logo-list .logo-list-pro__heading-wrap--press .title-wrapper {
+  gap: var(--sp-2);
+}
+
+.shopify-section.section-logo-list .logo-list-pro__heading-wrap--press .grid {
+  gap: var(--sp-2);
+  justify-items: inherit;
+}
+
+.shopify-section.section-logo-list .logo-list-pro__heading-wrap--press .heading {
+  font-size: clamp(0.6875rem, 0.62rem + 0.25vw, 0.8125rem);
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shopify-section.section-logo-list .logo-list-pro__heading-wrap--press .heading {
+    opacity: 0.58;
+  }
+}
+
+.shopify-section.section-logo-list .logo-list-pro__heading-wrap--press .heading .split-words {
+  display: inline-block;
+}
+
+/* Track shells */
+.shopify-section.section-logo-list .logo-list-pro__track {
+  position: relative;
+}
+
+.shopify-section.section-logo-list .logo-list-pro__track--grid {
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+}
+
+@media screen and (min-width: 768px) {
+  .shopify-section.section-logo-list .logo-list-pro__track--grid {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* Logo rail (default grid + marquee inner bar) */
+.shopify-section.section-logo-list .logo-list-pro__bar {
+  gap: clamp(calc(var(--section-grid-gap) * 0.45), 3vw, var(--section-grid-gap));
+  row-gap: clamp(var(--sp-4), 2vw, var(--sp-6));
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .shopify-section.section-logo-list .logo-list-pro__track--grid .logo-list-pro__bar {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    column-gap: clamp(var(--section-grid-gap), 4vw, calc(var(--section-grid-gap) * 1.25));
+    max-width: 72rem;
+    margin-inline: auto;
+  }
+}
+
+/* Slider cells */
+.shopify-section.section-logo-list .logo-list-pro__slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 3rem;
+}
+
+@media screen and (min-width: 768px) {
+  .shopify-section.section-logo-list .logo-list-pro__track--grid .logo-list-pro__slot {
+    flex: 1 1 0;
+    max-width: 11.5rem;
+  }
+}
+
+/* Hit target + focus ring */
+.shopify-section.section-logo-list .logo-list-pro__hit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: clamp(3rem, 8vw, 4.5rem);
+  padding: clamp(var(--sp-4), 2vw, var(--sp-6)) clamp(var(--sp-5), 2.25vw, var(--sp-8));
+  border-radius: calc(var(--rounded-card) / 1.75);
+  transition: background-color var(--animation-nav), transform var(--animation-nav),
+    opacity var(--animation-nav);
+}
+
+.shopify-section.section-logo-list .logo-list-pro__hit:is(:focus-visible, :hover) {
+  background-color: rgb(var(--color-foreground)/ 0.04);
+}
+
+.shopify-section.section-logo-list .logo-list-pro__hit:active {
+  transform: scale(0.98);
+}
+
+.shopify-section.section-logo-list .logo-list-pro__plate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: clamp(3rem, 8vw, 4.5rem);
+  padding: clamp(var(--sp-4), 2vw, var(--sp-6)) clamp(var(--sp-5), 2.25vw, var(--sp-8));
+  border-radius: calc(var(--rounded-card) / 1.75);
+}
+
+.shopify-section.section-logo-list .logo__media:is(:hover) .logo-list-pro__plate {
+  background-color: rgb(var(--color-foreground)/ 0.045);
+}
+
+.shopify-section.section-logo-list .logo-list-pro__hit:focus-visible {
+  outline: 2px solid rgb(var(--color-keyboard-focus));
+  outline-offset: 2px;
+}
+
+/* Images: contain + balanced visual weight */
+.shopify-section.section-logo-list .logo__media > .logo-list-pro__hit > :is(img, svg.placeholder),
+.shopify-section.section-logo-list .logo__media > .logo-list-pro__plate :is(img, svg.placeholder) {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: calc(var(--image-height) * 0.72);
+  object-fit: contain;
+  transition: opacity var(--animation-nav), filter var(--animation-nav), transform var(--animation-nav);
+}
+
+@media screen and (min-width: 1024px) {
+  .shopify-section.section-logo-list .logo__media > .logo-list-pro__hit > :is(img, svg.placeholder),
+  .shopify-section.section-logo-list .logo__media > .logo-list-pro__plate :is(img, svg.placeholder) {
+    height: calc(var(--image-height) * 0.88);
+  }
+}
+
+.shopify-section.section-logo-list[data-uniform-heights='true'] .logo__media > .logo-list-pro__hit > :is(img, svg.placeholder),
+.shopify-section.section-logo-list[data-uniform-heights='true'] .logo__media > .logo-list-pro__plate :is(img, svg.placeholder) {
+  height: var(--uniform-logo-h, 48px);
+}
+
+/* Monochrome strip + restore color on hover / focus-within */
+.shopify-section.section-logo-list[data-monochrome='true']
+  .logo__media:is(:hover, :focus-within)
+  > .logo-list-pro__hit
+  :is(img, svg.placeholder) {
+  opacity: 1;
+  filter: none;
+}
+
+.shopify-section.section-logo-list[data-monochrome='true'] .logo__media > .logo-list-pro__hit :is(img, svg.placeholder) {
+  opacity: 0.58;
+  filter: grayscale(1);
+}
+
+.shopify-section.section-logo-list[data-monochrome='true'] .logo__media .logo-list-pro__plate :is(img, svg.placeholder) {
+  opacity: 0.58;
+  filter: grayscale(1);
+}
+
+.shopify-section.section-logo-list[data-monochrome='true'] .logo__media:hover .logo-list-pro__plate :is(img, svg.placeholder) {
+  opacity: 1;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shopify-section.section-logo-list .logo-list-pro__hit,
+  .shopify-section.section-logo-list .logo-list-pro__hit :is(img, svg.placeholder) {
+    transition: none;
+  }
+
+  .shopify-section.section-logo-list .logo-list-pro__hit:active {
+    transform: none;
+  }
+}
+
+/* --- Marquee: keep LogoList/Flickity behavior; tame vertical rhythm --- */
+.shopify-section.section-logo-list logo-list.logo-list.logo-list-pro__logo-list-host {
+  display: flex;
+}
+
+.shopify-section.section-logo-list logo-list .logo-bar.logo-list-pro__bar {
+  margin-inline-end: var(--grid-gap, var(--section-grid-gap));
+  align-items: center;
+}
+
+/* Touch marquee uses theme scrolling-left — ensure slot padding doesn't clip */
+.shopify-section.section-logo-list .logo-list.logo-list-pro__logo-list-host .logo-list-pro__slot {
+  align-self: stretch;
+}

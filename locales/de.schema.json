@@ -4108,6 +4108,10 @@
             },
             "author_url": {
               "label": "Autoren-URL"
+            },
+            "quote_text_color": {
+              "label": "Zitatfarbe",
+              "info": "Gilt nur für den Zitatstext dieser Erfahrungsbewertung. Leer lassen, um die Textfarbe des Abschnitts zu verwenden."
             }
           }
         }

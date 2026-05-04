@@ -33,8 +33,23 @@
     assign tt_vp_pad_x = 0
   endif
   assign tt_overlap = section.settings.overlap_above | default: 0
+  assign tt_section_width = section.settings.section_width | default: ''
+  if tt_section_width == blank
+    if section.settings.narrow
+      assign tt_section_width = 'narrow'
+    else
+      assign tt_section_width = 'normal'
+    endif
+  endif
   if section.settings.testimonial_text_color != blank
     assign tt_testimonial_text_rgb = section.settings.testimonial_text_color.rgb
+  endif
+  assign tt_quote_trim = section.settings.quote_trim_enable | default: false
+  assign tt_quote_max_height = section.settings.quote_max_height | default: 260
+  if tt_quote_max_height < 100
+    assign tt_quote_max_height = 100
+  elsif tt_quote_max_height > 560
+    assign tt_quote_max_height = 560
   endif
 -%}
 <style>
@@ -58,6 +73,20 @@
     margin-block-start: -{{ tt_overlap }}px;
     {%- endif -%}
     {%- render 'section-variables', section: section -%}
+  }
+
+  @media screen and (min-width: 1024px) {
+    /*
+      Normal: .page-width spans 100% of the section (no max-width in theme.css).
+      Narrow: 20% narrower — percentage width avoids calc(var(--page-container) * …)
+      which some engines drop when the substituted value uses min().
+    */
+    #shopify-section-{{ section.id }} .page-width.top-testimonials__width--narrow {
+      box-sizing: border-box;
+      width: 80%;
+      max-width: none;
+      margin-inline: auto;
+    }
   }
 
   /* One Flickity cell = one review; width controls how many are visible. */
@@ -142,6 +171,10 @@
     font-size: 36px;
   }
 
+  #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote .rte {
+    font-weight: 300;
+  }
+
   {%- if tt_testimonial_text_rgb != blank -%}
   #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote .rte,
   #shopify-section-{{ section.id }} .top-testimonials__slide-inner blockquote .rte p,
@@ -152,6 +185,19 @@
     color: inherit;
   }
   {%- endif -%}
+
+  {%- for block in section.blocks -%}
+    {%- if block.settings.quote_text_color != blank -%}
+  #shopify-section-{{ section.id }} #shopify-block-{{ block.id }} .top-testimonials__slide-inner blockquote .rte,
+  #shopify-section-{{ section.id }} #shopify-block-{{ block.id }} .top-testimonials__slide-inner blockquote .rte :is(p, li),
+  #shopify-section-{{ section.id }} #shopify-block-{{ block.id }} .top-testimonials__slide-inner blockquote cite {
+    color: rgb({{ block.settings.quote_text_color.rgb }});
+  }
+  #shopify-section-{{ section.id }} #shopify-block-{{ block.id }} .top-testimonials__slide-inner blockquote .rte a {
+    color: inherit;
+  }
+    {%- endif -%}
+  {%- endfor -%}
 
   /*
     Stars: theme .testimonial sets unicode in ::before; global .rte blockquote::before adds a huge quote mask.
@@ -189,10 +235,82 @@
   #shopify-section-{{ section.id }} .top-testimonials-carousel__track .flickity-viewport.is-pointer-down {
     cursor: grabbing;
   }
+
+  {%- if tt_quote_trim -%}
+  /* Quote body: capped height + bottom fade until hover/focus-within expands the slide. */
+  #shopify-section-{{ section.id }} .tt-quote-clip {
+    position: relative;
+    max-height: {{ tt_quote_max_height }}px;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .tt-quote-fade {
+    pointer-events: none;
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: clamp(28px, 32%, 5rem);
+    opacity: 1;
+    transition: opacity 0.28s ease;
+  }
+
+  {%- if section.settings.quote_fade_white -%}
+  #shopify-section-{{ section.id }} .tt-quote-fade {
+    background: linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 0%) 0%,
+      rgb(255 255 255 / 78%) 55%,
+      #ffffff 100%
+    );
+  }
+  {%- else -%}
+  #shopify-section-{{ section.id }} .tt-quote-fade {
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--color-background), 0) 0%,
+      rgb(var(--color-background)) 100%
+    );
+  }
+  {%- endif -%}
+
+  #shopify-section-{{ section.id }}
+    .top-testimonials-carousel:has(.top-testimonials__slide:hover)
+    .flickity-viewport,
+  #shopify-section-{{ section.id }}
+    .top-testimonials-carousel:has(.top-testimonials__slide:focus-within)
+    .flickity-viewport {
+    overflow: visible;
+    z-index: 4;
+  }
+
+  #shopify-section-{{ section.id }}
+    .top-testimonials-carousel:has(.top-testimonials__slide:hover)
+    .flickity-slider,
+  #shopify-section-{{ section.id }}
+    .top-testimonials-carousel:has(.top-testimonials__slide:focus-within)
+    .flickity-slider {
+    overflow: visible;
+  }
+
+  #shopify-section-{{ section.id }} .top-testimonials__slide:hover,
+  #shopify-section-{{ section.id }} .top-testimonials__slide:focus-within {
+    z-index: 5;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .top-testimonials__slide:is(:hover, :focus-within) .tt-quote-clip {
+    max-height: none;
+    overflow: visible;
+  }
+
+  #shopify-section-{{ section.id }} .top-testimonials__slide:is(:hover, :focus-within) .tt-quote-fade {
+    opacity: 0;
+  }
+  {%- endif -%}
 </style>
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
-  <div class="page-width{% if section.settings.full_width %} page-width--full{% elsif section.settings.narrow %} page-width--narrow{% endif %} relative">
+  <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative{% if tt_section_width == 'narrow' %} top-testimonials__width--narrow{% endif %}">
     {%- render 'section-heading', section: section -%}
 
     {%- if section.blocks.size > 0 -%}
@@ -210,7 +328,7 @@
           assign tt_autoplay_desktop_attr = true
         endif
       -%}
-      <div class="top-testimonials relative z-1">
+      <div class="top-testimonials relative z-1{% if tt_quote_trim %} top-testimonials--quote-trim{% endif %}">
         <top-testimonials-carousel
           class="top-testimonials-carousel block w-full not-rte"
           data-page-dots="{% if section.settings.show_dots %}true{% else %}false{% endif %}"
@@ -227,6 +345,7 @@
           <div class="top-testimonials-carousel__track relative w-full outline-none" tabindex="0">
             {%- for block in section.blocks -%}
               <div
+                id="shopify-block-{{ block.id }}"
                 class="top-testimonials__slide testimonial with-{{ block.settings.star_rating }}"
                 {{ block.shopify_attributes }}
               >
@@ -244,9 +363,20 @@
                     {%- endif -%}
 
                     {%- if block.settings.text != blank -%}
-                      <div class="rte {{ quote_text_size }} leading-normal">
-                        {{- block.settings.text -}}
-                      </div>
+                      {%- if tt_quote_trim -%}
+                        <div class="tt-quote-stack grid gap-0">
+                          <div class="tt-quote-clip">
+                            <div class="rte {{ quote_text_size }} leading-normal">
+                              {{- block.settings.text -}}
+                            </div>
+                            <div class="tt-quote-fade" aria-hidden="true"></div>
+                          </div>
+                        </div>
+                      {%- else -%}
+                        <div class="rte {{ quote_text_size }} leading-normal">
+                          {{- block.settings.text -}}
+                        </div>
+                      {%- endif -%}
                     {%- endif -%}
 
                     {%- if block.settings.author != blank -%}
@@ -501,7 +631,7 @@
       "type": "checkbox",
       "id": "autoplay_desktop",
       "label": "Auto-advance on desktop",
-      "info": "Smooth continuous scroll on viewports 768px and up. Always loops while this is on. Pauses on hover; smaller widths are unchanged.",
+      "info": "Smooth continuous scroll on viewports 768px and up. Always loops while this is on. Pauses while a card is hovered or focused; smaller widths are unchanged.",
       "default": true
     },
     {
@@ -816,10 +946,21 @@
       "default": false
     },
     {
-      "type": "checkbox",
-      "id": "narrow",
-      "label": "Make section narrow",
-      "default": true
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "default": "normal",
+      "info": "On large screens only (1024px+): Narrow sets the inner content wrapper to 80% of the section width (about 20% narrower than Normal). Phones and tablets are unchanged.",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        }
+      ]
     },
     {
       "type": "range",
@@ -914,6 +1055,12 @@
           "id": "text",
           "label": "Text",
           "default": "<p>Add the review quote here. Match your best Judge.me reviews for consistency across PDP and homepage.</p>"
+        },
+        {
+          "type": "color",
+          "id": "quote_text_color",
+          "label": "Quote text color",
+          "info": "Overrides the section \"Quote text color\" for this card. Leave empty to use the section default."
         },
         {
           "type": "text",

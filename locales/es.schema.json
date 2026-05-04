@@ -4108,6 +4108,10 @@
             },
             "author_url": {
               "label": "URL del autor"
+            },
+            "quote_text_color": {
+              "label": "Color del texto de la cita",
+              "info": "Se aplica solo al texto de la cita en este testimonio. Déjalo vacío para usar el color del texto del bloque."
             }
           }
         }

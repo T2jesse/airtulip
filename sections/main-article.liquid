@@ -34,7 +34,7 @@
 
 {{ 'article.css' | asset_url | stylesheet_tag }}
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <article class="article relative grid gap-8" itemscope itemtype="http://schema.org/BlogPosting">
     <div class="page-width{% if section.settings.narrow %} page-width--narrow{% endif %} grid gap-5 text-center">
       {%- if section.settings.show_tags or section.settings.show_date or section.settings.show_comments or section.settings.show_author -%}
@@ -111,7 +111,7 @@
 </div>
 
 {%- if section.blocks.size > 0 -%}
-  <div class="comments-section section{% if section.settings.rounded %} section--rounded relative{% endif %}">
+  <div class="comments-section section{% render 'section-rounded', section: section %}">
     <div class="page-width{% if section.settings.narrow %} page-width--narrow{% endif %} relative grid gap-8">
       {%- for block in section.blocks -%}
         {%- case block.type -%}

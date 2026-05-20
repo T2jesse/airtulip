@@ -16,7 +16,7 @@
   {%- endfor -%}
 </style>
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}" data-section-id="{{ section.id }}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}" data-section-id="{{ section.id }}">
   {%- render 'social-feed-heading', section: section -%}
   
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">

@@ -22,6 +22,11 @@
 <variant-picker id="VariantPicker-{{ section_id }}-{{ product_id }}{% if context == 'bundle' %}-swatch{% endif %}" class="variant-picker grid gap-5 no-js-hidden" {{ shopify_attributes }}>
   {%- for option in product.options_with_values -%}
     {%- liquid
+      assign option_display_selected = option.selected_value
+      if product.selected_variant == blank and default_option_value != blank
+        assign option_display_selected = default_option_value
+      endif
+
       assign is_color = false
       assign swatch_trigger_list = 'products.general.color_swatch_trigger' | t | downcase | split: ','
       assign downcased_option = option.name | downcase
@@ -56,7 +61,7 @@
         {%- if show_variant_labels -%}
           <div class="flex gap-2">
             {{- option.name -}}:
-            <span class="font-medium" id="{{ section_id }}-{{ product_id }}-option{{ option.position }}">{{ option.selected_value }}</span>
+            <span class="font-medium" id="{{ section_id }}-{{ product_id }}-option{{ option.position }}">{{ option_display_selected }}</span>
           </div>
         {%- endif -%}
         {%- if is_size -%}
@@ -94,7 +99,10 @@
       </div>
       {%- capture swatchs_content -%}
         {%- for value in option.values -%}
-          <li>
+          {%- capture option_order -%}
+            {%- render 'product-variant-option-order', value: value, option_values_order: option_values_order, forloop_index: forloop.index0 -%}
+          {%- endcapture -%}
+          <li style="order: {{ option_order | strip }}">
             <magnet-element class="block">
               <input
                 type="radio"
@@ -103,7 +111,7 @@
                 name="{{ option.name }}-{{ section_id }}-{{ product_id }}"
                 value="{{ value | escape }}"
                 {% unless value.available %}disabled{% endunless %}
-                {% if option.selected_value == value %}checked{% endif %}
+                {% if option_display_selected == value %}checked{% endif %}
                 {% if value.product_url != blank and value.product_url != product.url %}data-product-url="{{ value.variant.url | default: value.product_url }}"{% endif %}
                 data-option-value="{{ value | escape }}"
                 data-option-value-id="{{ value.id }}"
@@ -207,5 +215,5 @@
     </fieldset>
   {%- endfor -%}
 
-  <script type="application/json" data-selected-variant>{{ product.selected_or_first_available_variant | json }}</script>
+  <script type="application/json" data-selected-variant>{{ selected_variant | default: product.selected_or_first_available_variant | json }}</script>
 </variant-picker>

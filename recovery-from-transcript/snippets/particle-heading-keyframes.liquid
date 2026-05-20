@@ -1,0 +1,73 @@
+{%- doc -%}
+  Scoped keyframes + rule binding for one heading block (background-position flow + jitter).
+
+  Params:
+    - block
+    - direction (string preset)
+    - jitter (integer 0-100)
+    - duration_seconds (integer)
+{%- enddoc -%}
+{%- liquid
+  assign bx = 0
+  assign by = 0
+  case direction
+    when 'right'
+      assign bx = 140
+      assign by = 4
+    when 'left'
+      assign bx = -140
+      assign by = -4
+    when 'down'
+      assign bx = -4
+      assign by = 90
+    when 'up'
+      assign bx = 4
+      assign by = -90
+    when 'up_right'
+      assign bx = 112
+      assign by = -70
+    when 'down_right'
+      assign bx = 98
+      assign by = 82
+    when 'down_left'
+      assign bx = -102
+      assign by = 78
+    when 'up_left'
+      assign bx = -108
+      assign by = -74
+    else
+      assign bx = 140
+      assign by = 4
+  endcase
+
+  assign j = jitter | at_most: 100 | at_least: 0
+  assign jx1 = j | times: 12 | divided_by: 50
+  assign jy1 = j | times: -9 | divided_by: 50
+  assign jx2 = j | times: -11 | divided_by: 45
+  assign jy2 = j | times: 13 | divided_by: 42
+  assign jx3 = j | times: 14 | divided_by: 52
+  assign jy3 = j | times: -15 | divided_by: 53
+
+  assign x33 = bx | times: 33 | divided_by: 100 | plus: jx1
+  assign y33 = by | times: 33 | divided_by: 100 | plus: jy1
+  assign x66 = bx | times: 66 | divided_by: 100 | plus: jx2
+  assign y66 = by | times: 66 | divided_by: 100 | plus: jy2
+  assign x100 = bx | plus: jx3
+  assign y100 = by | plus: jy3
+
+  assign anim = 'phflow_' | append: block.id | replace: '-', '_'
+-%}
+<style>
+  @keyframes {{ anim }} {
+    0% { background-position: 0 0; }
+    33% { background-position: {{ x33 }}px {{ y33 }}px; }
+    66% { background-position: {{ x66 }}px {{ y66 }}px; }
+    100% { background-position: {{ x100 }}px {{ y100 }}px; }
+  }
+  #shopify-section-{{ section.id }} .particle-heading__fill--{{ block.id }} {
+    animation-name: {{ anim }};
+    animation-duration: {{ duration_seconds }}s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+</style>

@@ -202,7 +202,7 @@
             "label": "Couverture"
           },
           "options__2": {
-            "label":"Contenir"
+            "label": "Contenir"
           },
           "label": "Position de la vidéo"
         },
@@ -241,7 +241,7 @@
         },
         "gradient_direction": {
           "options__1": {
-            "label":"Haut"
+            "label": "Haut"
           },
           "options__2": {
             "label": "Bas"
@@ -428,7 +428,7 @@
             "label": "Payage"
           },
           "options__5": {
-            "label":"Grand"
+            "label": "Grand"
           },
           "label": "Format d’image"
         },
@@ -847,7 +847,7 @@
             "label": "Payage"
           },
           "options__5": {
-            "label":"Grand"
+            "label": "Grand"
           },
           "options__6": {
             "label": "Arrondi"
@@ -2925,8 +2925,7 @@
         },
         "promotion-video": {
           "name": "Vidéo promotionnelle",
-          "settings": {
-          }
+          "settings": {}
         }
       }
     },
@@ -3132,8 +3131,31 @@
         "price": {
           "name": "Prix",
           "settings": {
+            "show_shop_installments": {
+              "label": "Afficher le paiement en plusieurs fois (Shop Pay)",
+              "info": "Affiche le message de paiement fractionné lorsque votre boutique propose Shop Pay à tempérament — géré par Shopify Payments. Déplacez le bloc Prix dans la section pour l’ordonner."
+            },
             "show_taxes_notice": {
               "label": "Afficher l'avis de taxes"
+            },
+            "header__compare_at": {
+              "content": "Prix barré (comparaison)"
+            },
+            "compare_at_color": {
+              "label": "Couleur du prix de comparaison",
+              "info": "Affiché lorsque la variante a un prix de comparaison supérieur au prix actuel. Effacez la couleur pour la valeur par défaut du thème."
+            },
+            "compare_at_font_size": {
+              "label": "Taille du prix de comparaison",
+              "info": "S’applique uniquement au montant barré."
+            }
+          }
+        },
+        "shop_pay_installments": {
+          "name": "Shop Pay installments",
+          "settings": {
+            "paragraph": {
+              "content": "Shows installment messaging when Shop Pay installments are available. Add this block once, then drag it anywhere in the product information column."
             }
           }
         },
@@ -3270,6 +3292,10 @@
           "settings": {
             "show_quantity_selector": {
               "label": "Afficher le sélecteur de quantité"
+            },
+            "show_price": {
+              "label": "Afficher le prix dans ce bloc",
+              "info": "Activez si le prix n’apparaît qu’ici. Désactivez si le bloc Prix est dans la colonne produit pour éviter un doublon."
             },
             "show_dynamic_checkout": {
               "label": "Afficher les boutons de paiement dynamique",
@@ -3489,6 +3515,22 @@
           "settings": {
             "paragraph": {
               "content": "Gardez le bouton Ajouter au panier visible pendant que les clients parcourent et font défiler."
+            },
+            "layout": {
+              "label": "Mise en page",
+              "options__1": {
+                "label": "Barre pleine largeur en bas"
+              },
+              "options__2": {
+                "label": "Carte flottante"
+              }
+            },
+            "show_thumbnail": {
+              "label": "Afficher la miniature du produit"
+            },
+            "desktop_max_width_percent": {
+              "label": "Largeur max. sur ordinateur",
+              "info": "Uniquement pour la barre pleine largeur. Limite la largeur sur grands écrans (la barre reste centrée)."
             }
           }
         }
@@ -4643,7 +4685,7 @@
             "label": "Payage"
           },
           "options__5": {
-            "label":"Grand"
+            "label": "Grand"
           }
         },
         "image_fill": {

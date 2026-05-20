@@ -1,24 +1,183 @@
+{%- liquid
+  assign height_sync = section.settings.match_column_heights
+  assign use_video = false
+  if section.settings.image == blank and section.settings.diagram_asset_filename == blank
+    if section.settings.video != blank or section.settings.video_url != blank
+      assign use_video = true
+    endif
+  endif
+
+  assign show_diagram_asset = false
+  if section.settings.image == blank and section.settings.diagram_asset_filename != blank and use_video == false
+    assign show_diagram_asset = true
+  endif
+
+  assign iwt_aspect_css = '4 / 3'
+  case section.settings.media_aspect_ratio
+    when 'square'
+      assign iwt_aspect_css = '1'
+    when 'portrait'
+      assign iwt_aspect_css = '4 / 5'
+    when 'landscape'
+      assign iwt_aspect_css = '4 / 3'
+    when 'wide'
+      assign iwt_aspect_css = '16 / 9'
+    when 'tall'
+      assign iwt_aspect_css = '3 / 4'
+    when 'adapt'
+      if use_video and section.settings.video != blank
+        assign iwt_aspect_css = section.settings.video.aspect_ratio
+      elsif section.settings.image != blank
+        assign iwt_aspect_css = section.settings.image.aspect_ratio
+      elsif show_diagram_asset
+        assign iwt_aspect_css = '5 / 3'
+      endif
+  endcase
+
+  assign iwt_aspect_mobile_css = iwt_aspect_css
+  case section.settings.media_aspect_ratio_mobile
+    when 'square'
+      assign iwt_aspect_mobile_css = '1'
+    when 'portrait'
+      assign iwt_aspect_mobile_css = '4 / 5'
+    when 'landscape'
+      assign iwt_aspect_mobile_css = '4 / 3'
+    when 'wide'
+      assign iwt_aspect_mobile_css = '16 / 9'
+    when 'tall'
+      assign iwt_aspect_mobile_css = '3 / 4'
+    when 'adapt'
+      assign image_mobile_for_aspect = section.settings.image_mobile | default: section.settings.image
+      if use_video and section.settings.video != blank
+        assign iwt_aspect_mobile_css = section.settings.video.aspect_ratio
+      elsif image_mobile_for_aspect != blank
+        assign iwt_aspect_mobile_css = image_mobile_for_aspect.aspect_ratio
+      endif
+  endcase
+
+  assign iwt_content_justify = 'center'
+  case section.settings.content_position
+    when 'align-self-start'
+      assign iwt_content_justify = 'flex-start'
+    when 'align-self-end'
+      assign iwt_content_justify = 'flex-end'
+  endcase
+-%}
+
 <style>
   #shopify-section-{{ section.id }} {
     --section-padding-top: {{ section.settings.padding_top }}px;
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
     {%- render 'section-variables', section: section -%}
-    {%- if section.settings.image != blank and section.settings.image_height == 'adapt' %}
-      --ratio-percent: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
-    {% endif -%}
+    {%- unless height_sync -%}
+      {%- if section.settings.image != blank and section.settings.image_height == 'adapt' %}
+        --ratio-percent: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+      {% endif -%}
+    {%- endunless -%}
+    {%- if height_sync -%}
+      --iwt-aspect-ratio: {{ iwt_aspect_css }};
+      --iwt-aspect-ratio-mobile: {{ iwt_aspect_mobile_css }};
+      --iwt-content-justify: {{ iwt_content_justify }};
+    {%- endif -%}
   }
 
   {%- assign image_mobile = section.settings.image_mobile | default: section.settings.image -%}
-  {%- if image_mobile != blank and section.settings.image_height_mobile == 'adapt' %}
-    @media screen and (max-width: 767px) {
-      #shopify-section-{{ section.id }} {
-        --ratio-percent: {{ 1 | divided_by: image_mobile.aspect_ratio | times: 100 }}%;
+  {%- unless height_sync -%}
+    {%- if image_mobile != blank and section.settings.image_height_mobile == 'adapt' %}
+      @media screen and (max-width: 767px) {
+        #shopify-section-{{ section.id }} {
+          --ratio-percent: {{ 1 | divided_by: image_mobile.aspect_ratio | times: 100 }}%;
+        }
+      }
+    {% endif -%}
+  {%- endunless -%}
+
+  {%- if height_sync -%}
+    #shopify-section-{{ section.id }} .image-with-text__media-frame {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: inherit;
+      aspect-ratio: var(--iwt-aspect-ratio-mobile);
+    }
+
+    #shopify-section-{{ section.id }} .image-with-text__media-fill {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .image-with-text__media-fill :is(img, svg) {
+      object-fit: cover;
+      object-position: center;
+    }
+
+    #shopify-section-{{ section.id }} .image-with-text__media-fill video-media {
+      aspect-ratio: unset !important;
+      --aspect-ratio: auto;
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    #shopify-section-{{ section.id }} .image-with-text__media-fill video-media > :is(video, iframe, img, svg) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media screen and (min-width: 1024px) {
+      #shopify-section-{{ section.id }} .image-with-text__media-frame {
+        aspect-ratio: var(--iwt-aspect-ratio);
+      }
+
+      #shopify-section-{{ section.id }} .image-with-text--height-sync {
+        align-items: stretch;
+      }
+
+      #shopify-section-{{ section.id }} .image-with-text--height-sync .image-with-text__item--media,
+      #shopify-section-{{ section.id }} .image-with-text--height-sync .image-with-text__item--content {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+      }
+
+      #shopify-section-{{ section.id }} .image-with-text--height-sync .image-with-text__media--sync {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+      }
+
+      #shopify-section-{{ section.id }} .image-with-text--height-sync .image-with-text__media-frame {
+        flex: 1 1 auto;
+        width: 100%;
+        min-height: 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      #shopify-section-{{ section.id }} .image-with-text--height-sync .image-with-text__content-inner {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: var(--iwt-content-justify);
+        min-height: 100%;
       }
     }
-  {% endif -%}
+  {%- endif -%}
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .image-with-text .heading.title-lg {
+      font-size: 58px;
+      line-height: 1.05;
+    }
+  }
 </style>
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
     {%- liquid
       assign with_background = false
@@ -28,35 +187,110 @@
       if section.settings.color_background_2 != blank and section.settings.color_background_2 != 'rgba(0,0,0,0)'
         assign with_background = true
       endif
+
+      assign iwt_media_sizes = '(max-width: 767px) 100vw, 44vw'
+      assign iwt_cover_image = section.settings.image
+      if iwt_cover_image == blank
+        assign iwt_cover_image = section.settings.image_mobile
+      endif
     -%}
-    <div class="image-with-text{% if with_background %} with-background{% endif %} lg:flex lg:gap-8{% if section.settings.layout == 'image_first' %} lg:flex-row{% else %} lg:flex-row-reverse{% endif %} overflow-hidden">
-      <div class="image-with-text__item grow shrink-0{% if section.settings.image_width == 'small' %} lg:grow-0{% endif %} relative">
-        <div class="image-with-text__media h-full">
-          <media-element class="image-with-text__image block media--{{ section.settings.image_height }} mobile:media--{{ section.settings.image_height_mobile }} relative overflow-hidden"
-            {%- if section.settings.enable_parallax %} data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"{% endif -%}
-          >
-            <picture class="media media--height block w-full h-full relative overflow-hidden">
-              {%- if section.settings.image != blank -%}
-                {%- assign sizes = '(max-width: 767px) 100vw, 50vw' -%}
-                {%- if section.settings.image_mobile -%}
-                  <source
-                    media="(max-width: 767px)"
-                    srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1000x' }} 1000w"
-                    width="{{ section.settings.image_mobile.width }}"
-                    height="{{ section.settings.image_mobile.height }}"
+    <div class="image-with-text{% if with_background %} with-background{% endif %}{% if height_sync %} image-with-text--height-sync{% endif %} lg:flex lg:gap-8{% if section.settings.layout == 'image_first' %} lg:flex-row{% else %} lg:flex-row-reverse{% endif %} overflow-hidden">
+      <div class="image-with-text__item image-with-text__item--media grow shrink-0{% if section.settings.image_width == 'small' %} lg:grow-0{% endif %} relative">
+        <div class="image-with-text__media h-full{% if height_sync %} image-with-text__media--sync{% endif %}">
+          {%- if height_sync -%}
+            <div class="image-with-text__media-frame">
+              <div class="image-with-text__media-fill image-with-text__image block relative overflow-hidden">
+                {%- if use_video -%}
+                  {%- render 'video',
+                    video: section.settings.video,
+                    video_url: section.settings.video_url,
+                    cover_image: iwt_cover_image,
+                    sizes: iwt_media_sizes,
+                    muted: section.settings.video_muted,
+                    autoplay: section.settings.video_autoplay,
+                    loop: section.settings.video_loop,
+                    show_play_button: section.settings.video_show_play_button,
+                    description: section.settings.video_description,
+                    class: 'image-with-text__video w-full h-full'
+                  -%}
+                {%- elsif section.settings.image != blank -%}
+                  <picture class="media media--height block w-full h-full relative overflow-hidden{% if show_diagram_asset %} media--contain{% endif %}">
+                    {%- if section.settings.image_mobile -%}
+                      <source
+                        media="(max-width: 767px)"
+                        srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1000x' }} 1000w"
+                        width="{{ section.settings.image_mobile.width }}"
+                        height="{{ section.settings.image_mobile.height }}"
+                      >
+                    {%- endif -%}
+                    {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: iwt_media_sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600', is: 'lazy-image', class: 'w-full h-full' -}}
+                  </picture>
+                {%- elsif show_diagram_asset -%}
+                  <img
+                    src="{{ section.settings.diagram_asset_filename | strip | asset_url }}"
+                    alt="{{ section.settings.diagram_asset_alt | default: 'Scientific illustration' | escape }}"
+                    class="image-with-text__diagram-asset block w-full h-full object-contain p-6 lg:p-8"
+                    width="1600"
+                    height="960"
+                    loading="lazy"
+                    decoding="async"
+                    is="lazy-image"
                   >
+                {%- else -%}
+                  {{- 'lifestyle-1' | placeholder_svg_tag: 'placeholder w-full h-full' -}}
                 {%- endif -%}
-  
-                {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600', is: 'lazy-image' -}}
-              {%- else -%}
-                {{- 'lifestyle-1' | placeholder_svg_tag: 'placeholder' -}}
-              {%- endif -%}
-            </picture>
-          </media-element>
+              </div>
+            </div>
+          {%- else -%}
+            <media-element class="image-with-text__image block media--{{ section.settings.image_height }} mobile:media--{{ section.settings.image_height_mobile }} relative overflow-hidden"
+              {%- if section.settings.enable_parallax and use_video == false %} data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"{% endif -%}
+            >
+              <picture class="media media--height block w-full h-full relative overflow-hidden{% if show_diagram_asset %} media--contain{% endif %}">
+                {%- if use_video -%}
+                  {%- render 'video',
+                    video: section.settings.video,
+                    video_url: section.settings.video_url,
+                    cover_image: iwt_cover_image,
+                    sizes: iwt_media_sizes,
+                    muted: section.settings.video_muted,
+                    autoplay: section.settings.video_autoplay,
+                    loop: section.settings.video_loop,
+                    show_play_button: section.settings.video_show_play_button,
+                    description: section.settings.video_description,
+                    class: 'image-with-text__video w-full h-full'
+                  -%}
+                {%- elsif section.settings.image != blank -%}
+                  {%- if section.settings.image_mobile -%}
+                    <source
+                      media="(max-width: 767px)"
+                      srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1000x' }} 1000w"
+                      width="{{ section.settings.image_mobile.width }}"
+                      height="{{ section.settings.image_mobile.height }}"
+                    >
+                  {%- endif -%}
+                  {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: iwt_media_sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600', is: 'lazy-image' -}}
+                {%- elsif show_diagram_asset -%}
+                  <img
+                    src="{{ section.settings.diagram_asset_filename | strip | asset_url }}"
+                    alt="{{ section.settings.diagram_asset_alt | default: 'Scientific illustration' | escape }}"
+                    class="image-with-text__diagram-asset block w-full h-full p-6 lg:p-8"
+                    width="1600"
+                    height="960"
+                    loading="lazy"
+                    decoding="async"
+                    is="lazy-image"
+                  >
+                {%- else -%}
+                  {{- 'lifestyle-1' | placeholder_svg_tag: 'placeholder' -}}
+                {%- endif -%}
+              </picture>
+            </media-element>
+          {%- endif -%}
         </div>
       </div>
 
-      <div class="image-with-text__item grow shrink-0{% if section.settings.image_width == 'large' %} lg:grow-0{% endif %} {{ section.settings.content_position }}">
+      <div class="image-with-text__item image-with-text__item--content grow shrink-0{% if section.settings.image_width == 'large' %} lg:grow-0{% endif %}{% unless height_sync %} {{ section.settings.content_position }}{% endunless %}">
+        <div class="image-with-text__content-inner{% unless height_sync %} h-full{% endunless %}">
         <div class="rich-text lg:text-{{ section.settings.text_alignment }} text-{{ section.settings.text_alignment_mobile }} relative z-1">
           {%- liquid
             assign with_gradient = false
@@ -185,6 +419,7 @@
             {%- endcase -%}
           {%- endfor -%}
         </div>
+        </div>
       </div>
     </div>
   </div>
@@ -193,11 +428,66 @@
 {% schema %}
 {
   "name": "t:sections.image-with-text.name",
+  "class": "shopify-section--image-with-text",
   "settings": [
     {
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.global.settings.image.label"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["youtube", "vimeo"],
+      "label": "Video URL",
+      "info": "YouTube or Vimeo. Used when no Shopify video is uploaded."
+    },
+    {
+      "type": "text",
+      "id": "video_description",
+      "label": "Video description",
+      "info": "Accessibility description for screen readers."
+    },
+    {
+      "type": "checkbox",
+      "id": "video_muted",
+      "label": "Mute video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "video_loop",
+      "label": "Loop video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "video_show_play_button",
+      "label": "Show play button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "diagram_asset_filename",
+      "label": "Theme asset / diagram filename",
+      "info": "When no Image is picked, optionally load a static file from the theme assets folder (e.g. airtulip-performance-breathing-zone.svg). Uses asset_url."
+    },
+    {
+      "type": "text",
+      "id": "diagram_asset_alt",
+      "label": "Diagram alt text",
+      "default": "Diagram illustrating clean air concentrated at the headboard versus mixed room air"
     },
     {
       "type": "select",
@@ -257,7 +547,84 @@
         }
       ],
       "default": "650px",
-      "label": "t:sections.global.settings.image_height.label"
+      "label": "t:sections.global.settings.image_height.label",
+      "info": "Ignored on desktop when “Match column heights” is enabled."
+    },
+    {
+      "type": "checkbox",
+      "id": "match_column_heights",
+      "label": "Match column heights",
+      "info": "Desktop: media and text share one row height. Media fills its column (cover); text column aligns vertically per Content position.",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "media_aspect_ratio",
+      "label": "Media aspect ratio",
+      "info": "Sets the media column proportions when matching heights. If text is taller, the row grows and media scales to fill.",
+      "default": "adapt",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to image or video"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "tall",
+          "label": "Tall (3:4)"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_aspect_ratio_mobile",
+      "label": "Media aspect ratio (mobile)",
+      "default": "inherit",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Same as desktop"
+        },
+        {
+          "value": "adapt",
+          "label": "Adapt to image or video"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "tall",
+          "label": "Tall (3:4)"
+        }
+      ]
     },
     {
       "type": "select",

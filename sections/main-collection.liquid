@@ -27,7 +27,7 @@
   assign filter_type = section.settings.filter_type
 -%}
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="collection page-width{% if section.settings.full_width %} page-width--full{% endif %} relative{% if enable_filtering %} with-{{ filter_type }}{% endif %}">
     {%- if description != blank and collection.description != blank -%}
       <div class="rte collection__description" {{ description.shopify_attributes }}>

@@ -1,0 +1,145 @@
+---
+description: AirTulip product, science narrative, pricing, subscriptions — reference for storefront copy & sections
+alwaysApply: false
+---
+
+# AirTulip — brand, product & content reference
+
+Use this when writing theme copy, headings, FAQ-style blocks, hero text, or science claims. **Re-verify prices, legal lines, and medical framing on the live storefront** ([airtulip.co](https://airtulip.co/) / prod domain) before publishing—they change with variants, markets, and compliance edits.
+
+---
+
+## Identity & positioning
+
+| Item | Detail |
+|------|--------|
+| **Brand** | AirTulip |
+| **Category framing** | Not “another purifier”—a **bedroom headboard** that delivers a **controlled clean-air zone** around the sleeper via **laminar airflow**, plus industrial-grade filtration |
+| **Tagline territory** | Sleep as sacred; cleanroom-quality “bubble”; aerospace / deep-tech credibility; recovery, allergies/asthma, athletics |
+| **Audience** | Allergy/asthma sufferers; parents; athletes & recovery-focused buyers; wellness / high-performance sleep; design-conscious homeowners |
+
+---
+
+## Core product (canonical naming)
+
+| Name use | Notes |
+|---------|--------|
+| **AirTulip Sleep** | Common product-line name on PDP/supporting sections |
+| **Air Purifying Headboard / Air Purifier Headboard** | Descriptive SKU-style titles |
+| **SKU URL** | [`/products/sleep-air-purifier-headboard`](https://airtulip.co/products/sleep-air-purifier-headboard) |
+
+**What it is:** A **made-to-order headboard** with built-in purification: air drawn through filters and delivered through the headboard fabric using **laminar (low-turbulence) flow** aimed at the breathing zone—not only “cleaning the room volume” like a box purifier.
+
+**Variants:** Fabric **colors** (e.g. Pearl on PDP), sizes **Twin / Queen / Full–Queen bracket / King & Cal King**.
+
+---
+
+## Science & engineering narrative (for “About” / long-form alignment)
+
+Summarized from [`/pages/about`](https://airtulip.co/pages/about)—use for **marketing tone**, not clinical claims unless substantiated:
+
+1. **Laminar airflow:** Single-direction, ultra-low-turbulence stream forming a stable barrier vs chaotic room/HVAC mixing; analogous to cleanrooms / controlled environments.
+2. **Origin story:** Pandemic-era NYC; lasers/fog visualization; cleanroom + aerospace mental model; “filter + **control** how air moves.”
+3. **Founder:** **Arjen de Jong** — aerospace engineer/physicist, **PhD in aeroacoustics**; Porsche/Ferrari/NASA-relevant experience (as stated on site); family background in cleanrooms/industrial air.
+4. **External validation / partners named on site:** LaVision (laser imaging); **TU Delft** / Prof. Fulvio Scarano (flow visualization); **TU Eindhoven** Building Physics chambers (thermal mannequin, smoke); CFturbo / aerospace fan design; **owl biomimicry** (serrated blade edges for noise/turbulence).
+5. **Manufacturing story:** **Brooklyn & Detroit**; hand assembly, limited batches, modular/long-life positioning; **3D-printed** aerodynamic components.
+6. **IP:** “Patent-pending” / **multiple patent applications** (site language).
+7. **Credibility moments:** **Kickstarter** launch; **Shark Tank**; early advocate **NFL Matt Judon** (site copy).
+
+**Four pillars (site structure):** Aerodynamics (Delft-inspired CFD/pressure); Measurement (LaVision, sensors); Simulation & Design (CFturbo, 3D-printed paths); Real-world testing (TU/e chambers, smoke/mannequin).
+
+---
+
+## Health & air-quality messaging (careful copy rules)
+
+The site discusses **PM10 / PM2.5 / ultrafine** particles, sleep-related exposure, and links to **NIH / WHO / AHA / PubMed**-style references on the About page—for **educational framing**.
+
+**For theme/section copy:**
+
+- Prefer **experience** language: sleep quality, congestion, triggers, recovery, “clean zone,” “breathing zone.”
+- Avoid **disease treatment** claims unless legal/clinical approves; mirror PDP FAQ tone (“can alleviate,” “many customers report,” etc.).
+- **Consistency:** Site mixes stats (e.g. **99.997%** vs **99.97%** vs **99.995%** at 0.3 µm)—**pick one approved string** from PDP/legal before reusing in new sections.
+- Strong quantitative claims (“**1,000× cleaner** than traditional purifiers,” “within **seconds**,” “**2,600 gallons** per night”) appear on marketing surfaces—treat as **approved marketing claims** only if compliance has signed off; otherwise soften or quote PDP verbatim.
+
+---
+
+## PDP product facts (feature checklist)
+
+From [`sleep-air-purifier-headboard`](https://airtulip.co/products/sleep-air-purifier-headboard):
+
+- **Modes:** Whisper (quietest) · Night (stable “bubble”) · Day (stronger room cleaning).
+- **Noise (published):** **26 dB(A)** whisper · **30 dB(A)** night · Day “much less than AC” (qualitative).
+- **Filters:** Dual **HEPA H14** in metal cassettes (Twin: single); dual full-width **activated carbon** (Twin: single); **pre-filters** (count differs Twin vs larger).
+- **Tech labels:** Patent-pending laminar flow; custom fan; curved acoustic insulation channels; honeycomb core; foam acoustic pathways.
+- **Setup:** Arrives **fully assembled**; place behind bed, plug in (standard outlet).
+- **Maintenance (FAQ):** Pre-filters checked/dusted; **HEPA ~12 months**; **carbon ~6 months** (usage-dependent); **pre-filter ~3 months** (subscription page aligns quarterly reminders).
+
+---
+
+## Dimensions & weight (published)
+
+| Size | Fits | Width × depth × height | Weight |
+|------|------|------------------------|--------|
+| Queen | Full & Queen | 70" × 11" × 45" | **130 lb** |
+| King | King & Cal King | 79" × 11" × 45" | **130 lb** |
+| Twin | Twin / children’s | 42" × 11" × 45" | **80 lb** |
+
+Adjustable leg sets for mattress height.
+
+---
+
+## Commercial model & policies
+
+| Topic | Published detail |
+|------|------------------|
+| **Fulfillment** | **Made to order**; **~8 weeks** production lead; progress/ship notifications |
+| **Sleep trial** | **30 nights**; full product refund **minus shipping both ways** |
+| **Warranty (base)** | **1 year** manufacturing defects (PDP FAQ) |
+| **Filter subscription perk** | Copy ties **unlimited warranty** on the unit to **Filter Subscription** signup (verify current legal wording on live PDP) |
+| **Geography** | US-oriented manufacturing story; store shows **United States (USD $)** |
+| **Custom** | PDP form: custom front board, vinyl wrap, shelf, etc. |
+| **Free swatch** | [`Free Fabric Color Swatch`](https://airtulip.co/collections/all/products/free-air-purifier-headboard-fabric-color-swatch-box) — **$0** list (may still collect shipping/terms at checkout—verify live) |
+
+---
+
+## Pricing snapshot (verify live)
+
+Captured from **listings + PDP fetch**—**Twin vs Queen/King** drives range; VAT/markets may differ:
+
+| Offering | Observation |
+|---------|-------------|
+| **Headboard** | Collection **From ~$2,990** USD; PDP example **~$4,490** USD (Pearl **Queen**) |
+| **Annual filter bundle** | Collection **From ~$337**; PDP for **replacement bundle** showed **~$674** (**King**)—size-dependent |
+| **À-la-carte filter MSRP** (bundle page copy) | HEPA **$149** · Carbon **$59** · Pre-filter **$15** |
+| **Bundle shipping** (copy) | **$75** (stated **$45** for Twin) |
+| **Subscription marketing** | **15% off + free shipping + unlimited warranty** (filter product copy) |
+
+**Subscription stack:** Repo notes multiple subscription apps—**merchant-facing storefront promise** should match whichever app owns the PDP selling plan IDs at publish time.
+
+---
+
+## Catalog adjacencies
+
+- **Replacement filters:** [`replacement-filter-set`](https://airtulip.co/products/replacement-filter-set)
+- **Swatches:** PDP links fabric swatch flow (URL variant may differ—use theme’s live product link)
+
+---
+
+## Social proof & media (short list for sections)
+
+- **Shark Tank** + ABC/Hulu episode links on homepage/PDP
+- **Judge.me** reviews on PDP (**~21** reviews in snapshot; ratings subject to change)
+- **Featured testimonial themes:** deeper sleep, allergies/asthma, quiet operation, congestion, pediatric asthma anecdote (**always attribute as customer quote**)
+
+---
+
+## Cross-links inside this repo
+
+- **Apps touching subscriptions/checkout:** `.cursor/rules/airtulip-apps.mdc`
+- **Theme/staging workflow:** `.cursor/rules/airtulip-project.mdc`
+
+---
+
+## Disclaimer for agents
+
+Copy on **airtulip.co** evolves. This file is a **working snapshot for theme/content work**, not legal/regulatory approval. When in doubt, **match verbatim strings from the canonical PDP / About page** or ask the merchant for an approved claims sheet.

@@ -20,7 +20,7 @@
 </style>
 
 {%- if section.blocks.size > 0 -%}
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="{% unless section.settings.full_width %}page-width {% endunless %}relative">
     {%- if section.blocks.size > 1 and section.settings.autoplay -%}
       <button

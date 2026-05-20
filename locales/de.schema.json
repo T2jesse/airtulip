@@ -2925,8 +2925,7 @@
         },
         "promotion-video": {
           "name": "Werbevideo",
-          "settings": {
-          }
+          "settings": {}
         }
       }
     },
@@ -3132,8 +3131,31 @@
         "price": {
           "name": "Preis",
           "settings": {
+            "show_shop_installments": {
+              "label": "Ratenzahlung mit Shop Pay anzeigen",
+              "info": "Zeigt Shop-Pay-Ratenzahlung, wenn sie im Shop aktiv ist — über Shopify Payments gesteuert. Ordnen Sie den Preisblock in diesem Abschnitt neu, um die Position zu ändern (z. B. unter dem Titel)."
+            },
             "show_taxes_notice": {
               "label": "Steuerhinweis anzeigen"
+            },
+            "header__compare_at": {
+              "content": "Vergleichspreis (durchgestrichen)"
+            },
+            "compare_at_color": {
+              "label": "Farbe Vergleichspreis",
+              "info": "Wird angezeigt, wenn die Variante einen höheren Vergleichspreis hat. Farbe leeren für die Theme-Standardfarbe."
+            },
+            "compare_at_font_size": {
+              "label": "Schriftgröße Vergleichspreis",
+              "info": "Gilt nur für den durchgestrichenen Vergleichspreis."
+            }
+          }
+        },
+        "shop_pay_installments": {
+          "name": "Shop Pay installments",
+          "settings": {
+            "paragraph": {
+              "content": "Shows installment messaging when Shop Pay installments are available. Add this block once, then drag it anywhere in the product information column."
             }
           }
         },
@@ -3270,6 +3292,10 @@
           "settings": {
             "show_quantity_selector": {
               "label": "Mengenauswahl anzeigen"
+            },
+            "show_price": {
+              "label": "Preis in diesem Block anzeigen",
+              "info": "Aktivieren, wenn der Preis nur hier erscheinen soll. Deaktivieren, wenn der Preisblock in der Produktspalte verwendet wird, damit der Betrag nicht doppelt angezeigt wird."
             },
             "show_dynamic_checkout": {
               "label": "Dynamischer Checkout-Button anzeigen",
@@ -3489,6 +3515,22 @@
           "settings": {
             "paragraph": {
               "content": "Halten Sie die Schaltfläche Zum Warenkorb hinzufügen sichtbar, während Kunden stöbern und scrollen."
+            },
+            "layout": {
+              "label": "Layout",
+              "options__1": {
+                "label": "Volle Breite unten"
+              },
+              "options__2": {
+                "label": "Schwebende Karte"
+              }
+            },
+            "show_thumbnail": {
+              "label": "Produktminiatur anzeigen"
+            },
+            "desktop_max_width_percent": {
+              "label": "Maximale Breite (Desktop)",
+              "info": "Nur bei Layout „Volle Breite“. Begrenzt die Balkenbreite auf großen Bildschirmen (mittig ausgerichtet)."
             }
           }
         }

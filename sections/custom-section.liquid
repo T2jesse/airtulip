@@ -30,7 +30,7 @@
   }
 </style>
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   {%- render 'background-media',
     background_media: section.settings.background_media,
     background_video: section.settings.video,

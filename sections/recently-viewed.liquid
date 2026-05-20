@@ -8,7 +8,7 @@
 
 <recently-viewed class="recently-viewed block" data-url="{{ routes.search_url }}?section_id={{ section.id }}&type=product&q=" data-limit="{{ section.settings.product_limit }}"{% if request.page_type == 'product' %} data-product-id="{{ product.id }}"{% endif %}>
   {%- if request.page_type == 'search' and search.performed and search.results_count > 0 -%}
-    <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+    <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
       {%- liquid
         assign parsed_terms = search.terms | split: ' OR '
         capture recent_results

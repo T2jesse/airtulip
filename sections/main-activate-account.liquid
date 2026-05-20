@@ -7,7 +7,7 @@
 
 {{ 'customer.css' | asset_url | stylesheet_tag }}
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width relative">
     <div class="title-wrapper{% if section.settings.heading_size == 'title-xl' %} title-wrapper-lg{% endif %} text-center leading-none grid gap-4">
       <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}">

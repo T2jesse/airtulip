@@ -11,7 +11,7 @@
   assign products = section.settings.products | default: collection.products
   assign controls = 'ProductBundle-' | append: section.id
 -%}
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
     <div class="product-bundle-wrapper block lg:flex lg:gap-10">
       <div class="lg:grow">

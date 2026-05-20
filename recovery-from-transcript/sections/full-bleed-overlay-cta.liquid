@@ -1,0 +1,385 @@
+{%- liquid
+  if section.index == 1
+    assign loading = 'eager'
+    assign fetchpriority = 'high'
+    assign lazyimg = null
+  else
+    assign loading = 'lazy'
+    assign fetchpriority = 'low'
+    assign lazyimg = 'lazy-image'
+  endif
+
+  assign ih = section.settings.min_height_vh | default: 85
+  assign overlay_a = section.settings.overlay_opacity | times: 0.01 | at_most: 1 | at_least: 0
+  assign has_top = section.settings.top_heading != blank or section.settings.top_text != blank
+  assign has_bottom = section.settings.bottom_heading != blank or section.settings.bottom_text != blank
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    {%- render 'section-variables', section: section -%}
+    --fb-min-h: {{ ih }}vh;
+    --fb-overlay-a: {{ overlay_a }};
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual {
+    position: relative;
+    width: 100%;
+    min-height: var(--fb-min-h);
+    overflow: hidden;
+    background: rgb(var(--color-placeholder) / 0.35);
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__dim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: {{ section.settings.overlay_color }};
+    opacity: var(--fb-overlay-a);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__layers {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--sp-8);
+    padding: clamp(var(--sp-6), 4vw, var(--sp-12));
+    color: {{ section.settings.overlay_text_color }};
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__layers a {
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__layers .rte,
+  #shopify-section-{{ section.id }} .fboc-visual__layers .rte p {
+    color: inherit;
+  }
+
+  @media screen and (max-width: 767px) {
+    #shopify-section-{{ section.id }} .fboc-visual__layers--stack {
+      justify-content: flex-start;
+    }
+    #shopify-section-{{ section.id }} .fboc-br {
+      align-self: flex-start;
+      text-align: left;
+      margin-top: var(--sp-8);
+    }
+  }
+</style>
+
+<div class="section{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+  <div class="{% if section.settings.contain_width %}page-width {% endif %}relative">
+    <div class="fboc-visual">
+      <div class="fboc-visual__media media media--height">
+        {%- if section.settings.image != blank -%}
+          {%- capture sizes -%}100vw{%- endcapture -%}
+          {%- if section.settings.image_mobile != blank -%}
+            <source
+              media="(max-width: 767px)"
+              srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1200x' }} 1200w"
+              width="{{ section.settings.image_mobile.width }}"
+              height="{{ section.settings.image_mobile.height }}"
+            >
+          {%- endif -%}
+          {{
+            section.settings.image
+            | image_url: width: section.settings.image.width
+            | image_tag:
+              loading: loading,
+              fetchpriority: fetchpriority,
+              sizes: sizes,
+              widths: '400,600,800,1000,1200,1400,1600,1800,2000,2400,2800,3200,3600,3840',
+              is: lazyimg,
+              class: 'banner__image'
+          }}
+        {%- else -%}
+          {{- 'lifestyle-1' | placeholder_svg_tag: 'banner__image banner__overlay placeholder' -}}
+        {%- endif -%}
+      </div>
+
+      {%- if overlay_a > 0 -%}
+        <div class="fboc-visual__dim" aria-hidden="true"></div>
+      {%- endif -%}
+
+      {%- if has_top or has_bottom -%}
+        <div class="fboc-visual__layers fboc-visual__layers--stack w-full h-full">
+          <div class="fboc-tl max-w-lg lg:max-w-xl">
+            {%- if section.settings.top_heading != blank -%}
+              <h3 class="heading title-md md:title-lg leading-tight tracking-heading m-0">{{ section.settings.top_heading | escape }}</h3>
+            {%- endif -%}
+            {%- if section.settings.top_text != blank -%}
+              <div class="rte subtext-lg md:subtext-xl leading-normal mt-4 opacity-90">{{ section.settings.top_text }}</div>
+            {%- endif -%}
+          </div>
+          <div class="fboc-br max-w-lg lg:max-w-xl self-end text-right">
+            {%- if section.settings.bottom_heading != blank -%}
+              <h3 class="heading title-md md:title-lg leading-tight tracking-heading m-0">{{ section.settings.bottom_heading | escape }}</h3>
+            {%- endif -%}
+            {%- if section.settings.bottom_text != blank -%}
+              <div class="rte subtext-lg md:subtext-xl leading-normal mt-4 opacity-90">{{ section.settings.bottom_text }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+    <div class="page-width">
+      <div class="rich-text md:text-{{ section.settings.cta_alignment }} text-{{ section.settings.cta_alignment_mobile }} pt-8 md:pt-10">
+        {%- render 'button',
+          label: section.settings.cta_label,
+          link: section.settings.cta_link,
+          style: section.settings.cta_style,
+          size: section.settings.cta_size,
+          external: section.settings.cta_external,
+          show_icon: section.settings.cta_icon
+        -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Full-bleed image + overlay CTA",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (mobile)",
+      "info": "Optional. Uses desktop image when empty."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image focal point",
+      "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "min_height_vh",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Minimum height",
+      "default": 85
+    },
+    {
+      "type": "checkbox",
+      "id": "contain_width",
+      "label": "Constrain image to page width",
+      "default": false,
+      "info": "Off = edge-to-edge (full viewport width)."
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Darken / tint strength",
+      "default": 45
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#0a1628"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Overlay text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Top left"
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading",
+      "info": "Rendered as h3."
+    },
+    {
+      "type": "richtext",
+      "id": "top_text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Bottom right"
+    },
+    {
+      "type": "text",
+      "id": "bottom_heading",
+      "label": "Heading",
+      "info": "Rendered as h3."
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Call to action (below image)"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "cta_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "cta_size",
+      "label": "Button size",
+      "default": "md",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_icon",
+      "label": "Show arrow icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_external",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "cta_alignment",
+      "label": "CTA alignment (desktop)",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "cta_alignment_mobile",
+      "label": "CTA alignment (mobile)",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Full-bleed image + overlay CTA",
+      "settings": {
+        "min_height_vh": 85,
+        "overlay_opacity": 35,
+        "overlay_color": "#070f1a",
+        "overlay_text_color": "#ffffff",
+        "top_heading": "Scientifically proven results",
+        "top_text": "<p>Cleanroom-grade air in your breathing zone — validated against ordinary purifiers.</p>",
+        "bottom_heading": "Over 1,000× cleaner",
+        "bottom_text": "<p>Particles per breath drop to cleanroom-level performance while you sleep.</p>",
+        "cta_label": "Learn more about us",
+        "cta_style": "primary",
+        "cta_icon": true
+      }
+    }
+  ]
+}
+{% endschema %}

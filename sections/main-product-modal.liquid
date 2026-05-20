@@ -209,7 +209,16 @@
                   {%- endif -%}
   
                 {%- when 'price' -%}
-                  <div class="product__price grid gap-3" {{ block.shopify_attributes }}>
+                  {%- liquid
+                    assign compare_fs = block.settings.compare_at_font_size | default: 14
+                    capture price_compare_style
+                      echo '--price-compare-at-font-size: ' | append: compare_fs | append: 'px;'
+                      unless block.settings.compare_at_color == blank
+                        echo ' --price-compare-at-color: ' | append: block.settings.compare_at_color | append: ';'
+                      endunless
+                    endcapture
+                  -%}
+                  <div class="product__price grid gap-3 product__price--compare-custom" style="{{ price_compare_style | strip }}" {{ block.shopify_attributes }}>
                     <div class="no-js-hidden" id="Price-{{ section.id }}-{{ product.id }}">
                       {%- render 'product-price', product: product, use_variant: true, class: 'flex flex-wrap items-baseline gap-2 lg:gap-1d5' -%}
                       
@@ -219,12 +228,6 @@
                         </div>
                       {%- endif -%}
                     </div>
-    
-                    {%- assign product_form_installment_id = 'ProductFormInstallment-' | append: section.id | append: '-' | append: product.id -%}
-                    {%- form 'product', product, id: product_form_installment_id, class: 'installment text-sm leading-tight' -%}
-                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
-                      {{ form | payment_terms }}
-                    {%- endform -%}
     
                     {%- if block.settings.show_taxes_notice -%}
                       {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
@@ -554,6 +557,9 @@
                       {{ block.settings.liquid }}
                     </div>
                   </details>
+
+                {%- when 'tabbed_content' -%}
+                  {%- render 'product-tabbed-content', block: block, product: product -%}
 
                 {%- when 'countdown' -%}
                   {%- if product.metafields.theme.countdown.value != blank -%}
@@ -1341,12 +1347,6 @@
         },
         {
           "type": "checkbox",
-          "id": "show_price",
-          "default": true,
-          "label": "t:sections.global.settings.show_product_price.label"
-        },
-        {
-          "type": "checkbox",
           "id": "show_rating",
           "default": true,
           "label": "t:sections.main-product.blocks.title.settings.show_rating.label",
@@ -1364,6 +1364,28 @@
           "id": "show_taxes_notice",
           "default": true,
           "label": "t:sections.main-product.blocks.price.settings.show_taxes_notice.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.main-product.blocks.price.settings.header__compare_at.content"
+        },
+        {
+          "type": "color",
+          "id": "compare_at_color",
+          "label": "t:sections.main-product.blocks.price.settings.compare_at_color.label",
+          "info": "t:sections.main-product.blocks.price.settings.compare_at_color.info",
+          "default": "#737373"
+        },
+        {
+          "type": "range",
+          "id": "compare_at_font_size",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 14,
+          "label": "t:sections.main-product.blocks.price.settings.compare_at_font_size.label",
+          "info": "t:sections.main-product.blocks.price.settings.compare_at_font_size.info"
         }
       ]
     },
@@ -1616,7 +1638,8 @@
           "type": "checkbox",
           "id": "show_price",
           "default": false,
-          "label": "t:sections.global.settings.show_product_price.label"
+          "label": "t:sections.main-product.blocks.buy_buttons.settings.show_price.label",
+          "info": "t:sections.main-product.blocks.buy_buttons.settings.show_price.info"
         },
         {
           "type": "checkbox",
@@ -2127,6 +2150,366 @@
       ]
     },
     {
+      "type": "tabbed_content",
+      "name": "t:sections.main-product.blocks.tabbed_content.name",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-product.blocks.tabbed_content.settings.paragraph.content"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.style.label",
+          "options": [
+            {
+              "value": "with-border",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.style.options__1.label"
+            },
+            {
+              "value": "with-background",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.style.options__2.label"
+            }
+          ],
+          "default": "with-border"
+        },
+        {
+          "type": "select",
+          "id": "tab_count",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.tab_count.label",
+          "options": [
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "3"
+        },
+        {
+          "type": "checkbox",
+          "id": "tab_1_show_product_description",
+          "default": false,
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.tab_1_show_product_description.label",
+          "info": "t:sections.main-product.blocks.tabbed_content.settings.tab_1_show_product_description.info"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.main-product.blocks.tabbed_content.settings.header__tab_1.content"
+        },
+        {
+          "type": "text",
+          "id": "tab_1_heading",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.heading.label",
+          "default": "Details"
+        },
+        {
+          "type": "select",
+          "id": "tab_1_icon",
+          "label": "t:sections.global.settings.icon.label",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.global.settings.icon.options__1.label"
+            },
+            {
+              "value": "box",
+              "label": "t:sections.global.settings.icon.options__5.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.global.settings.icon.options__52.label"
+            },
+            {
+              "value": "shield",
+              "label": "t:sections.global.settings.icon.options__42.label"
+            },
+            {
+              "value": "file_text",
+              "label": "t:sections.global.settings.icon.options__18.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.global.settings.icon.options__9.label"
+            },
+            {
+              "value": "gift",
+              "label": "t:sections.global.settings.icon.options__19.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.global.settings.icon.options__23.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.global.settings.icon.options__45.label"
+            },
+            {
+              "value": "email",
+              "label": "t:sections.global.settings.icon.options__16.label"
+            },
+            {
+              "value": "phone",
+              "label": "t:sections.global.settings.icon.options__31.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.global.settings.icon.options__27.label"
+            }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "tab_1_content",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.content.label",
+          "default": "<p>Share in-depth information about this product: materials, specs, sizing, or care.</p>"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.main-product.blocks.tabbed_content.settings.header__tab_2.content"
+        },
+        {
+          "type": "text",
+          "id": "tab_2_heading",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.heading.label",
+          "default": "Shipping"
+        },
+        {
+          "type": "select",
+          "id": "tab_2_icon",
+          "label": "t:sections.global.settings.icon.label",
+          "default": "truck",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.global.settings.icon.options__1.label"
+            },
+            {
+              "value": "box",
+              "label": "t:sections.global.settings.icon.options__5.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.global.settings.icon.options__52.label"
+            },
+            {
+              "value": "shield",
+              "label": "t:sections.global.settings.icon.options__42.label"
+            },
+            {
+              "value": "file_text",
+              "label": "t:sections.global.settings.icon.options__18.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.global.settings.icon.options__9.label"
+            },
+            {
+              "value": "gift",
+              "label": "t:sections.global.settings.icon.options__19.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.global.settings.icon.options__23.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.global.settings.icon.options__45.label"
+            },
+            {
+              "value": "email",
+              "label": "t:sections.global.settings.icon.options__16.label"
+            },
+            {
+              "value": "phone",
+              "label": "t:sections.global.settings.icon.options__31.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.global.settings.icon.options__27.label"
+            }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "tab_2_content",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.content.label",
+          "default": "<p>Add delivery timelines, carriers, and regions you ship to.</p>"
+        },
+        {
+          "type": "page",
+          "id": "tab_2_page",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.tab_optional_page.label",
+          "info": "t:sections.main-product.blocks.tabbed_content.settings.tab_optional_page.info"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.main-product.blocks.tabbed_content.settings.header__tab_3.content"
+        },
+        {
+          "type": "text",
+          "id": "tab_3_heading",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.heading.label",
+          "default": "Returns"
+        },
+        {
+          "type": "select",
+          "id": "tab_3_icon",
+          "label": "t:sections.global.settings.icon.label",
+          "default": "shield",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.global.settings.icon.options__1.label"
+            },
+            {
+              "value": "box",
+              "label": "t:sections.global.settings.icon.options__5.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.global.settings.icon.options__52.label"
+            },
+            {
+              "value": "shield",
+              "label": "t:sections.global.settings.icon.options__42.label"
+            },
+            {
+              "value": "file_text",
+              "label": "t:sections.global.settings.icon.options__18.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.global.settings.icon.options__9.label"
+            },
+            {
+              "value": "gift",
+              "label": "t:sections.global.settings.icon.options__19.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.global.settings.icon.options__23.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.global.settings.icon.options__45.label"
+            },
+            {
+              "value": "email",
+              "label": "t:sections.global.settings.icon.options__16.label"
+            },
+            {
+              "value": "phone",
+              "label": "t:sections.global.settings.icon.options__31.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.global.settings.icon.options__27.label"
+            }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "tab_3_content",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.content.label",
+          "default": "<p>Summarize your return window and how customers start a return.</p>"
+        },
+        {
+          "type": "page",
+          "id": "tab_3_page",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.tab_optional_page.label",
+          "info": "t:sections.main-product.blocks.tabbed_content.settings.tab_optional_page.info"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.main-product.blocks.tabbed_content.settings.header__tab_4.content"
+        },
+        {
+          "type": "text",
+          "id": "tab_4_heading",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.heading.label",
+          "default": "Specs"
+        },
+        {
+          "type": "select",
+          "id": "tab_4_icon",
+          "label": "t:sections.global.settings.icon.label",
+          "default": "file_text",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.global.settings.icon.options__1.label"
+            },
+            {
+              "value": "box",
+              "label": "t:sections.global.settings.icon.options__5.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.global.settings.icon.options__52.label"
+            },
+            {
+              "value": "shield",
+              "label": "t:sections.global.settings.icon.options__42.label"
+            },
+            {
+              "value": "file_text",
+              "label": "t:sections.global.settings.icon.options__18.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.global.settings.icon.options__9.label"
+            },
+            {
+              "value": "gift",
+              "label": "t:sections.global.settings.icon.options__19.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.global.settings.icon.options__23.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.global.settings.icon.options__45.label"
+            },
+            {
+              "value": "email",
+              "label": "t:sections.global.settings.icon.options__16.label"
+            },
+            {
+              "value": "phone",
+              "label": "t:sections.global.settings.icon.options__31.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.global.settings.icon.options__27.label"
+            }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "tab_4_content",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.content.label",
+          "default": "<p>Dimensions, materials, weight, certifications, or compatibility.</p>"
+        },
+        {
+          "type": "page",
+          "id": "tab_4_page",
+          "label": "t:sections.main-product.blocks.tabbed_content.settings.tab_optional_page.label",
+          "info": "t:sections.main-product.blocks.tabbed_content.settings.tab_optional_page.info"
+        }
+      ]
+    },
+    {
       "type": "countdown",
       "name": "t:sections.main-product.blocks.countdown.name",
       "limit": 1,
@@ -2621,6 +3004,17 @@
           "id": "select_options",
           "label": "t:sections.main-product.blocks.line_item_property.settings.options.label",
           "info": "t:sections.main-product.blocks.line_item_property.settings.options.info"
+        }
+      ]
+    },
+    {
+      "type": "shop_pay_installments",
+      "name": "t:sections.main-product.blocks.shop_pay_installments.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-product.blocks.shop_pay_installments.settings.paragraph.content"
         }
       ]
     },

@@ -7,11 +7,12 @@ alwaysApply: true
 
 ## What this repo is
 
-- **Client / storefront:** [https://airtulip.com](https://airtulip.com) (Shopify).
+- **Client / storefront:** [https://airtulip.com](https://airtulip.com) (Shopify). **Customer-facing marketing domain** also uses [airtulip.co](https://airtulip.co/)—verify which is canonical for links in copy.
 - **Stack:** Shopify **Online Store 2.0** theme only — Liquid, JSON templates, theme `assets/`. There is **no** Hydrogen/React app, **no** `package.json` CSS/JS build pipeline; the storefront is rendered by Shopify’s **Online Store** theme system.
 - **Workflow:** Git repo → GitHub → **staging** theme on the Shopify store (do **not** treat changes as production-safe until the team publishes).
 - **Installed apps (admin):** See **`.cursor/rules/airtulip-apps.mdc`** — inventory + overlap notes; apps affect live theme behavior beyond this Git repo.
 - **Shopify CLI `theme push`:** See **`.cursor/rules/airtulip-cli-theme-push.mdc`** — `visible_if` schema patches required for RoarTheme Concept to upload via CLI (avoid PDP 404 on dev themes).
+- **Merchant product & storefront copy:** See **`.cursor/rules/airtulip-brand-content.mdc`** — AirTulip positioning, science story, pricing/subscription snapshot, policies (for headings, badges, FAQs, marketing sections).
 - **Theme product & styling (vendor baseline):** See **Theme product & CSS foundations** below.
 
 ## Theme product & CSS foundations

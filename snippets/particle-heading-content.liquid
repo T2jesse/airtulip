@@ -1,0 +1,18 @@
+{%- doc -%}
+  Inserts a clipped span around an escaped phrase inside a plain-text heading.
+
+  Params: heading_plain, phrase, block, dot_px, gap_px, dot_fill,
+    decorative_under_reduced_motion (optional checkbox from section)
+{%- enddoc -%}
+{%- liquid
+  assign phrase_t = phrase | strip_html | strip
+  assign chunks = heading_plain | split: phrase_t
+-%}
+{{- chunks[0] | escape -}}
+<span
+  class="particle-heading__fill particle-heading__fill--{{- block.id -}}{% if decorative_under_reduced_motion %} particle-heading__fill--decorative-motion{% endif %}"
+  style="--ph-dot-radius: {{- dot_px }}px; --ph-gap: {{- gap_px }}px; --ph-dot-color: {{- dot_fill -}};"
+>
+  {{- phrase_t | escape -}}
+</span>
+{{- chunks[1] | escape -}}

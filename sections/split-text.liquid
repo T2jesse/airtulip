@@ -1,0 +1,1026 @@
+{%- comment -%}
+  split-text — two columns (media | copy). No overlap, no gradient “split”.
+  Namespace: mc- (media + content). Keep section "type": split-text for JSON templates.
+{%- endcomment -%}
+{%- liquid
+  assign sid = '#shopify-section-' | append: section.id
+
+  if section.index == 1
+    assign loading_attr = 'eager'
+    assign fetchprio = 'high'
+    assign lazyimg = null
+  else
+    assign loading_attr = 'lazy'
+    assign fetchprio = 'low'
+    assign lazyimg = 'lazy-image'
+  endif
+
+  assign media_pct = section.settings.media_span_percent | default: 55 | times: 1
+  assign min_h_desk = section.settings.min_height_px | default: 480 | times: 1
+  assign min_h_mobile = section.settings.min_height_px_mobile | default: 340 | times: 1
+  assign block_gap = section.settings.split_overlay_stack_gap_px | default: 28 | times: 1
+  assign lh = section.settings.heading_line_height_pct | default: 124 | times: 0.01
+  assign media_flush = section.settings.media_flush_edge
+  assign media_right = false
+  if section.settings.media_side == 'right'
+    assign media_right = true
+  endif
+
+  assign clr_heading = section.settings.color_heading
+  assign clr_body = section.settings.color_supporting_text
+  assign clr_col = section.settings.content_column_background
+  if clr_heading == blank
+    assign clr_heading = '#0a1628'
+  endif
+  if clr_body == blank
+    assign clr_body = '#394a60'
+  endif
+  if clr_col == blank or clr_col == 'rgba(0,0,0,0)'
+    assign clr_col = 'transparent'
+  endif
+
+  assign clr_col_mobile = section.settings.mobile_stack_background
+  if clr_col_mobile == blank or clr_col_mobile == 'rgba(0,0,0,0)'
+    assign clr_col_mobile = clr_col
+  endif
+
+  capture sizes_primary
+    echo '(max-width: 767px) 100vw, '
+    echo media_pct
+    echo 'vw'
+  endcapture
+
+  assign use_video = false
+  if section.settings.video != blank or section.settings.video_url != blank
+    assign use_video = true
+  elsif section.settings.video_mobile != blank or section.settings.video_url_mobile != blank
+    assign use_video = true
+  endif
+
+  assign dual_video = false
+  if section.settings.video != blank or section.settings.video_url != blank
+    if section.settings.video_mobile != blank or section.settings.video_url_mobile != blank
+      assign dual_video = true
+    endif
+  endif
+
+  assign desk_v = section.settings.video
+  assign desk_u = section.settings.video_url
+  if desk_v == blank and desk_u == blank
+    assign desk_v = section.settings.video_mobile
+    assign desk_u = section.settings.video_url_mobile
+  endif
+
+  assign poster = section.settings.cover_image | default: section.settings.cover_image_mobile
+
+  assign sv_mute = section.settings.split_video_autoplay | default: true
+  assign sv_loop = section.settings.split_video_loop | default: true
+
+  capture vid_classes
+    echo 'mc-vm block w-full h-full'
+    if sv_mute
+      echo ' pointer-events-none'
+    endif
+  endcapture
+
+  assign show_vid_btn = true
+  if sv_mute
+    assign show_vid_btn = false
+  endif
+
+  assign vid_alt = section.settings.video_description | default: section.settings.image_heading_fallback | strip | default: 'Background video'
+
+  assign has_section_bg_solid = false
+  assign has_section_bg_gradient = false
+  if section.settings.color_background != blank and section.settings.color_background != 'rgba(0,0,0,0)'
+    assign has_section_bg_solid = true
+  endif
+  if section.settings.gradient_background != blank and section.settings.gradient_background != 'rgba(0,0,0,0)'
+    assign has_section_bg_gradient = true
+  endif
+  assign has_section_bg = false
+  if has_section_bg_solid or has_section_bg_gradient
+    assign has_section_bg = true
+  endif
+-%}
+
+<style>
+  {{ sid }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --mc-media-pct: {{ media_pct }}%;
+    --mc-min-desk: {{ min_h_desk }}px;
+    --mc-min-mob: {{ min_h_mobile }}px;
+    --mc-gap: {{ block_gap }}px;
+    --mc-h-lh: {{ lh }};
+    --mc-heading: {{ clr_heading }};
+    --mc-body: {{ clr_body }};
+    {%- render 'section-variables', section: section -%}
+  }
+
+  /*
+    Duplicate props on `.mc`: some browsers/third-party injections resolve `var()`
+    against the subtree root; avoids missing inherited custom props on `#shopify-section-*`.
+  */
+  {{ sid }} .mc {
+    --mc-heading: {{ clr_heading }};
+    --mc-body: {{ clr_body }};
+    width: 100%;
+  }
+
+  {%- if has_section_bg -%}
+  {{ sid }} .mc.mc--section-bg {
+    {%- if has_section_bg_gradient -%}
+    background: var(--gradient-background);
+    {%- endif -%}
+    {%- if has_section_bg_solid -%}
+    background-color: rgb(var(--color-background));
+    {%- endif -%}
+  }
+
+  {%- if section.settings.rounded -%}
+  {{ sid }} .mc.mc--section-bg {
+    border-radius: var(--rounded-block);
+    overflow: hidden;
+  }
+  {%- endif -%}
+  {%- endif -%}
+
+  {{ sid }} .mc__row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    overflow: visible;
+  }
+
+  {{ sid }} .mc__media {
+    position: relative;
+    width: 100%;
+    min-height: var(--mc-min-mob);
+    overflow: hidden;
+    box-sizing: border-box;
+    background: rgb(var(--color-placeholder));
+  }
+
+  {% if section.settings.rounded %}
+  {{ sid }} .mc__media {
+    border-radius: var(--border-radius);
+  }
+  {% endif %}
+
+  /* Inner box always has explicit height → absolute poster/video can fill it */
+  {{ sid }} .mc__fill {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  {{ sid }} .mc__fill > picture,
+  {{ sid }} .mc__fill picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  {{ sid }} .mc__fill img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  {{ sid }} .mc__fill video-media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Theme default: aspect-ratio ties height to width — narrow column ⇒ short strip. Fill the media cell instead. */
+    aspect-ratio: unset !important;
+    --aspect-ratio: auto;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: inherit;
+  }
+
+  {{ sid }} .mc__fill .deferred-media:not(video-media) {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: unset !important;
+  }
+
+  {{ sid }} .mc__fill video-media[host] {
+    display: block;
+  }
+
+  {{ sid }} .mc__fill video-media > :is(video, iframe, img, svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  {{ sid }} .mc__ph {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  {{ sid }} .mc__shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: rgb(0 0 0 / 0.22);
+  }
+
+  {{ sid }} .mc__copy {
+    box-sizing: border-box;
+    position: relative;
+    overflow: visible;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: var(--sp-8) clamp(var(--sp-4), 5vw, var(--sp-8)) var(--sp-10);
+    text-align: {{ section.settings.content_alignment_mobile }};
+    background: {{ clr_col_mobile }};
+    color: {{ clr_body }} !important;
+    -webkit-text-fill-color: {{ clr_body }} !important;
+  }
+
+  {{ sid }} .mc__stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--mc-gap);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  @media screen and (max-width: 767px) {
+    {% case section.settings.content_alignment_mobile %}
+      {% when 'center' %}
+    {{ sid }} .mc__stack { align-items: center; }
+      {% when 'right' %}
+    {{ sid }} .mc__stack { align-items: flex-end; }
+    {% endcase %}
+  }
+
+  @media screen and (min-width: 768px) {
+    {% if media_flush %}
+    {{ sid }} .mc--flush.mc--media-left .mc__row {
+      margin-inline-start: calc(-1 * var(--page-padding));
+      width: calc(100% + var(--page-padding));
+    }
+    {{ sid }} .mc--flush.mc--media-right .mc__row {
+      margin-inline-end: calc(-1 * var(--page-padding));
+      width: calc(100% + var(--page-padding));
+    }
+    {% endif %}
+
+    {{ sid }} .mc__row {
+      flex-direction: row;
+      align-items: stretch;
+      min-height: var(--mc-min-desk);
+    }
+
+    {{ sid }} .mc--media-right .mc__row {
+      flex-direction: row-reverse;
+    }
+
+    {{ sid }} .mc__media {
+      flex: 0 0 var(--mc-media-pct);
+      width: var(--mc-media-pct);
+      max-width: var(--mc-media-pct);
+      min-height: var(--mc-min-desk);
+      align-self: stretch;
+      background-color: transparent;
+    }
+
+    {{ sid }} .mc__copy {
+      flex: 1 1 0%;
+      padding: clamp(var(--sp-6), 4vw, var(--sp-12)) clamp(var(--sp-4), 3vw, var(--sp-10));
+      text-align: {{ section.settings.desktop_text_align }};
+      background: {{ clr_col }};
+      color: {{ clr_body }} !important;
+      -webkit-text-fill-color: {{ clr_body }} !important;
+    }
+
+    {% case section.settings.desktop_text_align %}
+      {% when 'center' %}
+    {{ sid }} .mc__stack { align-items: center; }
+      {% when 'right' %}
+    {{ sid }} .mc__stack { align-items: flex-end; }
+      {% else %}
+    {{ sid }} .mc__stack { align-items: flex-start; }
+    {% endcase %}
+  }
+
+  /*
+    Title uses solid Liquid colors (not only CSS vars) so text always paints in the customizer + storefront.
+    Also reset RoarTheme “particle-heading__fill” dotted text (transparent fill + background-clip).
+  */
+  {{ sid }} .mc__title {
+    margin: 0;
+    padding: clamp(4px, 0.08em, 12px) 0 0;
+    width: 100%;
+    max-width: 100%;
+    opacity: 1;
+    visibility: visible;
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: var(--font-heading-letter-spacing);
+    text-transform: var(--font-heading-text-transform);
+    word-break: break-word;
+    line-height: var(--mc-h-lh);
+    color: {{ clr_heading }} !important;
+    -webkit-text-fill-color: {{ clr_heading }} !important;
+    background-image: none;
+    mix-blend-mode: normal;
+  }
+
+  {{ sid }} .mc__title *,
+  {{ sid }} .mc__title ::marker {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+  }
+
+  {{ sid }} .mc__title .particle-heading__fill {
+    color: {{ clr_heading }} !important;
+    -webkit-text-fill-color: {{ clr_heading }} !important;
+    background-image: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+  }
+
+  /*
+    Theme typography utilities can pair with dotted “particle” fills (transparent glyph + patterned bg).
+    Force solid fill inside this column so PDP copy never disappears.
+  */
+  {{ sid }} .mc__rte.rte .particle-heading__fill {
+    color: {{ clr_body }} !important;
+    -webkit-text-fill-color: {{ clr_body }} !important;
+    background-image: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+  }
+
+  {{ sid }} .mc__title.title-md-lg {
+    font-size: calc((var(--title-md) + var(--title-lg)) * 0.5);
+  }
+
+  {{ sid }} .mc__title.title-lg-xl {
+    font-size: calc((var(--title-lg) + var(--title-xl)) * 0.5);
+  }
+
+  @media screen and (min-width: 1024px) {
+    {{ sid }} .mc__title,
+    {{ sid }} .mc__title.title-md,
+    {{ sid }} .mc__title.title-md-lg,
+    {{ sid }} .mc__title.title-lg,
+    {{ sid }} .mc__title.title-lg-xl,
+    {{ sid }} .mc__title.title-xl {
+      font-size: 58px;
+      line-height: 1.05;
+    }
+  }
+
+  {{ sid }} .mc__rte.rte {
+    width: 100%;
+    max-width: 100%;
+    opacity: 1;
+    visibility: visible;
+    mix-blend-mode: normal;
+    color: {{ clr_body }} !important;
+    -webkit-text-fill-color: {{ clr_body }} !important;
+  }
+
+  {{ sid }} .mc__rte.rte *,
+  {{ sid }} .mc__rte.rte ::marker {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+    background-image: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+  }
+
+  {{ sid }} .mc__rte.rte ::marker {
+    color: inherit !important;
+  }
+
+  {{ sid }} .mc__rte.rte a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  {{ sid }} .mc__btn {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /*
+    Copy column sets body color + -webkit-text-fill-color with !important (for particle-heading fixes).
+    Reset button label/icon to theme button tokens so primary (dark fill) always shows light text.
+  */
+  {{ sid }} .mc__copy .button.button--primary,
+  {{ sid }} .mc__copy .button.button--primary .btn-text,
+  {{ sid }} .mc__copy .button.button--primary .btn-text .icon {
+    color: rgb(var(--color-button-text)) !important;
+    -webkit-text-fill-color: rgb(var(--color-button-text)) !important;
+  }
+
+  {{ sid }} .mc__copy .button.button--secondary,
+  {{ sid }} .mc__copy .button.button--secondary .btn-text,
+  {{ sid }} .mc__copy .button.button--secondary .btn-text .icon {
+    color: rgb(var(--color-button-background)) !important;
+    -webkit-text-fill-color: rgb(var(--color-button-background)) !important;
+  }
+
+  @media screen and (pointer: fine) {
+    .js [data-button-hover=standard] {{ sid }} .mc__copy .button.button--primary:hover:not([disabled]),
+    .js [data-button-hover=standard] {{ sid }} .mc__copy .button.button--primary:hover:not([disabled]) .btn-text,
+    .js [data-button-hover=standard] {{ sid }} .mc__copy .button.button--primary:hover:not([disabled]) .btn-text .icon {
+      color: rgb(var(--color-button-background)) !important;
+      -webkit-text-fill-color: rgb(var(--color-button-background)) !important;
+    }
+
+    .js [data-button-hover=standard] {{ sid }} .mc__copy .button.button--secondary:hover:not([disabled]),
+    .js [data-button-hover=standard] {{ sid }} .mc__copy .button.button--secondary:hover:not([disabled]) .btn-text,
+    .js [data-button-hover=standard] {{ sid }} .mc__copy .button.button--secondary:hover:not([disabled]) .btn-text .icon {
+      color: rgb(var(--color-button-text)) !important;
+      -webkit-text-fill-color: rgb(var(--color-button-text)) !important;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    {% case section.settings.content_alignment_mobile %}
+      {% when 'center' %}
+    {{ sid }} .mc__btn { justify-content: center; }
+      {% when 'right' %}
+    {{ sid }} .mc__btn { justify-content: flex-end; }
+      {% else %}
+    {{ sid }} .mc__btn { justify-content: flex-start; }
+    {% endcase %}
+  }
+
+  @media screen and (min-width: 768px) {
+    {% case section.settings.desktop_text_align %}
+      {% when 'center' %}
+    {{ sid }} .mc__btn { justify-content: center; }
+      {% when 'right' %}
+    {{ sid }} .mc__btn { justify-content: flex-end; }
+      {% else %}
+    {{ sid }} .mc__btn { justify-content: flex-start; }
+    {% endcase %}
+  }
+
+  {{ sid }} .mc__app {
+    width: 100%;
+  }
+</style>
+
+<div class="section section--padding{% if section.settings.rounded %} section--rounded relative{% endif %}">
+  <div class="page-width">
+    <div
+      id="MediaContent-{{ section.id }}"
+      class="mc{% if has_section_bg %} mc--section-bg{% endif %}{% if media_flush %} mc--flush{% endif %} {% if media_right %}mc--media-right{% else %}mc--media-left{% endif %}"
+    >
+      <div class="mc__row">
+        <div class="mc__media">
+          <div class="mc__fill">
+            {% if use_video %}
+              {% if dual_video %}
+                {% render 'video',
+                  sizes: sizes_primary,
+                  loading: loading_attr,
+                  fetchpriority: fetchprio,
+                  lazyimage: lazyimg,
+                  video: section.settings.video_mobile,
+                  video_url: section.settings.video_url_mobile,
+                  muted: sv_mute,
+                  autoplay: sv_mute,
+                  loop: sv_loop,
+                  description: vid_alt,
+                  cover_image: section.settings.cover_image_mobile,
+                  show_play_button: show_vid_btn,
+                  is_mobile: true,
+                  class: vid_classes
+                %}
+              {% endif %}
+              {% render 'video',
+                sizes: sizes_primary,
+                loading: loading_attr,
+                fetchpriority: fetchprio,
+                lazyimage: lazyimg,
+                video: desk_v,
+                video_url: desk_u,
+                muted: sv_mute,
+                autoplay: sv_mute,
+                loop: sv_loop,
+                description: vid_alt,
+                cover_image: poster,
+                show_play_button: show_vid_btn,
+                class: vid_classes
+              %}
+            {% elsif section.settings.image != blank %}
+              {% assign alt_primary = section.settings.image.alt | default: section.settings.image_heading_fallback | escape %}
+              <picture>
+                {% if section.settings.image_mobile != blank %}
+                  <source
+                    media="(max-width: 767px)"
+                    srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1200x' }} 1200w"
+                    sizes="100vw"
+                    width="{{ section.settings.image_mobile.width }}"
+                    height="{{ section.settings.image_mobile.height }}"
+                  >
+                {% endif %}
+                {{ section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: loading_attr, fetchpriority: fetchprio, sizes: sizes_primary, widths: '375,550,720,940,1210,1600,2000,2400,3200', is: lazyimg, class: 'mc-img', alt: alt_primary }}
+              </picture>
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'mc__ph' }}
+            {% endif %}
+          </div>
+
+          {% if section.settings.media_shade %}
+            <div class="mc__shade" aria-hidden="true"></div>
+          {% endif %}
+        </div>
+
+        <div class="mc__copy">
+          <div class="mc__stack">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'heading' %}
+                  {% if block.settings.heading != blank %}
+                    <{{ block.settings.heading_tag }}
+                      id="Heading-SplitText-{{ block.id }}-{{ section.id }}"
+                      class="mc__title {{ block.settings.heading_size }}"
+                      {{ block.shopify_attributes }}
+                    >
+                      {{- block.settings.heading -}}
+                    </{{ block.settings.heading_tag }}>
+                  {% endif %}
+
+                {% when 'text' %}
+                  {% if block.settings.text != blank %}
+                    {% assign ts = block.settings.text_size | default: 'subtext-md' %}
+                    <div class="rte mc__rte {{ ts }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+                  {% endif %}
+
+                {% when 'button' %}
+                  {% if block.settings.button_label != blank %}
+                    <div class="mc__btn">
+                      {%- render 'button',
+                        label: block.settings.button_label,
+                        link: block.settings.button_link,
+                        size: block.settings.button_size | default: 'md',
+                        style: block.settings.button_style | default: 'primary',
+                        external: block.settings.button_external,
+                        show_icon: block.settings.button_icon,
+                        classes: 'mc-btn',
+                        shopify_attributes: block.shopify_attributes
+                      -%}
+                    </div>
+                  {% endif %}
+
+                {% when '@app' %}
+                  <div class="mc__app" {{ block.shopify_attributes }}>
+                    {% render block %}
+                  </div>
+              {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Split text",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Media and content sit side-by-side on large screens (no overlap). Heading, text, and button are edited in blocks below."
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Used when no video is set."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (mobile)",
+      "info": "Optional; uses desktop image when empty."
+    },
+    {
+      "type": "header",
+      "content": "Video — desktop"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Hosted video"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["youtube", "vimeo"],
+      "label": "Video link"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Poster image"
+    },
+    {
+      "type": "textarea",
+      "id": "video_description",
+      "label": "Video description",
+      "default": "Background video"
+    },
+    {
+      "type": "checkbox",
+      "id": "split_video_autoplay",
+      "label": "Autoplay (muted)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "split_video_loop",
+      "label": "Loop video",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Video — mobile"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Hosted video"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url_mobile",
+      "accept": ["youtube", "vimeo"],
+      "label": "Video link"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image_mobile",
+      "label": "Poster image"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "media_flush_edge",
+      "label": "Media flush into outer padding",
+      "default": false,
+      "info": "Large screens only: pulls the row into one side’s page gutter so media meets the viewport edge faster. Uses theme --page-padding."
+    },
+    {
+      "type": "select",
+      "id": "media_side",
+      "label": "Media column side",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "media_span_percent",
+      "label": "Media column width",
+      "min": 35,
+      "max": 80,
+      "step": 1,
+      "unit": "%",
+      "default": 55,
+      "info": "Large screens only. Copy column fills the rest."
+    },
+    {
+      "type": "checkbox",
+      "id": "media_shade",
+      "label": "Darken media slightly",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "image_heading_fallback",
+      "label": "Image alt fallback"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Section background",
+      "info": "Fills the full split area behind media and text. Clear the swatch for no section fill."
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "Section background gradient",
+      "info": "Optional. Uses the gradient instead of the solid section background when set."
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Heading",
+      "default": "#0a1628"
+    },
+    {
+      "type": "color",
+      "id": "color_supporting_text",
+      "label": "Body text",
+      "default": "#394a60"
+    },
+    {
+      "type": "color",
+      "id": "content_column_background",
+      "label": "Text column background",
+      "default": "rgba(248,247,246,1)",
+      "info": "Background on the copy side only. Clear for transparent (shows section background)."
+    },
+    {
+      "type": "color",
+      "id": "mobile_stack_background",
+      "label": "Text column background (mobile)",
+      "default": "#ffffff",
+      "info": "Copy area when stacked on small screens. Clear to use the text column color above."
+    },
+    {
+      "type": "header",
+      "content": "Typography & alignment"
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_pct",
+      "label": "Heading line height (×0.01)",
+      "min": 100,
+      "max": 160,
+      "step": 2,
+      "default": 124
+    },
+    {
+      "type": "select",
+      "id": "desktop_text_align",
+      "label": "Text alignment (desktop)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "label": "Text alignment (mobile)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "split_overlay_stack_gap_px",
+      "label": "Space between heading, text & button",
+      "min": 12,
+      "max": 72,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Height"
+    },
+    {
+      "type": "range",
+      "id": "min_height_px",
+      "label": "Minimum row height (desktop)",
+      "min": 280,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 480,
+      "info": "Adds a minimum for the whole row when media is beside copy."
+    },
+    {
+      "type": "range",
+      "id": "min_height_px_mobile",
+      "label": "Media minimum height (mobile)",
+      "min": 180,
+      "max": 640,
+      "step": 10,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded",
+      "label": "Rounded media corners",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Content" },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Text",
+          "default": "Air you can actually trust"
+        },
+        { "type": "header", "content": "Typography" },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Size",
+          "default": "title-lg tracking-heading",
+          "options": [
+            { "value": "title-md", "label": "Medium" },
+            { "value": "title-md-lg tracking-heading", "label": "Medium–large" },
+            { "value": "title-lg tracking-heading", "label": "Large" },
+            { "value": "title-lg-xl tracking-heading", "label": "Large–extra large" },
+            { "value": "title-xl tracking-heading", "label": "Extra large" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "HTML tag",
+          "default": "h2",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "header", "content": "Content" },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Copy appears in this column beside the media.</p>"
+        },
+        { "type": "header", "content": "Typography" },
+        {
+          "type": "select",
+          "id": "text_size",
+          "label": "Size",
+          "default": "subtext-md",
+          "options": [
+            { "value": "subtext-sm", "label": "Small" },
+            { "value": "subtext-md", "label": "Medium" },
+            { "value": "subtext-lg", "label": "Large" },
+            { "value": "subtext-xl", "label": "Extra large" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Link" },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Label",
+          "default": "Shop the range"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "URL"
+        },
+        { "type": "header", "content": "Style" },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Variant",
+          "default": "primary",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "link", "label": "Text link" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "button_size",
+          "label": "Size",
+          "default": "md",
+          "options": [
+            { "value": "sm", "label": "Small" },
+            { "value": "md", "label": "Medium" },
+            { "value": "lg", "label": "Large" }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "button_icon",
+          "label": "Show arrow icon",
+          "default": true
+        },
+        { "type": "header", "content": "Behavior" },
+        {
+          "type": "checkbox",
+          "id": "button_external",
+          "label": "Open in new tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split text",
+      "blocks": [
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "Air you can trust",
+            "heading_size": "title-xl tracking-heading"
+          }
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

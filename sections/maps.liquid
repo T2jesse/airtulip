@@ -24,7 +24,7 @@
   theme.strings.authError = {{ 'sections.map.auth_error_html' | t | json }};
 </script>
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}"{% if section.settings.transparent_header %} allow-transparent-header{% endif %}>
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}"{% if section.settings.transparent_header %} allow-transparent-header{% endif %}>
   <div class="{% unless section.settings.full_width %}page-width {% endunless %}relative">
     <div class="banner with-map mobile:banner--{{ section.settings.content_position_mobile }} relative">
       <div class="media--{{ section.settings.image_height }} mobile:media--{{ section.settings.image_height_mobile }} relative">

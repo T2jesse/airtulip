@@ -88,7 +88,7 @@
   {{ 'hero-overlay-logo-strip.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}"{% if section.settings.transparent_header %} allow-transparent-header{% endif %}>
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}"{% if section.settings.transparent_header %} allow-transparent-header{% endif %}>
   <div class="{% unless section.settings.full_width %}page-width {% endunless %}relative">
     <div class="banner media--{{ section.settings.image_height }} mobile:media--{{ section.settings.image_height_mobile }} relative">
       <media-element class="banner__media block w-full h-full overflow-hidden"{% if section.settings.enable_parallax %} data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"{% endif %}>
@@ -166,10 +166,59 @@
                             assign g_col = block.settings.heading_glow_color | color_modify: 'alpha', g_op
                           endif
                         endif
+
+                        assign heading_plain = block.settings.heading | strip_html | strip
+                        assign particle_phrase = block.settings.heading_particle_phrase | strip_html | strip
+                        assign heading_for_particle = heading_plain | replace: ' ', ' ' | replace: ' ', ' ' | replace: '‑', '-' | replace: '‒', '-' | replace: '–', '-' | replace: '—', '-'
+                        assign phrase_for_particle = particle_phrase | replace: ' ', ' ' | replace: ' ', ' ' | replace: '‑', '-' | replace: '‒', '-' | replace: '–', '-' | replace: '—', '-'
+                        assign particle_chunks = heading_for_particle | split: phrase_for_particle
+                        assign particle_apply = false
+                        if block.settings.highlighted_text == 'none' and block.settings.heading_particle_enable and phrase_for_particle != blank and particle_chunks.size == 2
+                          assign particle_apply = true
+                        endif
                       -%}
+                      {%- if particle_apply -%}
+                        {%- liquid
+                          assign ph_dur = block.settings.heading_particle_duration | default: 16 | at_least: 6 | at_most: 36
+                          assign ph_dot_px = block.settings.heading_particle_size | default: 2
+                          assign ph_gap_px = ph_dot_px | times: 7 | ceil
+                          assign ph_jitter = block.settings.heading_particle_jitter | default: 42 | at_least: 0 | at_most: 100
+                          assign ph_dot_alpha = block.settings.heading_particle_dot_opacity | default: 88 | times: 0.01
+                          assign ph_dot_fill = '#b8d4ff' | color_modify: 'alpha', ph_dot_alpha
+                          assign ph_dot_src = block.settings.heading_particle_dot_color
+                          if ph_dot_src != blank and ph_dot_src != 'rgba(0,0,0,0)'
+                            assign ph_dot_fill = ph_dot_src | color_modify: 'alpha', ph_dot_alpha
+                          endif
+                        -%}
+                        {%- render 'particle-heading-keyframes',
+                          section: section,
+                          block: block,
+                          direction: block.settings.heading_particle_direction,
+                          jitter: ph_jitter,
+                          duration_seconds: ph_dur
+                        -%}
+                      {%- endif -%}
                       <{{ block.settings.heading_tag }} class="banner__title heading leading-none {{ block.settings.heading_size }}{% if heading_glow_active %} banner__title--glow{% endif %}"{% if heading_glow_active %} style="filter: drop-shadow(0 0 {{ block.settings.heading_glow_width }}px {{ g_col }}) drop-shadow(0 0 calc({{ block.settings.heading_glow_width }}px * 0.65) {{ g_col }});"{% endif %} {{ block.shopify_attributes }}>
                         {%- if block.settings.highlighted_text == 'none' -%}
-                          <split-words class="split-words js-invisible block" data-animate="fade-up-large" data-animate-delay="{{ delay | times: 250 }}">{{ block.settings.heading }}</split-words>
+                          {%- if particle_apply -%}
+                            <animate-element
+                              data-animate="fade-up-large"
+                              data-animate-delay="{{ delay | times: 250 }}"
+                              class="block particle-heading-animate-wrap"
+                            >
+                              {%- render 'particle-heading-content',
+                                heading_plain: heading_for_particle,
+                                phrase: phrase_for_particle,
+                                block: block,
+                                dot_px: ph_dot_px,
+                                gap_px: ph_gap_px,
+                                dot_fill: ph_dot_fill,
+                                decorative_under_reduced_motion: block.settings.heading_particle_decorative_under_reduced_motion
+                              -%}
+                            </animate-element>
+                          {%- else -%}
+                            <split-words class="split-words js-invisible block" data-animate="fade-up-large" data-animate-delay="{{ delay | times: 250 }}">{{ block.settings.heading }}</split-words>
+                          {%- endif -%}
                         {%- else -%}
                           {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                         {%- endif -%}
@@ -1155,6 +1204,130 @@
           "label": "t:sections.image-with-text-overlay.blocks.heading.settings.heading_glow_width.label",
           "info": "t:sections.image-with-text-overlay.blocks.heading.settings.heading_glow_width.info",
           "default": 28
+        },
+        {
+          "type": "header",
+          "content": "Particle headline"
+        },
+        {
+          "type": "paragraph",
+          "content": "Flowing dots clipped to a phrase in the heading (highlight must be None). The phrase must appear exactly once after rich text is stripped; duplicates are ignored. If dots never move: your OS or browser may have “Reduce motion” on — enable “Animate particles when Reduce motion is on” below."
+        },
+        {
+          "type": "checkbox",
+          "id": "heading_particle_enable",
+          "label": "Enable particle flow on phrase",
+          "default": false
+        },
+        {
+          "visible_if": "{{ block.settings.heading_particle_enable }}",
+          "type": "checkbox",
+          "id": "heading_particle_decorative_under_reduced_motion",
+          "label": "Animate particles when “Reduce motion” is on",
+          "info": "Off by default for accessibility. Turn on so the decorative dot drift still plays for visitors who use reduced motion (including subtle OS settings).",
+          "default": false
+        },
+        {
+          "visible_if": "{{ block.settings.heading_particle_enable }}",
+          "type": "text",
+          "id": "heading_particle_phrase",
+          "label": "Phrase to animate",
+          "info": "Must match the heading text exactly (case-sensitive).",
+          "default": "Particle-Free"
+        },
+        {
+          "visible_if": "{{ block.settings.heading_particle_enable }}",
+          "type": "range",
+          "id": "heading_particle_size",
+          "min": 1,
+          "max": 5,
+          "step": 0.5,
+          "unit": "px",
+          "label": "Dot size",
+          "default": 2
+        },
+        {
+          "visible_if": "{{ block.settings.heading_particle_enable }}",
+          "type": "range",
+          "id": "heading_particle_duration",
+          "min": 6,
+          "max": 36,
+          "step": 1,
+          "unit": "s",
+          "label": "Flow cycle duration",
+          "info": "Shorter time = faster drift.",
+          "default": 16
+        },
+        {
+          "visible_if": "{{ block.settings.heading_particle_enable }}",
+          "type": "select",
+          "id": "heading_particle_direction",
+          "label": "Flow direction",
+          "default": "right",
+          "options": [
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "down",
+              "label": "Down"
+            },
+            {
+              "value": "up",
+              "label": "Up"
+            },
+            {
+              "value": "down_right",
+              "label": "Down-right"
+            },
+            {
+              "value": "down_left",
+              "label": "Down-left"
+            },
+            {
+              "value": "up_right",
+              "label": "Up-right"
+            },
+            {
+              "value": "up_left",
+              "label": "Up-left"
+            }
+          ]
+        },
+        {
+          "visible_if": "{{ block.settings.heading_particle_enable }}",
+          "type": "range",
+          "id": "heading_particle_jitter",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Path jitter",
+          "info": "Adds wobble so dots do not drift in a perfectly straight path.",
+          "default": 42
+        },
+        {
+          "visible_if": "{{ block.settings.heading_particle_enable }}",
+          "type": "color",
+          "id": "heading_particle_dot_color",
+          "label": "Dot color",
+          "info": "Pure white dots on bright headlines are nearly invisible — use a tint (default) or tweak opacity/size until the motion reads.",
+          "default": "#b8d4ff"
+        },
+        {
+          "visible_if": "{{ block.settings.heading_particle_enable }}",
+          "type": "range",
+          "id": "heading_particle_dot_opacity",
+          "min": 45,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Dot opacity",
+          "default": 88
         }
       ]
     },

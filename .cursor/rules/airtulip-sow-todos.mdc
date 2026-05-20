@@ -1,0 +1,94 @@
+---
+description: T2 SOW phased todos — theme/repo actionable items vs out-of-scope (email, ads, assets)
+alwaysApply: false
+---
+
+# AirTulip — SOW todos (theme / repo scope)
+
+Source: `.cursor/rules/T2_AirTulip_SOW_WithTodos.docx` (12-week sprint, three phases). Use this when prioritizing **Git/theme work** vs handing off to T2 Email, Creative, or Analytics.
+
+## Phase overview
+
+| Phase | Weeks | Focus |
+|-------|-------|--------|
+| **1 — Clarify & Prove** | 1–4 | Fix funnel, reposition copy, email rebuild, analytics baseline. No new paid traffic until conversion works. |
+| **2 — Segment & Optimize** | 5–8 | Persona LPs, affiliates, medical channel, social, retention. |
+| **3 — Scale with Confidence** | 9–12 | Paid retargeting, Tier 1 influencers, hospitality/trade, reporting. |
+
+---
+
+## Phase 1 — actionable in this theme repo
+
+### Week 1 (web dev — partial / in progress)
+
+| # | Task | Repo action |
+|---|------|-------------|
+| 1 | Fix H1 / homepage layout stability | `templates/index.json`, `sections/*`, `theme.css` |
+| 2 | Embed Shark Tank clip on homepage | Homepage section + video embed (not only PDP `shark-tank-spotlight`) |
+| 3 | “As seen on Shark Tank” badge — header, footer, cart, PDP | Snippets / announcement / cart drawer / PDP strip |
+| 4 | Affirm “As low as $X/mo” near ATC | Affirm app block order in `product.json` (block exists) |
+| 5 | Smoke test video 2nd in product gallery | `product.json` media order or theme gallery config |
+| 8 | Alt text + H3+ blog/PDP structure | Liquid alt defaults, article/PDP heading blocks |
+| 11–12 | Meta Pixel / GTM + conversion events | `layout/theme.liquid`, GTM container (often admin + theme hook) |
+
+### Week 2 (web dev + copy-in-repo)
+
+| # | Task | Repo action |
+|---|------|-------------|
+| **6** | Luxury bedroom photography | **Admin assets** — update `shopify://` refs in JSON after upload |
+| **7** | Book a Sleep Consult (Calendly) — homepage + PDP | New section/block + `index.json` / `product.json` |
+| **9** | Timeline of Innovation (About) | New `sections/timeline.liquid` + About page template |
+| **21** | PDP copy — sleep outcomes | `templates/product.json`, tab blocks, brand rule |
+| **23** | Kevin O’Leary hook | Blog article (admin) + optional homepage featured-blog block |
+| **26** | Blog post 1 publish | Admin content + article template SEO |
+
+**Not in repo:** #16 Founder Letter (Klaviyo), #22 ad creative (Meta/Google).
+
+### Weeks 3–4 (theme-relevant)
+
+| # | Task | Repo action |
+|---|------|-------------|
+| 10 | Meet the Engineer video on About | About template section + embed |
+| 17–19 | Email sequences | Klaviyo only |
+| 19 | Abandoned cart | Klaviyo / Shopify Flow |
+
+---
+
+## Phase 2 — actionable in theme (weeks 5–8)
+
+| # | Task | Repo action |
+|---|------|-------------|
+| 33–35 | Persona landing pages (Medical, Biohacker, Luxury) | New JSON templates + sections |
+| 42 | Affiliate platform | Shopify Collabs / app embeds |
+| 47 | TrueMed badge on medical LP + PDP | PDP has Truemed widget; extend to new LP template |
+
+**Mostly not repo:** influencer outreach, physician lists, social posts, TrueMed application submission.
+
+---
+
+## Phase 3 — mostly not theme
+
+| # | Task | Notes |
+|---|------|--------|
+| 58–61 | Paid retargeting | Ad platforms |
+| 62–66 | Influencer / hospitality / trade LP | Trade LP = new template (week 10) |
+| 67–69 | YouTube / blog scale | Content + light theme promos |
+
+---
+
+## Suggested dev queue (this repo)
+
+1. Calendly consult CTA (#7)  
+2. PDP copy pass (#21)  
+3. Shark Tank homepage embed + global badges (#2–3)  
+4. About timeline (#9)  
+5. Persona LPs (Phase 2)
+
+## Already touched in repo (reference)
+
+- PDP `shark-tank-spotlight` section  
+- PDP lateral tabs, Affirm + Truemed in buy box  
+- PDP below-fold heading scale (`title-md` + desktop clamp in `theme.css`)  
+- `tools/rebuild_product_pdp.py` syncs `product.json` PDP stack  
+
+When implementing SOW items, prefer **RoarTheme patterns**, update `rebuild_product_pdp.py` if it regenerates `product.json`, and avoid reintroducing CLI-invalid `visible_if` on schema settings (see `airtulip-cli-theme-push.mdc`).

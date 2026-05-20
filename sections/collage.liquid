@@ -14,7 +14,7 @@
 {%- capture section_heading -%}
   {%- render 'section-heading', section: section -%}
 {%- endcapture -%}
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %}{% if section_heading == blank %} page-width--narrow{% endif %} relative">
     <div class="collage on-scroll{% if section_heading == blank %} without-heading{% endif %} grid items-center">
       {{- section_heading -}}

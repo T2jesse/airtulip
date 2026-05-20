@@ -208,21 +208,23 @@
           </div>
 
         {%- when 'title' -%}
-          {%- assign price_block = section.blocks | where: "type", "price" | first -%}
-          <div class="product__title grid gap-3{% if price_block == blank and block.settings.show_price %} with-price{% endif %}" {{ block.shopify_attributes }}>
+          <div class="product__title grid gap-3" {{ block.shopify_attributes }}>
             <h1 class="heading leading-none {{ block.settings.title_size }} mobile:{{ block.settings.title_size_mobile }} col-span-full">
               <split-words class="split-words js-invisible block" data-animate="fade-up">{{ 'onboarding.product_title' | t }}</split-words>
             </h1>
-
-            {%- if price_block == blank and block.settings.show_price -%}
-              <div id="Price-{{ section_id }}" class="product__price">
-                {%- render 'product-price', product: product, placeholder: true, use_variant: true, class: 'flex flex-wrap items-baseline gap-2 lg:flex-col xl:items-end lg:gap-1d5' -%}
-              </div>
-            {%- endif -%}
           </div>
 
         {%- when 'price' -%}
-          <div class="product__price grid gap-3" {{ block.shopify_attributes }}>
+          {%- liquid
+            assign compare_fs = block.settings.compare_at_font_size | default: 14
+            capture price_compare_style
+              echo '--price-compare-at-font-size: ' | append: compare_fs | append: 'px;'
+              unless block.settings.compare_at_color == blank
+                echo ' --price-compare-at-color: ' | append: block.settings.compare_at_color | append: ';'
+              endunless
+            endcapture
+          -%}
+          <div class="product__price grid gap-3 product__price--compare-custom" style="{{ price_compare_style | strip }}" {{ block.shopify_attributes }}>
             <div class="no-js-hidden" id="Price-{{ section_id }}">
               {%- render 'product-price', product: product, placeholder: true, use_variant: true, class: 'flex flex-wrap items-baseline gap-2 lg:gap-1d5' -%}
             </div>
@@ -241,6 +243,24 @@
                 </div>
               {%- endif -%}
             {%- endif -%}
+          </div>
+
+        {%- when 'shop_pay_installments' -%}
+          <div class="product__installments" {{ block.shopify_attributes }}>
+            {%- assign product_form_installment_id = 'ProductFormInstallment-placeholder-' | append: section_id -%}
+            {%- form 'product', product, id: product_form_installment_id, class: 'installment text-sm leading-tight' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+              {{ form | payment_terms }}
+            {%- endform -%}
+          </div>
+
+        {%- when 'shop_pay_installments' -%}
+          <div class="product__installments" {{ block.shopify_attributes }}>
+            {%- assign product_form_installment_id = 'ProductFormInstallment-placeholder-' | append: section_id -%}
+            {%- form 'product', product, id: product_form_installment_id, class: 'installment text-sm leading-tight' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+              {{ form | payment_terms }}
+            {%- endform -%}
           </div>
 
         {%- when 'quantity_selector' -%}
@@ -278,11 +298,6 @@
             assign price_block = section.blocks | where: "type", "price" | first
             assign show_price = block.settings.show_price
             if price_block
-              assign show_price = false
-            endif
-
-            assign title_block = section.blocks | where: "type", "title" | first
-            if title_block.settings.show_price
               assign show_price = false
             endif
 
@@ -416,6 +431,9 @@
               {{ block.settings.liquid }}
             </div>
           </details>
+
+        {%- when 'tabbed_content' -%}
+          {%- render 'product-tabbed-content', block: block -%}
 
         {%- when 'read_more' -%}
           <button type="button" class="product__more flex items-center justify-between w-full" {{ block.shopify_attributes }}>

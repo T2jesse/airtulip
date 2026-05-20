@@ -1,0 +1,46 @@
+{%- doc -%}
+  In-page smooth-scroll link for the product buy column.
+  @param {object} block - main-product scroll_anchor_link block
+  @param {object} section - parent section
+{%- enddoc -%}
+
+{%- liquid
+  assign anchor_id = block.settings.anchor_id_custom | strip
+  if anchor_id == blank
+    assign anchor_id = block.settings.anchor_id | strip
+  endif
+  if anchor_id == blank
+    assign anchor_id = 'custom-design'
+  endif
+  assign link_label = block.settings.link_label
+  assign tooltip_text = block.settings.tooltip_text | strip
+-%}
+
+{%- if link_label != blank -%}
+  <div class="product__anchor-link flex items-center gap-2 flex-wrap" {{ block.shopify_attributes }}>
+    <a href="#{{ anchor_id | escape }}" class="link text-sm leading-tight" data-smooth-anchor>
+      {{- link_label | escape -}}
+    </a>
+
+    {%- if tooltip_text != blank -%}
+      <span class="product__anchor-help relative inline-flex items-center">
+        <button
+          type="button"
+          class="product__anchor-help__trigger flex items-center justify-center shrink-0"
+          aria-expanded="false"
+          aria-controls="AnchorHelp-{{ section.id }}-{{ block.id }}"
+        >
+          {%- render 'icon', icon: 'question', size: 'sm' -%}
+          <span class="sr-only">{{ 'sections.main-product.blocks.scroll_anchor_link.settings.tooltip_text.label' | t }}</span>
+        </button>
+        <span
+          id="AnchorHelp-{{ section.id }}-{{ block.id }}"
+          class="product__anchor-help__tooltip"
+          role="tooltip"
+        >
+          {{- tooltip_text | escape -}}
+        </span>
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

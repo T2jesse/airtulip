@@ -1,0 +1,761 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    {%- render 'section-variables', section: section -%}
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: start;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .shark-spotlight {
+      grid-template-columns: minmax(280px, 42%) 1fr;
+      gap: clamp(var(--sp-8), 5vw, var(--sp-12));
+      align-items: stretch;
+    }
+
+    #shopify-section-{{ section.id }} .shark-spotlight:not(:has(.shark-spotlight__media)) {
+      grid-template-columns: minmax(200px, 28%) 1fr;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__aside,
+  #shopify-section-{{ section.id }} .shark-spotlight__media {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .shark-spotlight__aside {
+      align-self: stretch;
+      height: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .shark-spotlight__media {
+      flex: 1 1 auto;
+      height: 100%;
+      min-height: 100%;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__media {
+    border-radius: var(--rounded-block);
+    overflow: hidden;
+    border: 1px solid rgb(var(--color-border));
+    background-color: rgb(var(--color-foreground) / 0.04);
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__media .media,
+  #shopify-section-{{ section.id }} .shark-spotlight__media .deferred-media,
+  #shopify-section-{{ section.id }} .shark-spotlight__media video-media {
+    --aspect-ratio: 16 / 9;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} motion-element.shark-spotlight__aside,
+    #shopify-section-{{ section.id }} motion-element.shark-spotlight__media {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .shark-spotlight__media-link,
+    #shopify-section-{{ section.id }} .shark-spotlight__media media-element {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      height: 100%;
+      min-height: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .shark-spotlight__media .media,
+    #shopify-section-{{ section.id }} .shark-spotlight__media .deferred-media,
+    #shopify-section-{{ section.id }} .shark-spotlight__media video-media,
+    #shopify-section-{{ section.id }} .shark-spotlight__media .shark-spotlight__video {
+      --aspect-ratio: auto;
+      aspect-ratio: auto;
+      flex: 1 1 auto;
+      height: 100%;
+      min-height: 100%;
+      position: relative;
+    }
+
+    #shopify-section-{{ section.id }} .shark-spotlight__media video-media > :is(img, svg),
+    #shopify-section-{{ section.id }} .shark-spotlight__media .deferred-media > :is(img, svg) {
+      height: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__media-link {
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__media-link:focus-visible {
+    outline: 2px solid rgb(var(--color-foreground));
+    outline-offset: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__media-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .shark-spotlight__media-image {
+      aspect-ratio: auto;
+      height: 100%;
+      min-height: 100%;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: min(100%, {{ section.settings.logo_max_width }}px);
+    margin: 0 0 var(--sp-4);
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__logo img {
+    width: 100%;
+    height: auto;
+    max-height: {{ section.settings.logo_max_height }}px;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__heading {
+    margin: 0 0 var(--sp-4);
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: var(--font-heading-letter-spacing);
+    text-transform: var(--font-heading-text-transform);
+    line-height: 1.05;
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__text {
+    margin: 0 0 var(--sp-5);
+    max-width: 68ch;
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: rgb(var(--color-foreground) / 0.82);
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__proof {
+    display: grid;
+    gap: var(--sp-2);
+    margin: 0 0 var(--sp-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .shark-spotlight__proof {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--sp-4);
+    }
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__proof li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-2);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: rgb(var(--color-foreground) / 0.88);
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__proof .icon {
+    flex-shrink: 0;
+    margin-block-start: 0.15em;
+    color: rgb(var(--color-foreground));
+  }
+
+  #shopify-section-{{ section.id }} .shark-spotlight__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+
+  #shopify-section-{{ section.id }} .shark-tank-video-modal__frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    max-height: min(70vh, calc(100vw - var(--sp-12)));
+    overflow: hidden;
+    background-color: rgb(0 0 0);
+  }
+
+  #shopify-section-{{ section.id }} .shark-tank-video-modal__frame--shorts {
+    width: 100%;
+    max-width: min(32rem, calc(100vw - var(--sp-10)));
+    aspect-ratio: 1 / 1;
+    max-height: min(32rem, 70vh, calc(100vw - var(--sp-10)));
+    margin-inline: auto;
+  }
+
+  #shopify-section-{{ section.id }} .shark-tank-video-modal__frame--shorts .shark-tank-video-modal__iframe {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    aspect-ratio: 9 / 16;
+    transform: translateX(-50%);
+  }
+
+  #shopify-section-{{ section.id }} .shark-tank-video-modal__iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media screen and (max-width: 639px) {
+    .js #shopify-section-{{ section.id }} .shark-tank-video-modal.drawer .drawer__inner {
+      height: auto;
+      max-height: min(92dvh, calc(100% - 3.5rem));
+    }
+
+    .js #shopify-section-{{ section.id }} .shark-tank-video-modal .drawer__close {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #shopify-section-{{ section.id }} .shark-tank-video-modal .shark-tank-video-modal__scroll {
+      gap: var(--sp-3);
+    }
+
+    #shopify-section-{{ section.id }} .shark-tank-video-modal__frame--shorts {
+      max-width: min(calc(100vw - var(--sp-10)), 20rem);
+      max-height: min(calc(100vw - var(--sp-10)), 20rem, 52dvh);
+    }
+  }
+
+  @media screen and (min-width: 640px) {
+    #shopify-section-{{ section.id }} .shark-tank-video-modal:not(.shark-tank-video-modal--shorts) .drawer__inner {
+      max-width: min(56rem, calc(100vw - var(--sp-12)));
+    }
+
+    #shopify-section-{{ section.id }} .shark-tank-video-modal--shorts .drawer__inner {
+      max-width: min(40rem, calc(100vw - var(--sp-12)));
+    }
+
+    #shopify-section-{{ section.id }} .shark-tank-video-modal__frame--shorts {
+      max-width: min(36rem, calc(100vw - var(--sp-12)));
+      max-height: min(36rem, 75vh, calc(100vw - var(--sp-12)));
+    }
+  }
+</style>
+
+{%- liquid
+  assign show_media_image = false
+  assign show_media_video = false
+
+  if section.settings.media_type == 'image' and section.settings.media_image != blank
+    assign show_media_image = true
+  elsif section.settings.media_type == 'video'
+    if section.settings.media_video != blank or section.settings.media_video_url != blank
+      assign show_media_video = true
+    endif
+  endif
+
+  assign show_media = false
+  if show_media_image or show_media_video
+    assign show_media = true
+  endif
+
+  assign shark_modal_id = 'SharkTankVideo-' | append: section.id
+  assign show_video_modal = false
+  if section.settings.open_video_in_modal and section.settings.episode_video_url != blank
+    assign show_video_modal = true
+  endif
+
+  assign media_link = section.settings.media_link
+  assign media_link_external = section.settings.media_link_external
+  if media_link == blank and show_video_modal == false
+    assign media_link = section.settings.episode_url
+    assign media_link_external = section.settings.episode_external
+  endif
+
+  assign logo_links_out = true
+  if show_video_modal and section.settings.logo_opens_modal
+    assign logo_links_out = false
+  endif
+-%}
+
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
+  <motion-list class="page-width{% if section.settings.narrow %} page-width--narrow{% endif %} relative block">
+    <div class="shark-spotlight">
+      {%- if show_media -%}
+      <motion-element class="shark-spotlight__aside block h-full" data-animate="fade-up" data-animate-delay="0">
+          <motion-element class="shark-spotlight__media block w-full h-full min-h-full" data-animate="fade-up" data-animate-delay="0">
+            {%- if show_media_video -%}
+              {%- render 'video',
+                video: section.settings.media_video,
+                video_url: section.settings.media_video_url,
+                cover_image: section.settings.media_cover_image,
+                description: section.settings.heading,
+                show_play_button: true,
+                muted: section.settings.enable_video_mute,
+                autoplay: section.settings.enable_video_autoplay,
+                loop: section.settings.enable_video_looping,
+                class: 'shark-spotlight__video media media--height relative w-full h-full min-h-full overflow-hidden'
+              -%}
+            {%- elsif show_media_image -%}
+              {%- if show_video_modal -%}
+                <button type="button" class="shark-spotlight__media-link border-0 p-0 bg-transparent cursor-pointer text-left" aria-controls="{{ shark_modal_id }}" aria-expanded="false" aria-label="{{ section.settings.button_label | default: 'Watch the Shark Tank segment' | escape }}">
+              {%- elsif media_link != blank -%}
+                <a href="{{ media_link }}" class="shark-spotlight__media-link"{% if media_link_external %} target="_blank" rel="noopener"{% endif %}>
+              {%- endif -%}
+              <media-element class="block relative overflow-hidden w-full h-full min-h-full">
+                {{- section.settings.media_image | image_url: width: section.settings.media_image.width | image_tag: loading: 'lazy', class: 'shark-spotlight__media-image', widths: '400,600,800,1000,1200,1600', sizes: '(max-width: 767px) 100vw, 42vw', alt: section.settings.media_image.alt | default: section.settings.heading | escape -}}
+              </media-element>
+              {%- if show_video_modal or media_link != blank -%}
+                {%- if show_video_modal -%}
+                  </button>
+                {%- else -%}
+                  </a>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+          </motion-element>
+      </motion-element>
+      {%- endif -%}
+
+      <div class="shark-spotlight__body">
+        {%- if section.settings.logo != blank -%}
+          <motion-element class="shark-spotlight__logo block" data-animate="fade-up" data-animate-delay="50">
+            {%- if show_video_modal and section.settings.logo_opens_modal -%}
+              <button type="button" class="block border-0 p-0 bg-transparent cursor-pointer" aria-controls="{{ shark_modal_id }}" aria-expanded="false" aria-label="{{ section.settings.button_label | default: 'Watch the Shark Tank segment' | escape }}">
+            {%- elsif section.settings.episode_url != blank and logo_links_out -%}
+              <a href="{{ section.settings.episode_url }}" class="block"{% if section.settings.episode_external %} target="_blank" rel="noopener"{% endif %}>
+            {%- endif -%}
+            {{- section.settings.logo | image_url: width: 480 | image_tag: loading: 'lazy', widths: '160,240,320,480', sizes: '(max-width: 767px) 200px, 240px', alt: section.settings.logo.alt | default: 'Shark Tank' | escape -}}
+            {%- if show_video_modal and section.settings.logo_opens_modal -%}
+              </button>
+            {%- elsif section.settings.episode_url != blank and logo_links_out -%}
+              </a>
+            {%- endif -%}
+          </motion-element>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <motion-element class="block" data-animate="fade-up" data-animate-delay="100">
+            <{{ section.settings.heading_tag }} class="shark-spotlight__heading heading {{ section.settings.heading_size }}">
+              {{- section.settings.heading | escape -}}
+            </{{ section.settings.heading_tag }}>
+          </motion-element>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <motion-element class="shark-spotlight__text rte block" data-animate="fade-up" data-animate-delay="150">
+            {{- section.settings.text -}}
+          </motion-element>
+        {%- endif -%}
+
+        {%- if section.settings.proof_1 != blank or section.settings.proof_2 != blank or section.settings.proof_3 != blank -%}
+          <motion-element class="block" data-animate="fade-up" data-animate-delay="200">
+            <ul class="shark-spotlight__proof" role="list">
+              {%- for i in (1..3) -%}
+                {%- case i -%}
+                  {%- when 1 -%}{%- assign proof = section.settings.proof_1 -%}
+                  {%- when 2 -%}{%- assign proof = section.settings.proof_2 -%}
+                  {%- when 3 -%}{%- assign proof = section.settings.proof_3 -%}
+                {%- endcase -%}
+                {%- if proof != blank -%}
+                  <li>
+                    {%- render 'icon', icon: 'check_mark', size: 'sm' -%}
+                    <span>{{ proof | escape }}</span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </motion-element>
+        {%- endif -%}
+
+        <motion-element class="shark-spotlight__actions" data-animate="fade-up" data-animate-delay="250">
+          {%- if section.settings.button_label != blank -%}
+            {%- if show_video_modal -%}
+              <button
+                type="button"
+                class="button button--primary button--md{% if section.settings.button_icon %} icon-with-text{% endif %}"
+                is="hover-button"
+                aria-controls="{{ shark_modal_id }}"
+                aria-expanded="false"
+              >
+                <span class="btn-fill" data-fill></span>
+                <span class="btn-text">
+                  {{- section.settings.button_label | escape -}}
+                  {%- if section.settings.button_icon -%}
+                    {%- render 'icon', icon: 'arrow-right', size: 'sm', class: 'transform' -%}
+                  {%- endif -%}
+                </span>
+              </button>
+            {%- else -%}
+              {%- render 'button',
+                label: section.settings.button_label,
+                link: section.settings.episode_url,
+                size: 'md',
+                style: 'primary',
+                external: section.settings.episode_external,
+                show_icon: section.settings.button_icon
+              -%}
+            {%- endif -%}
+          {%- endif -%}
+          {%- if section.settings.button_secondary_label != blank -%}
+            {%- render 'button',
+              label: section.settings.button_secondary_label,
+              link: section.settings.button_secondary_link,
+              size: 'md',
+              style: 'secondary',
+              external: section.settings.button_secondary_external,
+              show_icon: false
+            -%}
+          {%- endif -%}
+        </motion-element>
+      </div>
+    </div>
+  </motion-list>
+</div>
+
+{%- if show_video_modal -%}
+  {%- render 'shark-tank-episode-modal', section: section, modal_id: shark_modal_id -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Shark Tank spotlight",
+  "tag": "section",
+  "class": "shopify-section--shark-tank-spotlight",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left column media"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media type",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_image",
+      "label": "Image"
+    },
+    {
+      "type": "video",
+      "id": "media_video",
+      "label": "Shopify-hosted video"
+    },
+    {
+      "type": "video_url",
+      "id": "media_video_url",
+      "accept": ["youtube", "vimeo"],
+      "label": "External video (YouTube or Vimeo)"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_cover_image",
+      "label": "Video cover image",
+      "info": "Poster shown before the video plays. Uses the video preview if empty."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_autoplay",
+      "label": "Autoplay video",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label": "Loop video",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_mute",
+      "label": "Mute video",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "media_link",
+      "label": "Media link",
+      "info": "Optional. Wraps the image or video. Defaults to the episode link when empty."
+    },
+    {
+      "type": "checkbox",
+      "id": "media_link_external",
+      "label": "Open media link in new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Shark Tank logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Shark Tank logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 120,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "default": 200,
+      "label": "Logo max width"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_height",
+      "min": 48,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72,
+      "label": "Logo max height"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The pitch that put bedside clean air on national TV"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "title-md", "label": "Medium" },
+        { "value": "title-lg tracking-heading", "label": "Large" },
+        { "value": "title-xl tracking-heading", "label": "Extra large" }
+      ],
+      "default": "title-lg tracking-heading",
+      "label": "Heading size"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h2",
+      "label": "Heading tag"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Supporting text",
+      "default": "<p>Millions watched our founders present AirTulip Sleep on <strong>Shark Tank</strong>—a headboard that delivers filtered, laminar air where you breathe at night. Watch the segment and see why shoppers compare us to every floor purifier they have owned.</p>"
+    },
+    {
+      "type": "text",
+      "id": "proof_1",
+      "label": "Proof point 1",
+      "default": "National TV validation for a four-figure sleep investment"
+    },
+    {
+      "type": "text",
+      "id": "proof_2",
+      "label": "Proof point 2",
+      "default": "Founder story: engineered for sleep, not showroom CFM"
+    },
+    {
+      "type": "text",
+      "id": "proof_3",
+      "label": "Proof point 3",
+      "default": "Stream the full episode in minutes"
+    },
+    {
+      "type": "header",
+      "content": "Primary CTA"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Watch the Shark Tank segment"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_video_in_modal",
+      "label": "Open video in modal",
+      "default": true,
+      "info": "Plays the YouTube or Vimeo URL below on this page instead of sending shoppers away."
+    },
+    {
+      "type": "text",
+      "id": "episode_video_url",
+      "label": "Episode video URL",
+      "placeholder": "https://www.youtube.com/shorts/…",
+      "info": "Paste any YouTube or Vimeo link—including Shorts (youtube.com/shorts/…), watch URLs, or youtu.be. Used when “Open video in modal” is on."
+    },
+    {
+      "type": "text",
+      "id": "modal_heading",
+      "label": "Modal title",
+      "info": "Optional. Defaults to the button label."
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_opens_modal",
+      "label": "Logo and image open modal",
+      "default": true,
+      "info": "When enabled, clicking the Shark Tank logo or left image opens the same video modal."
+    },
+    {
+      "type": "url",
+      "id": "episode_url",
+      "label": "Full episode link (optional)",
+      "info": "ABC, Hulu, or other full-episode URL. Shown inside the modal and used as fallback when modal is off."
+    },
+    {
+      "type": "text",
+      "id": "episode_link_label",
+      "label": "Full episode link label",
+      "default": "Watch the full episode on ABC"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_episode_link_in_modal",
+      "label": "Show full episode link in modal",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "episode_external",
+      "label": "Open full episode link in new tab",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "Show arrow icon on primary button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Secondary CTA"
+    },
+    {
+      "type": "text",
+      "id": "button_secondary_label",
+      "label": "Secondary button label",
+      "default": "Watch on Hulu"
+    },
+    {
+      "type": "url",
+      "id": "button_secondary_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_secondary_external",
+      "label": "Open secondary link in new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "narrow",
+      "label": "Narrow content width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#f8f7f6"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "Background gradient"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 52,
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 52,
+      "label": "Padding bottom"
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "Show section divider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded",
+      "label": "Rounded section",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shark Tank spotlight"
+    }
+  ]
+}
+{% endschema %}

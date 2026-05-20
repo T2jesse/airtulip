@@ -1,0 +1,50 @@
+[
+  {
+    "value": "none",
+    "label": "t:sections.global.settings.icon.options__1.label"
+  },
+  {
+    "value": "box",
+    "label": "t:sections.global.settings.icon.options__5.label"
+  },
+  {
+    "value": "truck",
+    "label": "t:sections.global.settings.icon.options__52.label"
+  },
+  {
+    "value": "shield",
+    "label": "t:sections.global.settings.icon.options__42.label"
+  },
+  {
+    "value": "file_text",
+    "label": "t:sections.global.settings.icon.options__18.label"
+  },
+  {
+    "value": "check_mark",
+    "label": "t:sections.global.settings.icon.options__9.label"
+  },
+  {
+    "value": "gift",
+    "label": "t:sections.global.settings.icon.options__19.label"
+  },
+  {
+    "value": "heart",
+    "label": "t:sections.global.settings.icon.options__23.label"
+  },
+  {
+    "value": "star",
+    "label": "t:sections.global.settings.icon.options__45.label"
+  },
+  {
+    "value": "email",
+    "label": "t:sections.global.settings.icon.options__16.label"
+  },
+  {
+    "value": "phone",
+    "label": "t:sections.global.settings.icon.options__31.label"
+  },
+  {
+    "value": "map_pin",
+    "label": "t:sections.global.settings.icon.options__27.label"
+  }
+]

@@ -154,7 +154,7 @@
             "label": "Stretto"
           },
           "options__2": {
-            "label":"Pagina"
+            "label": "Pagina"
           },
           "options__3": {
             "label": "Largo"
@@ -2925,8 +2925,7 @@
         },
         "promotion-video": {
           "name": "Videopromozione",
-          "settings": {
-          }
+          "settings": {}
         }
       }
     },
@@ -3132,8 +3131,31 @@
         "price": {
           "name": "Prezzo",
           "settings": {
+            "show_shop_installments": {
+              "label": "Mostra rate con Shop Pay",
+              "info": "Mostra i messaggi di rateizzazione quando lo store li offre — gestito tramite Shopify Payments. Riordina il blocco Prezzo per spostarlo (ad esempio sotto il titolo)."
+            },
             "show_taxes_notice": {
               "label": "Mostra avviso tasse"
+            },
+            "header__compare_at": {
+              "content": "Prezzo di confronto (barrato)"
+            },
+            "compare_at_color": {
+              "label": "Colore prezzo di confronto",
+              "info": "Mostrato quando la variante ha un prezzo di confronto superiore al prezzo attuale. Cancella il colore per usare il predefinito del tema."
+            },
+            "compare_at_font_size": {
+              "label": "Dimensione prezzo di confronto",
+              "info": "Si applica solo all’importo barrato."
+            }
+          }
+        },
+        "shop_pay_installments": {
+          "name": "Shop Pay installments",
+          "settings": {
+            "paragraph": {
+              "content": "Shows installment messaging when Shop Pay installments are available. Add this block once, then drag it anywhere in the product information column."
             }
           }
         },
@@ -3271,6 +3293,10 @@
             "show_quantity_selector": {
               "label": "Mostra il selettore della quantità"
             },
+            "show_price": {
+              "label": "Mostra il prezzo in questo blocco",
+              "info": "Attivalo se il prezzo compare solo qui. Disattivalo se usi già il blocco Prezzo nella colonna del prodotto per evitare duplicati."
+            },
             "show_dynamic_checkout": {
               "label": "Mostra pulsanti di check-out dinamico",
               "info": "Utilizzando i metodi di pagamento disponibili sul tuo negozio, i clienti vedranno la propria opzione preferita, ad esempio PayPal o Apple Pay. [Maggiori informazioni](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
@@ -3320,7 +3346,7 @@
                 "label": "Finestra"
               },
               "options__2": {
-                "label":"Pagina"
+                "label": "Pagina"
               },
               "label": "Tipo di aiuto"
             },
@@ -3489,6 +3515,22 @@
           "settings": {
             "paragraph": {
               "content": "Mantieni visibile il pulsante Aggiungi al carrello mentre i clienti navigano e scorrono."
+            },
+            "layout": {
+              "label": "Layout",
+              "options__1": {
+                "label": "Barra inferiore a tutta larghezza"
+              },
+              "options__2": {
+                "label": "Scheda flottante"
+              }
+            },
+            "show_thumbnail": {
+              "label": "Mostra anteprima prodotto"
+            },
+            "desktop_max_width_percent": {
+              "label": "Larghezza massima (desktop)",
+              "info": "Solo per il layout a tutta larghezza. Limita la larghezza su schermi grandi (la barra resta centrata)."
             }
           }
         }

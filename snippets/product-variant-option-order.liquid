@@ -1,0 +1,22 @@
+{%- doc -%}
+  Computes flex `order` for a variant option value when a custom display order is set.
+
+  @param {object} value - product option value
+  @param {string} [option_values_order] - Comma-separated value order (e.g. King, Queen, Twin)
+{%- enddoc -%}
+
+{%- liquid
+  assign option_order = forloop_index | default: 0
+  if option_values_order != blank
+    assign order_parts = option_values_order | split: ','
+    assign option_order = 99
+    for order_part in order_parts
+      assign order_name = order_part | strip
+      if value == order_name
+        assign option_order = forloop.index0
+        break
+      endif
+    endfor
+  endif
+-%}
+{{- option_order -}}

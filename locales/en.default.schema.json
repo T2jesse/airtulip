@@ -460,6 +460,9 @@
         "button": {
           "label": "Button"
         },
+        "header__button": {
+          "content": "Button"
+        },
         "button_label": {
           "label": "Button label",
           "info": "Leave the label blank to hide the button."
@@ -1211,7 +1214,8 @@
           "label": "Make section narrow"
         },
         "rounded": {
-          "label": "Make section rounded"
+          "label": "Make section rounded",
+          "info": "Contained card within the page width with rounded corners and side inset. Ignored when Make section full width is on."
         }
       },
       "blocks": {
@@ -1556,6 +1560,10 @@
       "settings": {
         "paragraph": {
           "content": "All submissions are sent to the customer email address of your store. [Learn more](https://help.shopify.com/en/manual/using-themes/change-the-layout/add-contact-form#view-contact-form-submissions)."
+        },
+        "section_anchor_id": {
+          "label": "Section anchor ID",
+          "info": "Used by in-page links on the product page (no #). Example: custom-design"
         }
       },
       "blocks": {
@@ -3134,6 +3142,48 @@
           "settings": {
             "show_taxes_notice": {
               "label": "Show taxes notice"
+            },
+            "header__compare_at": {
+              "content": "Compare-at price (strikethrough)"
+            },
+            "compare_at_color": {
+              "label": "Compare-at color",
+              "info": "Shown when the variant has a compare-at price higher than the current price. Clear the color to use the theme default."
+            },
+            "compare_at_font_size": {
+              "label": "Compare-at font size",
+              "info": "Applies to the strikethrough compare-at amount only."
+            }
+          }
+        },
+        "shop_pay_installments": {
+          "name": "Shop Pay installments",
+          "settings": {
+            "paragraph": {
+              "content": "Shows installment messaging when Shop Pay installments are available. Add this block once, then drag it anywhere in the product information column."
+            }
+          }
+        },
+        "scroll_anchor_link": {
+          "name": "Scroll anchor link",
+          "settings": {
+            "link_label": {
+              "label": "Link text"
+            },
+            "anchor_id": {
+              "label": "Scroll to section",
+              "info": "Must match the anchor ID on the target section (Contact form → Section anchor ID).",
+              "options__1": {
+                "label": "Custom headboard design form"
+              }
+            },
+            "anchor_id_custom": {
+              "label": "Custom anchor ID",
+              "info": "Optional. Overrides the dropdown when set. Do not include #."
+            },
+            "tooltip_text": {
+              "label": "Help tooltip",
+              "info": "Optional. Shows a ? icon beside the link. Leave blank to hide the icon."
             }
           }
         },
@@ -3186,6 +3236,17 @@
             },
             "size_chart": {
               "label": "Size chart page"
+            },
+            "header__order": {
+              "content": "Display order & default"
+            },
+            "default_option_value": {
+              "label": "Default option value",
+              "info": "Preselects this option on first visit (e.g. Queen). Must match the option label exactly. Ignored when the URL includes a variant."
+            },
+            "option_values_order": {
+              "label": "Option display order",
+              "info": "Comma-separated list controlling left-to-right order (e.g. King, Queen, Twin). Any values not listed appear after these."
             }
           }
         },
@@ -3270,6 +3331,10 @@
           "settings": {
             "show_quantity_selector": {
               "label": "Show quantity selector"
+            },
+            "show_price": {
+              "label": "Show price in this block",
+              "info": "Turn on if customers only see price here. Turn off when the Price block is in the product column so the amount is not shown twice."
             },
             "show_dynamic_checkout": {
               "label": "Show dynamic checkout buttons",
@@ -3368,6 +3433,46 @@
                 "label": "With background"
               },
               "label": "Style"
+            }
+          }
+        },
+        "tabbed_content": {
+          "name": "Tabbed content",
+          "settings": {
+            "paragraph": {
+              "content": "Horizontal tabs beside the price and buy buttons—cleaner than a long description plus stacked accordions. Use Tab 1 for an overview from the Shopify product description, then move specs/shipping/dimensions into the other tabs. Optional linked pages append after rich text."
+            },
+            "style": {
+              "label": "Container style"
+            },
+            "tab_count": {
+              "label": "Number of tabs"
+            },
+            "tab_1_show_product_description": {
+              "label": "Overview tab pulls product description",
+              "info": "When enabled, the Overview tab renders the Shopify product description (shown first). Extra rich text below still appears when filled in."
+            },
+            "heading": {
+              "label": "Tab title"
+            },
+            "content": {
+              "label": "Tab content"
+            },
+            "tab_optional_page": {
+              "label": "Append Shopify page content (optional)",
+              "info": "Shown after the rich text for this tab. Use for dimensional drawings, policies, or any long-form page."
+            },
+            "header__tab_1": {
+              "content": "Tab 1"
+            },
+            "header__tab_2": {
+              "content": "Tab 2"
+            },
+            "header__tab_3": {
+              "content": "Tab 3"
+            },
+            "header__tab_4": {
+              "content": "Tab 4"
             }
           }
         },
@@ -3489,6 +3594,26 @@
           "settings": {
             "paragraph": {
               "content": "Keep add to cart button visible as customers browse and scroll."
+            },
+            "layout": {
+              "label": "Layout",
+              "options__1": {
+                "label": "Full width (aligned with page content)"
+              },
+              "options__2": {
+                "label": "Floating card (bottom corner)"
+              }
+            },
+            "show_thumbnail": {
+              "label": "Show thumbnail image"
+            },
+            "desktop_max_width_percent": {
+              "label": "Desktop max width",
+              "info": "Caps the sticky bar width as a percent of the viewport on large screens. Still never wider than the theme page content width."
+            },
+            "desktop_max_width_percent": {
+              "label": "Desktop max width",
+              "info": "Caps the sticky bar width as a percent of the viewport on large screens. Still never wider than the theme page content width."
             }
           }
         }

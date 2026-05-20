@@ -335,7 +335,7 @@
       }
     },
     "social-icons": {
-       "name": "Biểu tượng truyền thông xã hội",
+      "name": "Biểu tượng truyền thông xã hội",
       "settings": {
         "paragraph": {
           "content": "Để hiển thị các tài khoản mạng xã hội của bạn, hãy liên kết chúng trong [cài đặt chủ đề](/editor?context=theme&category=social%20media)."
@@ -2925,8 +2925,7 @@
         },
         "promotion-video": {
           "name": "Video khuyến mãi",
-          "settings": {
-          }
+          "settings": {}
         }
       }
     },
@@ -3132,8 +3131,31 @@
         "price": {
           "name": "Giá",
           "settings": {
+            "show_shop_installments": {
+              "label": "Hiển thị trả góp Shop Pay",
+              "info": "Hiển thị thông báo trả góp Shop Pay khi cửa hàng hỗ trợ — do Shopify Payments quản lý. Sắp xếp lại khối Giá để đặt vị trí (ví dụ ngay dưới tiêu đề)."
+            },
             "show_taxes_notice": {
               "label": "Hiển thị thông báo thuế"
+            },
+            "header__compare_at": {
+              "content": "Giá so sánh (gạch ngang)"
+            },
+            "compare_at_color": {
+              "label": "Màu giá so sánh",
+              "info": "Hiển thị khi biến thể có giá so sánh cao hơn giá hiện tại. Xóa màu để dùng mặc định của theme."
+            },
+            "compare_at_font_size": {
+              "label": "Cỡ chữ giá so sánh",
+              "info": "Chỉ áp dụng cho số tiền gạch ngang."
+            }
+          }
+        },
+        "shop_pay_installments": {
+          "name": "Shop Pay installments",
+          "settings": {
+            "paragraph": {
+              "content": "Shows installment messaging when Shop Pay installments are available. Add this block once, then drag it anywhere in the product information column."
             }
           }
         },
@@ -3270,6 +3292,10 @@
           "settings": {
             "show_quantity_selector": {
               "label": "Hiển thị bộ chọn số lượng"
+            },
+            "show_price": {
+              "label": "Hiển thị giá trong khối này",
+              "info": "Bật nếu giá chỉ hiển thị ở đây. Tắt nếu đã dùng khối Giá ở cột thông tin sản phẩm để tránh hiển thị hai lần."
             },
             "show_dynamic_checkout": {
               "label": "Hiển thị các nút thanh toán động",
@@ -3489,6 +3515,22 @@
           "settings": {
             "paragraph": {
               "content": "Giữ nút thêm vào giỏ hàng hiển thị khi khách hàng duyệt và cuộn."
+            },
+            "layout": {
+              "label": "Bố cục",
+              "options__1": {
+                "label": "Thanh dưới cùng full width"
+              },
+              "options__2": {
+                "label": "Thẻ nổi"
+              }
+            },
+            "show_thumbnail": {
+              "label": "Hiển thị ảnh thu nhỏ sản phẩm"
+            },
+            "desktop_max_width_percent": {
+              "label": "Chiều rộng tối đa trên desktop",
+              "info": "Chỉ áp dụng cho bố cục full width. Giới hạn độ rộng thanh trên màn hình lớn (thanh được căn giữa)."
             }
           }
         }

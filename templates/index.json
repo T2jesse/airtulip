@@ -63,23 +63,32 @@
         "heading_q7Q3W7": {
           "type": "heading",
           "settings": {
-            "heading": "Your personal clean air sanctuary.",
-            "heading_size": "title-xl tracking-heading",
+            "heading": "Sleep in a 100% Particle-Free Zone.",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h1",
             "highlighted_text": "none",
             "highlighted_scribble": "circle",
             "heading_glow_enable": true,
             "heading_glow_color": "#cfe4ff",
             "heading_glow_opacity": 25,
-            "heading_glow_width": 4
+            "heading_glow_width": 4,
+            "heading_particle_enable": false,
+            "heading_particle_decorative_under_reduced_motion": false,
+            "heading_particle_phrase": "Particle-Free",
+            "heading_particle_size": 2,
+            "heading_particle_duration": 16,
+            "heading_particle_direction": "right",
+            "heading_particle_jitter": 42,
+            "heading_particle_dot_color": "#b8d4ff",
+            "heading_particle_dot_opacity": 88
           }
         },
         "text_Dk8PTE": {
           "type": "text",
           "settings": {
-            "text": "<p>Enhancing your wellness through better air quality during rest.</p>",
+            "text": "<p>Experience medical-grade air that’s 1,000x cleaner than traditional purifiers, delivered through a luxury handcrafted headboard.</p>",
             "text_font": "body",
-            "text_size": "subtext-md",
+            "text_size": "subtext-lg",
             "text_max_size": 32,
             "text_line_height": 1.6,
             "text_letter_spacing": 0,
@@ -114,10 +123,10 @@
       ],
       "settings": {
         "transparent_header": false,
-        "image": "shopify://shop_images/Screenshot_2024-09-05_at_11.20.38_AM.png",
+        "image": "shopify://shop_images/airtulip_headboard_in_bedroom_with_couple_breathing_pure_air_49846c2b-37d1-422d-94a5-87ff0838bec9.jpg",
         "image_height": "800px",
-        "content_width": "medium",
-        "content_position": "md:items-center md:justify-center",
+        "content_width": "small",
+        "content_position": "md:items-center md:justify-start",
         "text_alignment": "left",
         "image_height_mobile": "auto",
         "content_position_mobile": "items-end justify-start",
@@ -135,8 +144,8 @@
         "logo_strip_padding_y": 4,
         "logo_strip_height": 40,
         "logo_strip_gap": 32,
-        "logo_strip_speed": 4,
-        "logo_strip_shadow_enable": false,
+        "logo_strip_speed": 2,
+        "logo_strip_shadow_enable": true,
         "logo_strip_shadow_color": "#121212",
         "logo_strip_shadow_opacity": 90,
         "logo_strip_shadow_blur": 22,
@@ -146,7 +155,7 @@
         "logo_strip_plate_background": "#ffffff",
         "logo_strip_plate_height": 40,
         "padding_top": 0,
-        "padding_bottom": 0,
+        "padding_bottom": 40,
         "divider": false,
         "full_width": true,
         "rounded": false,
@@ -183,19 +192,6 @@
             "highlighted_scribble": "circle"
           }
         },
-        "review_pbRaDB": {
-          "type": "review",
-          "settings": {
-            "star_rating": "5-stars",
-            "heading": "Deeper sleep!",
-            "text": "<p>We both like the headboard. We both have much deeper sleep! </p>",
-            "quote_text_color": "",
-            "author": "J.K.",
-            "author_url": "",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
         "review_tzebWE": {
           "type": "review",
           "settings": {
@@ -204,6 +200,19 @@
             "text": "<p>We’re really happy with it. The fan works great and is wonderfully quiet on the low setting, which makes it a pleasure to sleep with. And the headboard itself looks great! </p>",
             "quote_text_color": "",
             "author": "K.P.",
+            "author_url": "",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "review_pbRaDB": {
+          "type": "review",
+          "settings": {
+            "star_rating": "5-stars",
+            "heading": "Deeper sleep!",
+            "text": "<p>We both like the headboard. We both have much deeper sleep! </p>",
+            "quote_text_color": "",
+            "author": "J.K.",
             "author_url": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -239,15 +248,15 @@
       "block_order": [
         "review_TinqWM",
         "review_g7KbFN",
-        "review_pbRaDB",
         "review_tzebWE",
+        "review_pbRaDB",
         "review_DyP8Cd",
         "review_wh6FLX"
       ],
       "name": "t:sections.top-testimonials.presets.name",
       "settings": {
         "heading": "Why people love AirTulip",
-        "heading_size": "title-md",
+        "heading_size": "title-lg tracking-heading",
         "heading_alignment": "text-center md:items-center",
         "heading_tag": "h2",
         "subheading": "",
@@ -288,7 +297,7 @@
         "color_button_background": "",
         "color_button_gradient": "",
         "full_width": false,
-        "section_width": "narrow",
+        "section_width": "normal",
         "padding_top": 72,
         "padding_bottom": 72,
         "divider": false,
@@ -296,71 +305,83 @@
         "overlap_above": 14
       }
     },
-    "highlight_text_4N3FJy": {
-      "type": "highlight-text",
-      "blocks": {
-        "heading_QzqV6K": {
-          "type": "heading",
-          "settings": {
-            "heading": "Experience Clean Air in 4 Seconds",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "heading_QzqV6K"
-      ],
+    "homepage_shark_spotlight": {
+      "type": "shark-tank-spotlight",
       "settings": {
-        "text_alignment": "center",
-        "text_alignment_mobile": "center",
-        "heading": "",
-        "heading_size": "title-sm",
-        "heading_alignment": "text-left md:items-end md:flex-row",
+        "media_type": "image",
+        "media_image": "shopify://shop_images/air-tulip-shark-tank-update-1_jpg.webp",
+        "media_video_url": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "enable_video_mute": true,
+        "media_link": "",
+        "media_link_external": true,
+        "logo": "shopify://shop_images/shark-tank-logo-png_seeklogo-447416_1.png",
+        "logo_max_width": 200,
+        "logo_max_height": 72,
+        "heading": "The pitch that put bedside clean air on national TV",
+        "heading_size": "title-lg tracking-heading",
         "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": false,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
+        "text": "<p>Millions watched our founders present AirTulip Sleep on <strong>Shark Tank</strong>—a headboard that delivers filtered, laminar air where you breathe at night. Watch the segment and see why shoppers compare us to every floor purifier they have owned.</p>",
+        "proof_1": "National TV validation for a four-figure sleep investment",
+        "proof_2": "Founder story: engineered for sleep, not showroom CFM",
+        "proof_3": "Stream the full episode in minutes",
+        "button_label": "Watch the Shark Tank segment",
+        "open_video_in_modal": true,
+        "episode_video_url": "https://www.youtube.com/shorts/zHFq9OsfATU",
+        "modal_heading": "",
+        "logo_opens_modal": true,
+        "episode_url": "https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961",
+        "episode_link_label": "Watch the full episode on ABC",
+        "show_episode_link_in_modal": true,
+        "episode_external": true,
+        "button_icon": true,
+        "button_secondary_label": "Watch on Hulu",
+        "button_secondary_link": "https://www.hulu.com/",
+        "button_secondary_external": true,
+        "narrow": false,
         "color_text": "",
-        "color_background": "",
+        "color_background": "#f8f7f6",
         "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 20,
-        "padding_bottom": 8,
+        "padding_top": 80,
+        "padding_bottom": 80,
         "divider": false,
-        "narrow": true,
         "rounded": false
       }
     },
-    "video_wkwnCX": {
-      "type": "video",
+    "full_bleed_overlay_cta_gjNt74": {
+      "type": "full-bleed-overlay-cta",
+      "name": "Full-bleed overlay CTA",
       "settings": {
-        "transparent_header": false,
-        "video": "shopify://files/videos/AirTulip Sleep Laser Footage (Cropped).mp4",
+        "image_position": "center center",
+        "video": "shopify://files/videos/AirTulip Sleep Laser Footage Optimized.mp4",
         "video_url": "",
-        "description": "",
-        "enable_video_autoplay": true,
-        "enable_video_looping": true,
-        "image_height": "600px",
-        "video_mobile": "shopify://files/videos/AirTulip Sleep Laser Footage Optimized.mp4",
+        "video_description": "Ambient background video",
+        "fb_video_autoplay": true,
+        "fb_video_loop": true,
         "video_url_mobile": "",
-        "image_height_mobile": "300px",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "divider": false,
-        "full_width": false,
-        "rounded": true
+        "min_height_vh": 50,
+        "contain_width": true,
+        "fb_overlay_opacity": 15,
+        "overlay_color": "#ffffff",
+        "overlay_text_color": "#ffffff",
+        "overlay_heading_color": "#ffffff",
+        "overlay_heading_scale": 100,
+        "overlay_heading_font_weight": "700",
+        "top_heading": "Isolate Your Breathing Zone",
+        "top_text": "<p>Cleanroom-grade air in your breathing zone, 100% validated against ordinary purifiers.</p>",
+        "bottom_heading": "Pure Air, Delivered Directly to You",
+        "bottom_text": "<p>Uncompromised, laboratory-grade purity exactly where it matters most: where you sleep.</p>",
+        "cta_label": "Learn more about us",
+        "cta_link": "",
+        "cta_style": "primary",
+        "cta_size": "md",
+        "cta_icon": true,
+        "cta_external": false,
+        "cta_alignment": "center",
+        "cta_alignment_mobile": "center",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "logo_list_PN4b9x": {
@@ -414,13 +435,14 @@
         "logo_apRwTV",
         "logo_nEJwaH"
       ],
+      "disabled": true,
       "settings": {
         "layout": "marquee",
         "grid_horizontal": 70,
         "direction": "left",
         "speed": 5,
         "heading": "As Seen On",
-        "heading_size": "title-md",
+        "heading_size": "title-lg tracking-heading",
         "heading_alignment": "text-center md:items-center",
         "heading_tag": "h2",
         "subheading": "",
@@ -443,70 +465,6 @@
         "padding_bottom": 72,
         "divider": false,
         "full_width": false,
-        "rounded": false
-      }
-    },
-    "rich_text_qpRKkp": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_VnMcza": {
-          "type": "heading",
-          "settings": {
-            "heading": "AirTulip is on Shark Tank!",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_N8z668": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Here’s our <a href=\"https://youtube.com/shorts/zHFq9OsfATU?si=rcudfYuS-5Cxdu6u\" title=\"https://youtube.com/shorts/zHFq9OsfATU?si=rcudfYuS-5Cxdu6u\">Youtube clip!</a> Full Episode on Hulu!📺</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "heading_VnMcza",
-        "text_N8z668"
-      ],
-      "settings": {
-        "text_alignment": "center",
-        "text_alignment_mobile": "center",
-        "heading": "",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_width": "small",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 0,
-        "divider": false,
-        "narrow": true,
         "rounded": false
       }
     },
@@ -597,59 +555,6 @@
         "parallax_direction": "vertical"
       }
     },
-    "rich-text": {
-      "type": "rich-text",
-      "blocks": {
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Step into a new era of sleep and wellness with AirTulip. Our clean room-grade air purification system doesn't just clean your air - it transforms your sleep experience. </p><p>Whether you're fighting asthma and/or allergies, seeking optimal recovery, or investing in better sleep, AirTulip delivers pure air that's 1,000 times cleaner than traditional purifiers. <strong>The result?</strong> Improved sleep quality, waking up refreshed and enhanced daily performance.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "text"
-      ],
-      "settings": {
-        "text_alignment": "left",
-        "text_alignment_mobile": "center",
-        "heading": "Pure Air, Better Health",
-        "heading_size": "title-md",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_width": "small",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "shopify://pages/about",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "scribble",
-        "highlighted_scribble": "basic-underline",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 0,
-        "divider": false,
-        "narrow": false,
-        "rounded": false
-      }
-    },
     "multicolumn_with_icons_Di4fLz": {
       "type": "multicolumn-with-icons",
       "blocks": {
@@ -696,8 +601,8 @@
         "style": "with-border",
         "columns": 3,
         "text_alignment": "left",
-        "heading": "The healthy sleep solution",
-        "heading_size": "title-md",
+        "heading": "The Only Cleanroom-Grade Solution",
+        "heading_size": "title-lg tracking-heading",
         "heading_alignment": "text-center md:items-center",
         "heading_tag": "h2",
         "subheading": "",
@@ -723,8 +628,72 @@
         "rounded": false
       }
     },
+    "split_text_Nwr68R": {
+      "type": "split-text",
+      "blocks": {
+        "heading_WcDfJF": {
+          "type": "heading",
+          "settings": {
+            "heading": "Sleep in Your Own Private Air Bubble",
+            "heading_size": "title-md-lg tracking-heading",
+            "heading_tag": "h2"
+          }
+        },
+        "text_48CaxT": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Clean air at the headboard, designed for sleep—without overlapping the story on your media.</p>",
+            "text_size": "subtext-md"
+          }
+        },
+        "button_VwzLYP": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Clean Air",
+            "button_link": "",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_icon": true,
+            "button_external": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_WcDfJF",
+        "text_48CaxT",
+        "button_VwzLYP"
+      ],
+      "name": "Split text",
+      "settings": {
+        "video_url": "",
+        "video_description": "Background video",
+        "split_video_autoplay": true,
+        "split_video_loop": true,
+        "video_mobile": "shopify://files/videos/Couple enjoying headboards clean fresh air video.mp4",
+        "video_url_mobile": "",
+        "media_flush_edge": false,
+        "media_side": "right",
+        "media_span_percent": 60,
+        "media_shade": false,
+        "image_heading_fallback": "",
+        "color_heading": "#171717",
+        "color_supporting_text": "#171717",
+        "content_column_background": "#ffffff",
+        "mobile_stack_background": "#ffffff",
+        "heading_line_height_pct": 100,
+        "desktop_text_align": "left",
+        "content_alignment_mobile": "left",
+        "split_overlay_stack_gap_px": 28,
+        "min_height_px": 520,
+        "min_height_px_mobile": 340,
+        "rounded": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
     "video_3MUXjz": {
       "type": "video",
+      "disabled": true,
       "settings": {
         "transparent_header": false,
         "video": "shopify://files/videos/Air Tulip Video.mp4",
@@ -792,7 +761,7 @@
         "text_alignment": "left",
         "text_alignment_mobile": "left",
         "heading": "",
-        "heading_size": "title-md",
+        "heading_size": "title-lg tracking-heading",
         "heading_alignment": "text-left md:items-end md:flex-row",
         "heading_width": "small",
         "heading_tag": "h2",
@@ -826,7 +795,7 @@
           "type": "heading",
           "settings": {
             "heading": "Want more details? Sign up below",
-            "heading_size": "title-md",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -884,7 +853,7 @@
           "type": "heading",
           "settings": {
             "heading": "Your Nighttime Sanctuary From Allergies & Asthma",
-            "heading_size": "title-md",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -952,7 +921,7 @@
           "type": "heading",
           "settings": {
             "heading": "Transform Your Sleep With Clean Air",
-            "heading_size": "title-md",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -1020,7 +989,7 @@
           "type": "heading",
           "settings": {
             "heading": "Maximize Recovery While You Sleep",
-            "heading_size": "title-md",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -1088,7 +1057,7 @@
           "type": "heading",
           "settings": {
             "heading": "Scientifically Proven Results",
-            "heading_size": "title-md",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -1126,8 +1095,11 @@
         "text_BtWb38",
         "button_pYAAnK"
       ],
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/graph2.png",
+        "diagram_asset_filename": "",
+        "diagram_asset_alt": "Diagram illustrating clean air concentrated at the headboard versus mixed room air",
         "image_height": "adapt",
         "image_width": "medium",
         "layout": "text_first",
@@ -1175,7 +1147,7 @@
         "direction": "left",
         "speed": 5,
         "heading": "<strong>Performance measured & confirmed by</strong>",
-        "heading_size": "title-md",
+        "heading_size": "title-lg tracking-heading",
         "heading_alignment": "text-center md:items-center",
         "heading_tag": "h2",
         "subheading": "",
@@ -1240,7 +1212,7 @@
         "text_alignment": "left",
         "text_alignment_mobile": "left",
         "heading": "Like us as a company?",
-        "heading_size": "title-md",
+        "heading_size": "title-lg tracking-heading",
         "heading_alignment": "text-left md:items-end md:flex-row",
         "heading_width": "small",
         "heading_tag": "h2",
@@ -1274,7 +1246,7 @@
           "type": "heading",
           "settings": {
             "heading": "Sleep in a Cleanroom-grade Quality Space",
-            "heading_size": "title-md",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -1345,14 +1317,13 @@
   },
   "order": [
     "image_with_text_overlay_xAGVpd",
+    "homepage_shark_spotlight",
     "top_testimonials_DeNDcE",
-    "highlight_text_4N3FJy",
-    "video_wkwnCX",
+    "full_bleed_overlay_cta_gjNt74",
     "logo_list_PN4b9x",
-    "rich_text_qpRKkp",
     "countdown_timer_KVHK76",
-    "rich-text",
     "multicolumn_with_icons_Di4fLz",
+    "split_text_Nwr68R",
     "video_3MUXjz",
     "rich_text_JNxpha",
     "newsletter_9QCrN3",

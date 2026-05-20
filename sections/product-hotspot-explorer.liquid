@@ -1,0 +1,658 @@
+{%- liquid
+  assign explorer_image = section.settings.image
+  assign hotspot_blocks = section.blocks | where: 'type', 'hotspot'
+  assign image_aspect_ratio = section.settings.image_aspect_ratio | default: 'adapt'
+  assign fixed_image_aspect = false
+  assign explorer_aspect_value = blank
+
+  case image_aspect_ratio
+    when 'square'
+      assign fixed_image_aspect = true
+      assign explorer_aspect_value = '1 / 1'
+    when 'portrait'
+      assign fixed_image_aspect = true
+      assign explorer_aspect_value = '4 / 5'
+    when 'landscape'
+      assign fixed_image_aspect = true
+      assign explorer_aspect_value = '4 / 3'
+    when 'wide'
+      assign fixed_image_aspect = true
+      assign explorer_aspect_value = '16 / 9'
+    when 'tall'
+      assign fixed_image_aspect = true
+      assign explorer_aspect_value = '3 / 4'
+    when 'adapt'
+      if explorer_image != blank
+        assign explorer_aspect_value = explorer_image.aspect_ratio
+      endif
+  endcase
+
+  if section.index > 2
+    assign image_loading = 'lazy'
+    assign image_fetchpriority = 'low'
+  else
+    assign image_loading = 'lazy'
+    assign image_fetchpriority = 'auto'
+  endif
+
+  assign explorer_img_src = blank
+  assign explorer_img_srcset = blank
+  assign explorer_img_alt = section.settings.heading | escape
+  if explorer_image != blank
+    assign explorer_img_src = explorer_image | image_url: width: 1600
+    assign explorer_img_alt = explorer_image.alt | default: section.settings.heading | escape
+    capture explorer_img_srcset
+      echo explorer_image | image_url: width: 480
+      echo ' 480w, '
+      echo explorer_image | image_url: width: 800
+      echo ' 800w, '
+      echo explorer_image | image_url: width: 1200
+      echo ' 1200w, '
+      echo explorer_image | image_url: width: 1600
+      echo ' 1600w'
+    endcapture
+  endif
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    {%- render 'section-variables', section: section -%}
+    --product-explorer-pin-size: {{ section.settings.pin_size }}px;
+    --product-explorer-stage-radius: {% if section.settings.rounded %}var(--rounded-block){% else %}0{% endif %};
+    --product-explorer-panel-width: {{ section.settings.panel_width }}px;
+    {%- if fixed_image_aspect and explorer_aspect_value != blank -%}
+      --product-explorer-aspect-ratio: {{ explorer_aspect_value }};
+    {%- endif -%}
+  }
+
+  #shopify-section-{{ section.id }} product-hotspot-explorer,
+  #shopify-section-{{ section.id }} .product-explorer {
+    display: block;
+    width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .product-explorer__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+    width: 100%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .product-explorer__layout {
+      grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr);
+      gap: var(--sp-10);
+    }
+
+    #shopify-section-{{ section.id }} .product-explorer__layout--align-sidebar {
+      align-items: stretch;
+    }
+
+    #shopify-section-{{ section.id }} .product-explorer__layout--align-sidebar .product-explorer__details {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .product-explorer__layout--align-sidebar .product-explorer__list {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
+  <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
+    {%- render 'section-heading', section: section -%}
+
+    <product-hotspot-explorer
+      class="product-explorer block"
+      data-section-id="{{ section.id }}"
+      data-sync-sidebar="{{ section.settings.sync_sidebar_on_hover }}"
+      {% if section.settings.hint != blank %}
+        data-hint="{{ section.settings.hint | escape }}"
+      {% endif %}
+    >
+      <div class="product-explorer__layout{% if section.settings.align_sidebar_to_image %} product-explorer__layout--align-sidebar{% endif %}">
+        <div class="product-explorer__stage-wrap">
+          <div class="product-explorer__stage">
+            {%- if explorer_image != blank -%}
+              <div class="product-explorer__figure{% if fixed_image_aspect %} product-explorer__figure--fixed{% endif %}{% if section.settings.rounded %} product-explorer__figure--rounded{% endif %}">
+                <div class="product-explorer__media-fill">
+                  <img
+                    id="ProductExplorerImage-{{ section.id }}"
+                    src="{{ explorer_img_src }}"
+                    srcset="{{ explorer_img_srcset | strip }}"
+                    sizes="(max-width: 767px) 100vw, 66vw"
+                    alt="{{ explorer_img_alt }}"
+                    class="product-explorer__image w-full block{% unless fixed_image_aspect %} h-auto{% endunless %}"
+                    loading="{{ image_loading }}"
+                    {% if image_fetchpriority != 'auto' %}fetchpriority="{{ image_fetchpriority }}"{% endif %}
+                    width="{{ explorer_image.width }}"
+                    height="{{ explorer_image.height }}"
+                  >
+                </div>
+
+                {%- if hotspot_blocks.size > 0 -%}
+                  <div class="product-explorer__pins">
+                    {%- for block in hotspot_blocks -%}
+                  {%- liquid
+                    assign pin_x = block.settings.position_x | default: 50
+                    assign pin_y = block.settings.position_y | default: 50
+                    assign panel_id = 'ProductExplorerPanel-' | append: section.id | append: '-' | append: block.id
+                    assign pin_placement = 'is-below'
+                    if pin_y < 32
+                      assign pin_placement = 'is-above'
+                    elsif pin_y > 72
+                      assign pin_placement = 'is-above'
+                    endif
+                    if pin_x > 72
+                      assign pin_placement = pin_placement | append: ' is-left'
+                    elsif pin_x < 26
+                      assign pin_placement = pin_placement | append: ' is-right'
+                    endif
+
+                    assign panel_media_type = block.settings.panel_media_type | default: 'none'
+                    if panel_media_type == 'none' and block.settings.panel_image != blank
+                      assign panel_media_type = 'image'
+                    endif
+                    assign panel_has_media = false
+                    if panel_media_type == 'image' and block.settings.panel_image != blank
+                      assign panel_has_media = true
+                    elsif panel_media_type == 'video'
+                      if block.settings.panel_video != blank or block.settings.panel_video_url != blank
+                        assign panel_has_media = true
+                      endif
+                    endif
+                  -%}
+                  <div
+                    class="product-explorer__pin {{ pin_placement }}{% if block.settings.featured %} is-featured{% endif %}"
+                    style="--pin-x: {{ pin_x }}%; --pin-y: {{ pin_y }}%;"
+                    data-block-id="{{ block.id }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    <button
+                      type="button"
+                      class="product-explorer__pin-button flex items-center justify-center"
+                      aria-expanded="false"
+                      aria-controls="{{ panel_id }}"
+                    >
+                      <span class="product-explorer__pin-ring" aria-hidden="true"></span>
+                      <span class="product-explorer__pin-core" aria-hidden="true"></span>
+                      <span class="sr-only">{{ block.settings.heading | default: 'Product detail' | escape }}</span>
+                    </button>
+
+                    <div
+                      id="{{ panel_id }}"
+                      class="product-explorer__panel{% if panel_has_media %} has-media{% endif %}"
+                      role="region"
+                      aria-hidden="true"
+                    >
+                      {%- if panel_has_media -%}
+                        {%- liquid
+                          assign panel_media_ratio = section.settings.panel_media_ratio | default: section.settings.panel_image_ratio | default: 'landscape'
+                          assign panel_media_rounded = section.settings.panel_media_rounded | default: section.settings.panel_image_rounded | default: true
+                        -%}
+                        <div class="product-explorer__panel-media product-explorer__panel-media--{{ panel_media_ratio }}{% if panel_media_rounded %} product-explorer__panel-media--rounded{% endif %}">
+                          {%- if panel_media_type == 'video' -%}
+                            {%- render 'video',
+                              video: block.settings.panel_video,
+                              video_url: block.settings.panel_video_url,
+                              description: block.settings.heading,
+                              muted: true,
+                              autoplay: true,
+                              loop: true,
+                              show_play_button: false,
+                              cover_image: block.settings.panel_image,
+                              loading: 'lazy',
+                              class: 'product-explorer__panel-video w-full',
+                              sizes: '(max-width: 767px) 85vw, 280px'
+                            -%}
+                          {%- elsif block.settings.panel_image != blank -%}
+                            {%- liquid
+                              assign panel_img_alt = block.settings.panel_image_alt
+                              if panel_img_alt == blank
+                                assign panel_img_alt = block.settings.panel_image.alt | default: block.settings.heading
+                              endif
+                            -%}
+                            {{- block.settings.panel_image | image_url: width: 640 | image_tag: loading: 'lazy', widths: '320,480,640', sizes: '(max-width: 767px) 85vw, 280px', class: 'product-explorer__panel-image w-full h-auto block', alt: panel_img_alt -}}
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.heading != blank -%}
+                        <p class="product-explorer__panel-title heading text-base font-medium leading-tight tracking-none">
+                          {{- block.settings.heading | escape -}}
+                        </p>
+                      {%- endif -%}
+                      {%- if block.settings.text != blank -%}
+                        <div class="product-explorer__panel-text rte text-sm leading-normal">
+                          {{- block.settings.text -}}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- else -%}
+              <div class="product-explorer__placeholder flex items-center justify-center w-full aspect-[4/3] bg-opacity-10">
+                {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.hint != blank and hotspot_blocks.size > 0 -%}
+            <p class="product-explorer__hint text-xs text-opacity text-center lg:text-left mt-3">
+              {{- section.settings.hint | escape -}}
+            </p>
+          {%- endif -%}
+
+        </div>
+
+        <div class="product-explorer__details flex flex-col gap-4 min-w-0">
+          {%- if section.settings.details_heading != blank -%}
+            <p class="heading title-md tracking-heading leading-tight">
+              {{- section.settings.details_heading | escape -}}
+            </p>
+          {%- endif -%}
+
+          {%- if hotspot_blocks.size > 0 -%}
+            <ul class="product-explorer__list flex flex-col gap-2">
+              {%- for block in hotspot_blocks -%}
+                <li>
+                  <button
+                    type="button"
+                    class="product-explorer__list-item text-left w-full"
+                    data-explorer-list="{{ block.id }}"
+                    aria-controls="ProductExplorerPanel-{{ section.id }}-{{ block.id }}"
+                  >
+                    {%- if block.settings.heading != blank -%}
+                      <span class="product-explorer__list-label font-medium text-sm leading-tight">
+                        {{- block.settings.heading | escape -}}
+                      </span>
+                    {%- endif -%}
+                    {%- if block.settings.text != blank -%}
+                      <span class="product-explorer__list-teaser text-xs text-opacity leading-normal line-clamp-2">
+                        {{- block.settings.text | strip_html | truncate: 90 -}}
+                      </span>
+                    {%- endif -%}
+                  </button>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- if section.settings.button_label != blank -%}
+            <a
+              {% if section.settings.button_link != blank %}
+                href="{{ section.settings.button_link }}"
+              {% else %}
+                role="link" aria-disabled="true"
+              {% endif %}
+              class="button button--secondary button--md inline-flex self-start"
+              {% if section.settings.button_external %}target="_blank" rel="noopener"{% endif %}
+            >
+              <span class="btn-fill" data-fill></span>
+              <span class="btn-text flex items-center gap-2">
+                {{- section.settings.button_label | escape -}}
+                {%- if section.settings.button_icon -%}
+                  {%- render 'icon', icon: 'arrow-right', size: 'sm' -%}
+                {%- endif -%}
+              </span>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </product-hotspot-explorer>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product hotspot explorer",
+  "tag": "section",
+  "class": "shopify-section--product-hotspot-explorer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Product image aspect ratio",
+      "info": "Controls the main image frame. The sidebar aligns to this height on desktop.",
+      "default": "adapt",
+      "options": [
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "landscape", "label": "Landscape (4:3)" },
+        { "value": "wide", "label": "Wide (16:9)" },
+        { "value": "tall", "label": "Tall (3:4)" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "align_sidebar_to_image",
+      "label": "Align sidebar to product image height",
+      "info": "Desktop only. Matches the right column height to the main image.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.settings.header__heading.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.global.settings.heading.label",
+      "default": "Explore AirTulip Sleep"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "title-sm", "label": "t:sections.global.settings.heading_size.options__1.label" },
+        { "value": "title-md", "label": "t:sections.global.settings.heading_size.options__2.label" },
+        { "value": "title-lg tracking-heading", "label": "t:sections.global.settings.heading_size.options__3.label" },
+        { "value": "title-xl tracking-heading", "label": "t:sections.global.settings.heading_size.options__4.label" }
+      ],
+      "default": "title-lg tracking-heading",
+      "label": "t:sections.global.settings.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.global.settings.heading_alignment.label",
+      "options": [
+        { "value": "text-left md:items-end md:flex-row", "label": "t:sections.global.settings.heading_alignment.options__1.label" },
+        { "value": "text-center md:items-center", "label": "t:sections.global.settings.heading_alignment.options__2.label" },
+        { "value": "text-right md:items-end md:flex-row-reverse", "label": "t:sections.global.settings.heading_alignment.options__3.label" }
+      ],
+      "default": "text-center md:items-center"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        { "value": "h1", "label": "t:sections.global.settings.heading_tag.options__1.label" },
+        { "value": "h2", "label": "t:sections.global.settings.heading_tag.options__2.label" },
+        { "value": "h3", "label": "t:sections.global.settings.heading_tag.options__3.label" }
+      ],
+      "default": "h2",
+      "label": "t:sections.global.settings.heading_tag.label"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.global.settings.subheading.label"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.global.settings.description.label",
+      "default": "<p>Hover or tap each point to see how laminar airflow, filtration, and craftsmanship come together in your headboard.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hint",
+      "label": "Interaction hint",
+      "default": "Hover or tap the points to explore"
+    },
+    {
+      "type": "text",
+      "id": "details_heading",
+      "label": "Sidebar heading",
+      "default": "What you are looking at"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.settings.header__button.content"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.global.settings.button_label.label",
+      "default": "Read the engineering story"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.global.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Hotspot appearance"
+    },
+    {
+      "type": "range",
+      "id": "pin_size",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Pin size",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "sync_sidebar_on_hover",
+      "label": "Highlight sidebar item when hovering a hotspot",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Tooltip panels"
+    },
+    {
+      "type": "range",
+      "id": "panel_width",
+      "min": 220,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Tooltip panel width",
+      "default": 280
+    },
+    {
+      "type": "select",
+      "id": "panel_media_ratio",
+      "label": "Tooltip media aspect ratio",
+      "options": [
+        { "value": "adapt", "label": "Original proportions" },
+        { "value": "landscape", "label": "Landscape (4:3)" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "wide", "label": "Wide (16:9)" }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "checkbox",
+      "id": "panel_media_rounded",
+      "label": "Rounded tooltip media",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.settings.header__colors.content"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.global.settings.color_text.label",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.global.settings.color_background.label",
+      "default": "#fafafa"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "t:sections.global.settings.gradient_background.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.settings.header__section.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.settings.padding_top.label",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.settings.padding_bottom.label",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.global.settings.divider.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.global.settings.full_width.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded",
+      "label": "t:sections.global.settings.rounded.label",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Hotspot",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Title",
+          "default": "Feature"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Describe this part of the product.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Tooltip panel"
+        },
+        {
+          "type": "select",
+          "id": "panel_media_type",
+          "label": "Tooltip media",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Video" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "panel_image",
+          "label": "Tooltip image",
+          "info": "Shown when Tooltip media is Image. Also used as the video poster when Tooltip media is Video."
+        },
+        {
+          "type": "text",
+          "id": "panel_image_alt",
+          "label": "Tooltip image alt text",
+          "info": "Leave blank to use the image file alt text or hotspot title."
+        },
+        {
+          "type": "video",
+          "id": "panel_video",
+          "label": "Tooltip video (Shopify-hosted)"
+        },
+        {
+          "type": "video_url",
+          "id": "panel_video_url",
+          "label": "Tooltip video (YouTube or Vimeo)",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "header",
+          "content": "Pin position"
+        },
+        {
+          "type": "range",
+          "id": "position_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "position_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 50
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Emphasize pin",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product hotspot explorer",
+      "blocks": [
+        { "type": "hotspot" },
+        { "type": "hotspot" },
+        { "type": "hotspot" },
+        { "type": "hotspot" }
+      ]
+    }
+  ]
+}
+{% endschema %}

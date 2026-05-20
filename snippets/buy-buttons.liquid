@@ -23,6 +23,8 @@
 
 <div class="product-form-wrapper" {{ block.shopify_attributes }}>
   {%- liquid
+    assign active_variant = variant | default: product.selected_or_first_available_variant
+
     assign gift_card_recipient_feature_active = false
     if block.settings.show_gift_card_recipient and product.gift_card?
       assign gift_card_recipient_feature_active = true
@@ -46,6 +48,10 @@
     endif
 
     assign show_price = block.settings.show_price
+    assign price_block = section.blocks | where: "type", "price" | first
+    if price_block
+      assign show_price = false
+    endif
   -%}
   {%- form 'product',
     product,
@@ -55,7 +61,7 @@
     class: 'product-form grid gap-8',
     is: 'product-form'
   -%}
-    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled />
+    <input type="hidden" name="id" value="{{ active_variant.id }}" disabled />
 
     {%- liquid
       if gift_card_recipient_feature_active
@@ -63,10 +69,10 @@
       endif
 
       assign check_against_inventory = true
-      if product.selected_or_first_available_variant.inventory_management != 'shopify' or  product.selected_or_first_available_variant.inventory_policy == 'continue'
+      if active_variant.inventory_management != 'shopify' or  active_variant.inventory_policy == 'continue'
         assign check_against_inventory = false
       endif
-      if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+      if active_variant.quantity_rule.min > active_variant.inventory_quantity and check_against_inventory
         assign quantity_rule_soldout = true
       endif
     -%}
@@ -76,7 +82,7 @@
 
       {%- if product.quantity_price_breaks_configured? and show_quantity_selector -%}
         <div id="QuantityForm-{{ section_id }}-{{ product_id }}" class="field">
-          {%- assign cart_qty = cart | item_count_for_variant: product.selected_or_first_available_variant.id -%}
+          {%- assign cart_qty = cart | item_count_for_variant: active_variant.id -%}
           <label for="Quantity-{{ section_id }}-{{ product_id }}" class="quantity__label label" is="quantity-label">
             {{ 'products.quantity.label' | t }}
             <span id="QuantityRulesCart-{{ section_id }}-{{ product_id }}" class="quantity__rules-cart{% if cart_qty == 0 %} hidden{% endif %} relative">
@@ -95,16 +101,16 @@
                 name="quantity"
                 inputmode="numeric"
                 autocomplete="off"
-                data-quantity-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                data-quantity-variant-id="{{ active_variant.id }}"
                 data-cart-quantity="{{ cart_qty }}"
-                data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-                min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-                {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
-                  data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
-                  max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+                data-min="{{ active_variant.quantity_rule.min }}"
+                min="{{ active_variant.quantity_rule.min }}"
+                {% if active_variant.quantity_rule.max != null %}
+                  data-max="{{ active_variant.quantity_rule.max }}"
+                  max="{{ active_variant.quantity_rule.max }}"
                 {% endif %}
-                step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
-                value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                step="{{ active_variant.quantity_rule.increment }}"
+                value="{{ active_variant.quantity_rule.min }}"
                 form="{{ product_form_id }}"
               />
               <button type="button" name="plus" class="quantity__button" aria-label="{{ 'products.quantity.increase' | t: product: product.title | escape }}">
@@ -114,19 +120,19 @@
 
             {%- if product.quantity_price_breaks_configured? -%}
               {%- liquid
-                assign volume_pricing_array = product.selected_or_first_available_variant.quantity_price_breaks | sort: 'quantity' | reverse
-                assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.min
+                assign volume_pricing_array = active_variant.quantity_price_breaks | sort: 'quantity' | reverse
+                assign current_qty_for_volume_pricing = cart_qty | plus: active_variant.quantity_rule.min
                 if cart_qty > 0
-                  assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.increment
+                  assign current_qty_for_volume_pricing = cart_qty | plus: active_variant.quantity_rule.increment
                 endif
-                assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price
+                assign variant_price_compare = active_variant.compare_at_price
               -%}
               <price-per-item
                 id="PricePerItem-{{ section_id }}-{{ product_id }}"
                 class="price flex flex-wrap items-center gap-2 lg:gap-1d5"
                 data-section-id="{{ section_id }}"
                 data-product-id="{{ product_id }}"
-                data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                data-variant-id="{{ active_variant.id }}"
               >
                 {%- if variant_price_compare -%}
                   <span class="sr-only">{{ 'products.price.regular_price' | t }}</span>
@@ -142,13 +148,13 @@
                   <span class="sr-only">{{ 'products.price.sale_price' | t }}</span>
                 {%- endif -%}
                 
-                {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
+                {%- if active_variant.quantity_price_breaks.size > 0 -%}
                   {%- if current_qty_for_volume_pricing < volume_pricing_array.last.minimum_quantity -%}
                     {%- liquid
                       if settings.currency_code_enabled
-                        assign variant_price = product.selected_or_first_available_variant.price | money_with_currency
+                        assign variant_price = active_variant.price | money_with_currency
                       else
-                        assign variant_price = product.selected_or_first_available_variant.price | money
+                        assign variant_price = active_variant.price | money
                       endif
                     -%}
                     <span class="price-per-item--current price__regular whitespace-nowrap">
@@ -175,9 +181,9 @@
                   <span class="price-per-item--current price__regular whitespace-nowrap">
                     {%- liquid
                       if settings.currency_code_enabled
-                        assign variant_price = product.selected_or_first_available_variant.price | money_with_currency
+                        assign variant_price = active_variant.price | money_with_currency
                       else
-                        assign variant_price = product.selected_or_first_available_variant.price | money
+                        assign variant_price = active_variant.price | money
                       endif
                     -%}
                     {{- 'products.volume_pricing.price_at_each' | t: price: variant_price -}}
@@ -187,21 +193,21 @@
             {%- endif -%}
           </div>
 
-          {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 or product.selected_or_first_available_variant.quantity_rule.min > 1 or product.selected_or_first_available_variant.quantity_rule.max != null -%}
+          {%- if active_variant.quantity_rule.increment > 1 or active_variant.quantity_rule.min > 1 or active_variant.quantity_rule.max != null -%}
             <div class="quantity__rules text-sm font-medium leading-tight" id="QuantityRules-{{ section_id }}-{{ product_id }}">
-              {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
+              {%- if active_variant.quantity_rule.increment > 1 -%}
                 <span class="divider">
-                  {{- 'products.quantity.multiples_of' | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment -}}
+                  {{- 'products.quantity.multiples_of' | t: quantity: active_variant.quantity_rule.increment -}}
                 </span>
               {%- endif -%}
-              {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
+              {%- if active_variant.quantity_rule.min > 1 -%}
                 <span class="divider">
-                  {{- 'products.quantity.minimum_of' | t: quantity: product.selected_or_first_available_variant.quantity_rule.min -}}
+                  {{- 'products.quantity.minimum_of' | t: quantity: active_variant.quantity_rule.min -}}
                 </span>
               {%- endif -%}
-              {%- if product.selected_or_first_available_variant.quantity_rule.max != null -%}
+              {%- if active_variant.quantity_rule.max != null -%}
                 <span class="divider">
-                  {{- 'products.quantity.maximum_of' | t: quantity: product.selected_or_first_available_variant.quantity_rule.max -}}
+                  {{- 'products.quantity.maximum_of' | t: quantity: active_variant.quantity_rule.max -}}
                 </span>
               {%- endif -%}
             </div>
@@ -210,7 +216,7 @@
       {%- endif -%}
       <div class="buy-buttons{% if enable_back_in_stock %} back-in-stock{% endif %}{% if product.quantity_price_breaks_configured? != true and show_quantity_selector or show_price %} flex flex-wrap{% else %} grid{% endif %} gap-4">
         {%- if product.quantity_price_breaks_configured? != true and show_quantity_selector -%}
-          {%- assign cart_qty = cart | item_count_for_variant: product.selected_or_first_available_variant.id -%}
+          {%- assign cart_qty = cart | item_count_for_variant: active_variant.id -%}
           <label for="Quantity-{{ section_id }}-{{ product_id }}" class="label sr-only">{{ 'products.quantity.label' | t }}</label>
           <quantity-input class="quantity inline-flex shrink-0 relative" data-section-id="{{ section_id }}" data-product-id="{{ product_id }}">
             <button type="button" name="minus" class="quantity__button" aria-label="{{ 'products.quantity.decrease' | t: product: product.title | escape }}">
@@ -223,16 +229,16 @@
               name="quantity"
               inputmode="numeric"
               autocomplete="off"
-              data-quantity-variant-id="{{ product.selected_or_first_available_variant.id }}"
+              data-quantity-variant-id="{{ active_variant.id }}"
               data-cart-quantity="{{ cart_qty }}"
-              data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-              min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-              {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
-                data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
-                max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+              data-min="{{ active_variant.quantity_rule.min }}"
+              min="{{ active_variant.quantity_rule.min }}"
+              {% if active_variant.quantity_rule.max != null %}
+                data-max="{{ active_variant.quantity_rule.max }}"
+                max="{{ active_variant.quantity_rule.max }}"
               {% endif %}
-              step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
-              value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+              step="{{ active_variant.quantity_rule.increment }}"
+              value="{{ active_variant.quantity_rule.min }}"
               form="{{ product_form_id }}"
             />
             <button type="button" name="plus" class="quantity__button" aria-label="{{ 'products.quantity.increase' | t: product: product.title | escape }}">
@@ -247,7 +253,7 @@
           form="{{ product_form_id }}"
           class="product-form__submit button button--primary button--fixed grow{% if show_price %} with-price{% endif %}"
           is="hover-button"
-          {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %} disabled{% endif -%}
+          {%- if active_variant.available == false or quantity_rule_soldout %} disabled{% endif -%}
           {%- if product.template_suffix == 'pre-order' %} data-pre-order{% endif -%}
           {%- if enable_back_in_stock %} data-back-in-stock{% endif -%}
         >
@@ -255,7 +261,7 @@
           <span class="btn-text">
             <span>
               {%- liquid
-                if product.selected_or_first_available_variant.available == false or quantity_rule_soldout
+                if active_variant.available == false or quantity_rule_soldout
                   echo 'products.product.sold_out' | t
                 elsif product.template_suffix != 'pre-order'
                   echo 'products.product.add_to_cart' | t
@@ -267,9 +273,9 @@
             {%- if show_price -%}
               <div id="BuyButtonPrice-{{ section_id }}-{{ product_id }}" class="flex">
                 <span class="relative">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                <product-buy-price class="price" data-price="{{ product.selected_or_first_available_variant.price }}" form="{{ product_form_id }}">
+                <product-buy-price class="price" data-price="{{ active_variant.price }}" form="{{ product_form_id }}">
                   {%- liquid
-                    assign price = product.selected_or_first_available_variant.price | default: 1999
+                    assign price = active_variant.price | default: 1999
                     if settings.currency_code_enabled
                       echo price | money_with_currency
                     else
@@ -305,21 +311,21 @@
       </div>
 
       {%- if product.quantity_price_breaks_configured? != true and show_quantity_selector -%}
-        {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 or product.selected_or_first_available_variant.quantity_rule.min > 1 or product.selected_or_first_available_variant.quantity_rule.max != null -%}
+        {%- if active_variant.quantity_rule.increment > 1 or active_variant.quantity_rule.min > 1 or active_variant.quantity_rule.max != null -%}
           <div class="quantity__rules text-sm font-medium leading-tight" id="QuantityRules-{{ section_id }}-{{ product_id }}">
-            {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
+            {%- if active_variant.quantity_rule.increment > 1 -%}
               <span class="divider">
-                {{- 'products.quantity.multiples_of' | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment -}}
+                {{- 'products.quantity.multiples_of' | t: quantity: active_variant.quantity_rule.increment -}}
               </span>
             {%- endif -%}
-            {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
+            {%- if active_variant.quantity_rule.min > 1 -%}
               <span class="divider">
-                {{- 'products.quantity.minimum_of' | t: quantity: product.selected_or_first_available_variant.quantity_rule.min -}}
+                {{- 'products.quantity.minimum_of' | t: quantity: active_variant.quantity_rule.min -}}
               </span>
             {%- endif -%}
-            {%- if product.selected_or_first_available_variant.quantity_rule.max != null -%}
+            {%- if active_variant.quantity_rule.max != null -%}
               <span class="divider">
-                {{- 'products.quantity.maximum_of' | t: quantity: product.selected_or_first_available_variant.quantity_rule.max -}}
+                {{- 'products.quantity.maximum_of' | t: quantity: active_variant.quantity_rule.max -}}
               </span>
             {%- endif -%}
           </div>
@@ -338,7 +344,7 @@
 
   {%- if enable_back_in_stock -%}
     <div id="BackInStock-{{ section_id }}-{{ product_id }}">
-      {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+      {%- if active_variant.available == false or quantity_rule_soldout -%}
         <back-in-stock-drawer id="BackInStockDrawer-{{ section_id }}-{{ product_id }}" class="drawer drawer--end z-40 fixed bottom-0 left-0 h-full w-full pointer-events-none"
           role="dialog"
           aria-modal="true"

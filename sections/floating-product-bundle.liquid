@@ -18,7 +18,7 @@
     assign product_limit = products.count
   endif
 -%}
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="banner media--{{ section.settings.image_height }}{% unless section.settings.full_width %} page-width{% endunless %} relative">
     <media-element class="banner__media hidden lg:block w-full h-full overflow-hidden"{% if section.settings.enable_parallax %} data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"{% endif %}>
       <picture class="media media--height block w-full h-full relative overflow-hidden" is="animate-picture" data-animate="zoom-out">

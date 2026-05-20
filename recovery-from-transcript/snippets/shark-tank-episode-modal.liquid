@@ -1,0 +1,151 @@
+{%- doc -%}
+  In-page Shark Tank episode player (YouTube / Vimeo) using theme x-modal.
+  Accepts standard watch URLs, youtu.be links, and YouTube Shorts (/shorts/VIDEO_ID).
+
+  @param {object} section - Section with episode_video_url, heading, episode_url, episode_external
+  @param {string} modal_id - Unique DOM id for aria-controls
+{%- enddoc -%}
+
+{%- liquid
+  assign raw_url = section.settings.episode_video_url | strip
+  assign embed_src = ''
+  assign iframe_title = ''
+  assign is_youtube_short = false
+  assign video_host = ''
+  assign video_id = ''
+
+  if raw_url != blank
+    assign modal_title = section.settings.modal_heading | default: section.settings.button_label | default: 'Watch the Shark Tank segment'
+    assign origin_host = 'https://' | append: request.host
+    assign url_lower = raw_url | downcase
+
+    if url_lower contains 'youtube.com/shorts/' or url_lower contains 'youtube.com/short/'
+      assign video_host = 'youtube'
+      assign is_youtube_short = true
+      if url_lower contains '/shorts/'
+        assign video_id = raw_url | split: '/shorts/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+      else
+        assign video_id = raw_url | split: '/short/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+      endif
+    elsif url_lower contains 'youtu.be/'
+      assign video_host = 'youtube'
+      assign video_id = raw_url | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+    elsif url_lower contains 'youtube.com/watch'
+      assign video_host = 'youtube'
+      assign video_id = raw_url | split: 'v=' | last | split: '&' | first | split: '#' | first
+    elsif url_lower contains 'youtube.com/embed/'
+      assign video_host = 'youtube'
+      assign video_id = raw_url | split: '/embed/' | last | split: '?' | first | split: '&' | first
+    elsif url_lower contains 'youtube.com/live/'
+      assign video_host = 'youtube'
+      assign video_id = raw_url | split: '/live/' | last | split: '?' | first | split: '&' | first
+    elsif url_lower contains 'youtube.com' or url_lower contains 'youtu.be'
+      assign video_host = 'youtube'
+    elsif url_lower contains 'vimeo.com'
+      assign video_host = 'vimeo'
+      if url_lower contains '/video/'
+        assign video_id = raw_url | split: '/video/' | last | split: '?' | first | split: '&' | first
+      else
+        assign video_id = raw_url | split: 'vimeo.com/' | last | split: '?' | first | split: '&' | first | split: '/' | first
+      endif
+    endif
+
+    if video_host == 'youtube' and video_id != blank
+      capture embed_src
+        echo 'https://www.youtube.com/embed/'
+        echo video_id
+        echo '?playsinline=1&autoplay=1&rel=0&modestbranding=1&enablejsapi=1&origin='
+        echo origin_host | url_encode
+      endcapture
+      assign iframe_title = modal_title | append: ' — YouTube'
+    elsif video_host == 'vimeo' and video_id != blank
+      capture embed_src
+        echo 'https://player.vimeo.com/video/'
+        echo video_id
+        echo '?autopause=1&autoplay=1&transparent=0&responsive=1&title=0&byline=0'
+      endcapture
+      assign iframe_title = modal_title | append: ' — Vimeo'
+    endif
+  endif
+-%}
+
+{%- if embed_src != blank -%}
+<x-modal
+  id="{{ modal_id }}"
+  class="x-modal drawer z-30 fixed bottom-0 left-0 h-full w-full pointer-events-none shark-tank-video-modal{% if is_youtube_short %} shark-tank-video-modal--shorts{% endif %}"
+  role="dialog"
+  aria-modal="true"
+  aria-label="{{ modal_title | escape }}"
+  hidden
+>
+  <overlay-element
+    class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none"
+    aria-controls="{{ modal_id }}"
+    aria-expanded="false"
+  ></overlay-element>
+  <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
+    <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
+      <span class="drawer__title heading title-md">{{ modal_title | escape }}</span>
+      <button
+        class="button button--secondary button--close drawer__close hidden sm:flex items-center justify-center"
+        type="button"
+        is="hover-button"
+        aria-controls="{{ modal_id }}"
+        aria-expanded="false"
+        aria-label="{{ 'general.accessibility.close' | t | escape }}"
+      >
+        <span class="btn-fill" data-fill></span>
+        <span class="btn-text">
+          {%- render 'icon', icon: 'close', size: 'sm' -%}
+        </span>
+      </button>
+    </gesture-element>
+    <motion class="drawer__content opacity-0 invisible flex flex-col h-full grow shrink">
+      <div class="drawer__scrollable relative flex flex-col gap-5 md:gap-7 grow shrink{% if is_youtube_short %} items-center{% endif %}">
+        <div class="shark-tank-video-modal__player media media--height relative overflow-hidden w-full{% if is_youtube_short %} shark-tank-video-modal__player--shorts{% endif %}">
+          <iframe
+            class="shark-tank-video-modal__iframe absolute top-0 left-0 w-full h-full"
+            data-shark-tank-iframe
+            title="{{ iframe_title | escape }}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+        {%- if section.settings.episode_url != blank and section.settings.show_episode_link_in_modal -%}
+          <p class="shark-tank-video-modal__footer text-sm text-opacity text-center w-full">
+            <a
+              href="{{ section.settings.episode_url }}"
+              class="link"
+              {% if section.settings.episode_external %}target="_blank" rel="noopener"{% endif %}
+            >
+              {{- section.settings.episode_link_label | default: 'Watch the full episode on ABC' | escape -}}
+            </a>
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</x-modal>
+
+<script>
+  (() => {
+    const modal = document.getElementById({{ modal_id | json }});
+    if (!modal) return;
+
+    const iframe = modal.querySelector('[data-shark-tank-iframe]');
+    const embedSrc = {{ embed_src | json }};
+    if (!iframe || !embedSrc) return;
+
+    const loadVideo = () => {
+      if (iframe.getAttribute('src') !== embedSrc) iframe.setAttribute('src', embedSrc);
+    };
+    const unloadVideo = () => {
+      iframe.removeAttribute('src');
+    };
+
+    modal.addEventListener('modal:afterShow', loadVideo);
+    modal.addEventListener('modal:afterHide', unloadVideo);
+  })();
+</script>
+{%- endif -%}

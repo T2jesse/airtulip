@@ -1,0 +1,17 @@
+{%- doc -%}
+  Inserts a clipped span around an escaped phrase inside a plain-text heading.
+
+  Params: heading_plain, phrase, block, dot_px, gap_px, dot_fill
+{%- enddoc -%}
+{%- liquid
+  assign phrase_t = phrase | strip_html | strip
+  assign chunks = heading_plain | split: phrase_t
+-%}
+{{- chunks[0] | escape -}}
+<span
+  class="particle-heading__fill particle-heading__fill--{{- block.id -}}"
+  style="--ph-dot-radius: {{- dot_px }}px; --ph-gap: {{- gap_px }}px; --ph-dot-color: {{- dot_fill -}};"
+>
+  {{- phrase_t | escape -}}
+</span>
+{{- chunks[1] | escape -}}

@@ -75,8 +75,8 @@
         "color_button_gradient": "",
         "color_overlay": "#171717",
         "overlay_opacity": 70,
-        "padding_top": 8,
-        "padding_bottom": 8,
+        "padding_top": 52,
+        "padding_bottom": 52,
         "divider": false,
         "full_width": false,
         "rounded": true,
@@ -87,22 +87,11 @@
     "main-product": {
       "type": "main-product",
       "blocks": {
-        "text_Mhdn8P": {
-          "type": "text",
-          "settings": {
-            "icon": "none",
-            "iwidth": "custom",
-            "icon_width": 24,
-            "text": "AirTulip",
-            "text_size": "text-base"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {
             "title_size": "product-title-md",
             "title_size_mobile": "product-title-md",
-            "show_price": true,
             "show_rating": false
           }
         },
@@ -117,7 +106,17 @@
             "picker_type": "button",
             "enable_color_swatches": true,
             "color_swatch_type": "color",
-            "size_chart": ""
+            "size_chart": "",
+            "default_option_value": "Queen",
+            "option_values_order": "King, Queen, Twin"
+          }
+        },
+        "price_QR8YtK": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": true,
+            "compare_at_color": "#737373",
+            "compare_at_font_size": 14
           }
         },
         "buy_buttons": {
@@ -132,62 +131,57 @@
             "show_back_in_stock_phone": false
           }
         },
+        "pdp_custom_design_link": {
+          "type": "scroll_anchor_link",
+          "settings": {
+            "link_label": "Request a custom headboard design",
+            "anchor_id": "custom-design",
+            "anchor_id_custom": "",
+            "tooltip_text": "Share your vision for custom fronts, channels, wraps, or shelving. We will follow up with feasibility and timelines."
+          }
+        },
+        "affirm_pay_over_time_messaging_product_block_BiBYHe": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "settings": {
+            "logo_align": "left",
+            "font_size": 16,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "FNNKE76DET1WV20",
+            "price_selector": ""
+          }
+        },
+        "shop_pay_installments_7pLmQe": {
+          "type": "shop_pay_installments",
+          "settings": {}
+        },
         "liquid_f9YK6r": {
           "type": "liquid",
           "settings": {
             "liquid": "<div id=\"truemed-prequalify\" style=\"font-size: 14px;\" icon-height=\"12\" data-public-id=\"tm_qual_r9u205ahnk\"></div>\n<script src=\"https://static.truemed.com/widgets/product-page-widget.min.js\" defer></script>"
           }
         },
-        "description": {
-          "type": "description",
-          "settings": {
-            "text_size": "text-base"
-          }
-        },
-        "text_DnpMLq": {
-          "type": "text",
-          "settings": {
-            "icon": "none",
-            "iwidth": "custom",
-            "icon_width": 24,
-            "text": "<strong>AirTulip Sleep Details</strong>",
-            "text_size": "text-base lg:text-lg"
-          }
-        },
-        "collapsible_tab_cyMLKH": {
-          "type": "collapsible_tab",
+        "pdp_product_tabs": {
+          "type": "tabbed_content",
           "settings": {
             "style": "with-border",
-            "icon": "none",
-            "heading": "Features & Details",
-            "content": "<p><strong>Aerodynamics Technology</strong></p><ul><li>Patent-pending</li><li>Advanced laminar air flow technology</li><li>Particulate-free air zone where you sleep</li></ul><p><strong>3 Modes</strong></p><ul><li>Whisper mode for quietest operation</li><li>Night mode for the most stable bubble</li><li>Day mode for high cleaning power of the entire room</li></ul><p><strong>Advanced Acoustics</strong></p><ul><li>Own fan design using noise reduction technology</li><li>Computer generated curved acoustic insulation channels</li><li>26 dB(A) in whisper mode</li><li>30 dB(A) in night mode</li></ul><p><strong>Cleanroom Filters</strong></p><ul><li>Dual Industrial HEPA-H14 Filters in metal cassettes (single in Twin)</li><li>Dual full-width Active Carbon Filters (single in Twin)</li><li>2 Pre-filters (1 in Twin)</li></ul><p><strong>Local bespoke Production</strong></p><ul><li>All our products are sustainable and handcrafted in New York City</li></ul>",
-            "page": "",
-            "liquid": "",
-            "opened": false
-          }
-        },
-        "collapsible_tab_VnYrLG": {
-          "type": "collapsible_tab",
-          "settings": {
-            "style": "with-border",
-            "icon": "none",
-            "heading": "Dimensions",
-            "content": "<p></p><p><strong>AirTulip Queen</strong></p><ul><li>Fits Full and Queen size beds</li><li>Width: 70\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 130 lbs</li></ul><p></p><p><strong>AirTulip King</strong></p><ul><li>Fits King and California King beds</li><li>Width: 79\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 130 lbs</li></ul><p></p><p><strong>AirTulip Twin</strong></p><ul><li>Fits Twin size and childrens beds</li><li>Width: 42\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 80 lbs</li></ul>",
-            "page": "headboard-dimensions",
-            "liquid": "",
-            "opened": false
-          }
-        },
-        "collapsible_tab_6yPCkk": {
-          "type": "collapsible_tab",
-          "settings": {
-            "style": "with-border",
-            "icon": "none",
-            "heading": "Delivery & Shipping",
-            "content": "<p>Typical replacement filter delivery time is within two weeks</p>",
-            "page": "",
-            "liquid": "",
-            "opened": false
+            "tab_count": "4",
+            "tab_1_show_product_description": true,
+            "tab_1_heading": "Overview",
+            "tab_1_icon": "none",
+            "tab_1_content": "",
+            "tab_2_heading": "Features & Details",
+            "tab_2_icon": "check_mark",
+            "tab_2_content": "<p><strong>Aerodynamics Technology</strong></p><ul><li>Patent-pending</li><li>Advanced laminar air flow technology</li><li>Particulate-free air zone where you sleep</li></ul><p><strong>3 Modes</strong></p><ul><li>Whisper mode for quietest operation</li><li>Night mode for the most stable bubble</li><li>Day mode for high cleaning power of the entire room</li></ul><p><strong>Advanced Acoustics</strong></p><ul><li>Own fan design using noise reduction technology</li><li>Computer generated curved acoustic insulation channels</li><li>26 dB(A) in whisper mode</li><li>30 dB(A) in night mode</li></ul><p><strong>Cleanroom Filters</strong></p><ul><li>Dual Industrial HEPA-H14 Filters in metal cassettes (single in Twin)</li><li>Dual full-width Active Carbon Filters (single in Twin)</li><li>2 Pre-filters (1 in Twin)</li></ul><p><strong>Local bespoke Production</strong></p><ul><li>All our products are sustainable and handcrafted in New York City</li></ul>",
+            "tab_2_page": "",
+            "tab_3_heading": "Dimensions",
+            "tab_3_icon": "map_pin",
+            "tab_3_content": "<p><strong>AirTulip Queen</strong></p><ul><li>Fits Full and Queen size beds</li><li>Width: 70\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 130 lbs</li></ul><p></p><p><strong>AirTulip King</strong></p><ul><li>Fits King and California King beds</li><li>Width: 79\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 130 lbs</li></ul><p></p><p><strong>AirTulip Twin</strong></p><ul><li>Fits Twin size and childrens beds</li><li>Width: 42\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 80 lbs</li></ul>",
+            "tab_3_page": "headboard-dimensions",
+            "tab_4_heading": "Delivery & Shipping",
+            "tab_4_icon": "truck",
+            "tab_4_content": "<p><strong>Headboard fulfillment:</strong> AirTulip Sleep is <strong>made to order</strong> with an approximately <strong>8-week production lead time</strong>. We keep you informed on build progress and your estimated ship date.</p><p><strong>Replacement filters:</strong> Typical delivery is within about <strong>two weeks</strong> when ordered separately.</p>",
+            "tab_4_page": ""
           }
         },
         "complementary": {
@@ -201,21 +195,25 @@
         },
         "sticky_buy_button": {
           "type": "sticky_buy_button",
-          "settings": {}
+          "settings": {
+            "layout": "full_width",
+            "show_thumbnail": true,
+            "desktop_max_width_percent": 50,
+            "reveal_after_section_id": "pdp_trust_signals"
+          }
         }
       },
       "block_order": [
-        "text_Mhdn8P",
         "title",
         "judge_me_reviews_preview_badge_VYGRJr",
         "variant_picker",
+        "price_QR8YtK",
         "buy_buttons",
+        "pdp_custom_design_link",
+        "affirm_pay_over_time_messaging_product_block_BiBYHe",
+        "shop_pay_installments_7pLmQe",
         "liquid_f9YK6r",
-        "description",
-        "text_DnpMLq",
-        "collapsible_tab_cyMLKH",
-        "collapsible_tab_VnYrLG",
-        "collapsible_tab_6yPCkk",
+        "pdp_product_tabs",
         "complementary",
         "sticky_buy_button"
       ],
@@ -233,52 +231,363 @@
         "image_ratio_mobile": "square",
         "mobile_thumbnail": true,
         "padding_top": 0,
-        "padding_bottom": 84,
+        "padding_bottom": 52,
         "divider": false,
         "full_width": true,
         "rounded": false
       }
     },
-    "rich_text_ELB3eY": {
-      "type": "rich-text",
+    "pdp_trust_signals": {
+      "type": "multicolumn-with-icons",
       "blocks": {
-        "heading_Wi9RfN": {
-          "type": "heading",
+        "t1": {
+          "type": "column",
           "settings": {
-            "heading": "AirTulip is on Shark Tank!",
-            "heading_size": "title-lg tracking-heading",
-            "heading_tag": "h2",
+            "icon": "return",
+            "custom_icon": "",
+            "heading": "30-night sleep trial",
+            "text": "<p>Try it at home. If AirTulip Sleep is not right for you, return within 30 days for a full product refund (<strong>shipping both ways excluded</strong>)—see FAQ for details.</p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
         },
-        "text_cYtTX6": {
-          "type": "text",
+        "t2": {
+          "type": "column",
           "settings": {
-            "text": "<p>Watch the Episode on ABC or Hulu <a href=\"https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961\" target=\"_blank\" title=\"https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961\">here</a>! 📺</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
+            "icon": "shield",
+            "custom_icon": "",
+            "heading": "Lifetime Warranty",
+            "text": "<p>Manufacturing defects covered in year one. Pairing with an active <strong>filter subscription</strong> unlocks a lifetime warranty. Learn more.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "t3": {
+          "type": "column",
+          "settings": {
+            "icon": "map_pin",
+            "custom_icon": "",
+            "heading": "Hand-assembled in the U.S.",
+            "text": "<p>Proudly handcrafted in <strong>New York City and Detroit</strong>. Sized and upholstered for your bed, not mass-produced shelves.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "t4": {
+          "type": "column",
+          "settings": {
+            "icon": "time",
+            "custom_icon": "",
+            "heading": "Transparent lead time",
+            "text": "<p>Because each unit is made to order, expect roughly <strong>8 weeks</strong> before shipment. We communicate milestones so you can plan install and mattress height.</p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
         }
       },
       "block_order": [
-        "heading_Wi9RfN",
-        "text_cYtTX6"
+        "t1",
+        "t2",
+        "t3",
+        "t4"
       ],
       "settings": {
-        "text_alignment": "center",
-        "text_alignment_mobile": "center",
-        "heading": "",
-        "heading_size": "title-md",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_width": "small",
+        "style": "with-border",
+        "columns": 4,
+        "text_alignment": "left",
+        "heading": "Bespoke American Craftsmanship, Fully Guaranteed",
+        "heading_size": "title-lg tracking-heading",
+        "heading_max_width": "medium",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#171717",
+        "color_background": "#fafafa",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "pdp_value_split": {
+      "type": "split-text",
+      "blocks": {
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Not Another Floor Air Purifier",
+            "heading_size": "title-lg tracking-heading",
+            "heading_tag": "h2"
+          }
+        },
+        "x1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>AirTulip Sleep pulls air through industrial-grade filtration and delivers it across the headboard fabric using <strong>laminar, low-turbulence airflow</strong> aimed at your breathing zone—so cleaner air is directed where you actually breathe at night.</p><p>Use the tabs above for full specs; this section is the “why it exists” story serious buyers need before a four-figure decision.</p>",
+            "text_size": "subtext-md"
+          }
+        },
+        "b1": {
+          "type": "button",
+          "settings": {
+            "button_label": "Read the engineering story",
+            "button_link": "/pages/about",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_icon": true,
+            "button_external": false
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "x1",
+        "b1"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/AirTulipProductFrontAngle_square.jpg",
+        "video_url": "",
+        "video_description": "Background video",
+        "split_video_autoplay": true,
+        "split_video_loop": true,
+        "video_url_mobile": "",
+        "media_flush_edge": false,
+        "media_side": "right",
+        "media_span_percent": 52,
+        "media_shade": false,
+        "image_heading_fallback": "",
+        "color_background": "#ffffff",
+        "gradient_background": "",
+        "color_heading": "#0a1628",
+        "color_supporting_text": "#394a60",
+        "content_column_background": "#ffffff",
+        "mobile_stack_background": "#ffffff",
+        "heading_line_height_pct": 112,
+        "desktop_text_align": "left",
+        "content_alignment_mobile": "left",
+        "split_overlay_stack_gap_px": 24,
+        "min_height_px": 460,
+        "min_height_px_mobile": 280,
+        "rounded": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "pdp_product_explorer": {
+      "type": "product-hotspot-explorer",
+      "blocks": {
+        "hs_breathing_zone": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Breathing zone delivery",
+            "text": "<p>Filtered air exits across the headboard fabric as <strong>laminar, low-turbulence flow</strong> aimed at where you breathe—not just into the room corners like a floor purifier.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 50,
+            "position_y": 28,
+            "featured": true
+          }
+        },
+        "hs_hepa": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "HEPA H14 + carbon filtration",
+            "text": "<p>Dual industrial <strong>HEPA-H14</strong> cassettes (single on Twin) plus full-width activated carbon for particulates, odors, and VOCs—serviceable metal filter trays, not disposable gimmicks.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 15,
+            "position_y": 57,
+            "featured": false
+          }
+        },
+        "hs_acoustics": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Bedside-quiet engineering",
+            "text": "<p>Custom fan paths, curved acoustic channels, and biomimicry-inspired blade design target roughly <strong>26 dB(A) Whisper</strong> and <strong>30 dB(A) Night</strong> modes—engineered for sleep, not showroom CFM.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 50,
+            "position_y": 65,
+            "featured": false
+          }
+        },
+        "hs_upholstery": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Bespoke upholstery",
+            "text": "<p>Each headboard is <strong>made to order</strong> in Brooklyn and Detroit with your fabric and channel selections—pair with the custom design form below for contrasting wraps, shelving, or alternate fronts.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 55,
+            "position_y": 35,
+            "featured": false
+          }
+        },
+        "hs_legs": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Two leg heights included",
+            "text": "<p>Ships with <strong>two leg sets</strong> to match your mattress height across Twin, Queen, and King footprints—roughly 8-week build lead time with proactive milestone updates.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 50,
+            "position_y": 91,
+            "featured": false
+          }
+        }
+      },
+      "block_order": [
+        "hs_breathing_zone",
+        "hs_hepa",
+        "hs_acoustics",
+        "hs_upholstery",
+        "hs_legs"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/AirTulipProductFrontAngle_square.jpg",
+        "image_aspect_ratio": "landscape",
+        "align_sidebar_to_image": true,
+        "heading": "Inside your clean-air headboard",
+        "heading_size": "title-lg tracking-heading",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "Interactive product tour",
+        "description": "<p>Explore how laminar delivery, industrial filtration, and American hand assembly work together—without leaving the product page.</p>",
+        "hint": "Hover or tap each point to explore",
+        "details_heading": "",
+        "button_label": "Read the engineering story",
+        "button_link": "shopify://pages/about",
+        "button_external": false,
+        "button_icon": true,
+        "pin_size": 16,
+        "sync_sidebar_on_hover": true,
+        "panel_width": 280,
+        "panel_media_ratio": "landscape",
+        "panel_media_rounded": true,
+        "color_text": "#171717",
+        "color_background": "#fafafa",
+        "gradient_background": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "divider": false,
+        "full_width": false,
+        "rounded": true
+      }
+    },
+    "pdp_shark_spotlight": {
+      "type": "shark-tank-spotlight",
+      "settings": {
+        "media_type": "image",
+        "media_image": "shopify://shop_images/air-tulip-shark-tank-update-1_jpg.webp",
+        "media_video_url": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "enable_video_mute": true,
+        "media_link": "",
+        "media_link_external": true,
+        "logo": "shopify://shop_images/shark-tank-logo-png_seeklogo-447416_1.png",
+        "logo_max_width": 200,
+        "logo_max_height": 72,
+        "heading": "Watch AirTulip Founder Arjen Bring Cleanroom Innovation to the Sharks",
+        "heading_size": "title-lg tracking-heading",
+        "heading_tag": "h2",
+        "text": "<p>Millions watched our founders present AirTulip Sleep on <strong>Shark Tank</strong>—a headboard that delivers filtered, laminar air where you breathe at night. Watch the segment and see why shoppers compare us to every floor purifier they have owned.</p>",
+        "proof_1": "",
+        "proof_2": "",
+        "proof_3": "",
+        "button_label": "Watch the Shark Tank segment",
+        "open_video_in_modal": true,
+        "episode_video_url": "https://www.youtube.com/shorts/zHFq9OsfATU",
+        "modal_heading": "",
+        "logo_opens_modal": true,
+        "episode_url": "https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961",
+        "episode_link_label": "Watch the full episode on ABC",
+        "show_episode_link_in_modal": true,
+        "episode_external": true,
+        "button_icon": true,
+        "button_secondary_label": "",
+        "button_secondary_link": "https://www.hulu.com/",
+        "button_secondary_external": true,
+        "narrow": false,
+        "color_text": "",
+        "color_background": "#ffffff",
+        "gradient_background": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "divider": false,
+        "rounded": false
+      }
+    },
+    "pdp_how_it_works": {
+      "type": "multicolumn-with-icons",
+      "blocks": {
+        "w1": {
+          "type": "column",
+          "settings": {
+            "icon": "lightning",
+            "custom_icon": "",
+            "heading": "Directed laminar airflow",
+            "text": "<p>Laminar delivery helps keep purified air cohesive on its way to you instead of dumping speed into turbulent room corners.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "w2": {
+          "type": "column",
+          "settings": {
+            "icon": "award",
+            "custom_icon": "",
+            "heading": "Industrial-grade HEPA H14 filtration",
+            "text": "<p>Dual certified HEPA H14 cartridges in steel cassettes (counts adjust for Twin) plus wide activated carbon layers for odors and VOCs.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "w3": {
+          "type": "column",
+          "settings": {
+            "icon": "organic",
+            "custom_icon": "",
+            "heading": "Whisper-level bedside acoustics",
+            "text": "<p>Published operating points land around <strong>26 dB(A)</strong> in Whisper and <strong>30 dB(A)</strong> in Night mode—engineered for sleep, not showroom CFM contests.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3"
+      ],
+      "settings": {
+        "style": "with-border",
+        "columns": 3,
+        "text_alignment": "left",
+        "heading": "What you are actually investing in",
+        "heading_size": "title-lg tracking-heading",
+        "heading_max_width": "full",
+        "heading_alignment": "text-center md:items-center",
         "heading_tag": "h2",
         "subheading": "",
         "description": "",
@@ -289,263 +598,45 @@
         "highlighted_text": "none",
         "highlighted_scribble": "circle",
         "color_text": "",
-        "color_background": "",
+        "color_background": "#fafafa",
         "gradient_background": "",
         "color_highlight": "",
         "gradient_highlight": "",
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 8,
-        "padding_bottom": 8,
-        "divider": false,
-        "narrow": true,
-        "rounded": false
-      }
-    },
-    "video_yrA9aV": {
-      "type": "video",
-      "settings": {
-        "transparent_header": false,
-        "video": "shopify://files/videos/Air Tulip Video.mp4",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "cover_image": "shopify://shop_images/AirTulipProductFrontAngle_square.jpg",
-        "description": "AirTulip Sleep Animation",
-        "enable_video_autoplay": true,
-        "enable_video_looping": true,
-        "image_height": "adapt",
-        "video_mobile": "shopify://files/videos/Air Tulip Video.mp4",
-        "video_url_mobile": "",
-        "cover_image_mobile": "shopify://shop_images/AirTulipProductFrontAngle_square.jpg",
-        "image_height_mobile": "auto",
-        "padding_top": 8,
-        "padding_bottom": 8,
-        "divider": false,
-        "full_width": true,
-        "rounded": false
-      }
-    },
-    "help-drawer": {
-      "type": "help-drawer",
-      "blocks": {
-        "content_38RjHh": {
-          "type": "content",
-          "settings": {
-            "icon": "none",
-            "heading": "Information",
-            "text": "<p>Share contact information, store details, and brand content with your customers.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle",
-            "color_text": "#fafafa",
-            "color_background": "#1f1f1f",
-            "gradient_background": "",
-            "color_highlight": "#ffddbf",
-            "gradient_highlight": ""
-          }
-        },
-        "content-1": {
-          "type": "content",
-          "settings": {
-            "icon": "rocket",
-            "heading": "Shipping Information",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle",
-            "color_text": "#b45309",
-            "color_background": "#fffbeb",
-            "gradient_background": "",
-            "color_highlight": "#ffddbf",
-            "gradient_highlight": ""
-          }
-        },
-        "content-2": {
-          "type": "content",
-          "settings": {
-            "icon": "headphone",
-            "heading": "Customer Support",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle",
-            "color_text": "#0369a1",
-            "color_background": "#f0f9ff",
-            "gradient_background": "",
-            "color_highlight": "#ffddbf",
-            "gradient_highlight": ""
-          }
-        },
-        "content-3": {
-          "type": "content",
-          "settings": {
-            "icon": "chat_bubble",
-            "heading": "FAQ’s",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle",
-            "color_text": "#be123c",
-            "color_background": "#fff1f2",
-            "gradient_background": "",
-            "color_highlight": "#ffddbf",
-            "gradient_highlight": ""
-          }
-        },
-        "content-4": {
-          "type": "content",
-          "settings": {
-            "icon": "phone",
-            "heading": "Contact Us",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle",
-            "color_text": "#4d7c0f",
-            "color_background": "#f7fee7",
-            "gradient_background": "",
-            "color_highlight": "#ffddbf",
-            "gradient_highlight": ""
-          }
-        }
-      },
-      "block_order": [
-        "content_38RjHh",
-        "content-1",
-        "content-2",
-        "content-3",
-        "content-4"
-      ],
-      "disabled": true,
-      "settings": {
-        "heading": "Need help?",
-        "description": "<p>If you have any questions, you are always welcome to contact us. We'll get back to you as soon as possible, within 24 hours on weekdays.</p>"
-      }
-    },
-    "logo_list_VcX8Jn": {
-      "type": "logo-list",
-      "blocks": {
-        "logo_pbhNfB": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/shark-tank-logo-png_seeklogo-447416_1.png",
-            "height": 80,
-            "link": "https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961"
-          }
-        },
-        "logo_kyxr8V": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/images_1.png",
-            "height": 80,
-            "link": "https://www.forbes.com/sites/forbes-personal-shopper/article/air-quality-and-sleep/"
-          }
-        },
-        "logo_Fy6XFp": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/apartment-therapy-logo-vector_1.png",
-            "height": 80,
-            "link": "https://www.apartmenttherapy.com/air-tulip-air-purifying-headboard-review-37481462"
-          }
-        },
-        "logo_3EnDYJ": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/design-milk-logo-vector.png",
-            "height": 80,
-            "link": "https://design-milk.com/this-headboard-cleans-the-air-near-you-as-you-sleep/"
-          }
-        },
-        "logo_yXzWqb": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Fast_Company_Logo.png",
-            "height": 80,
-            "link": "https://www.fastcompany.com/90781651/this-clever-headboard-is-an-air-filter-in-disguise"
-          }
-        }
-      },
-      "block_order": [
-        "logo_pbhNfB",
-        "logo_kyxr8V",
-        "logo_Fy6XFp",
-        "logo_3EnDYJ",
-        "logo_yXzWqb"
-      ],
-      "settings": {
-        "layout": "default",
-        "grid_horizontal": 70,
-        "direction": "left",
-        "speed": 5,
-        "heading": "As seen on",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": true,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 32,
-        "padding_bottom": 32,
+        "padding_top": 60,
+        "padding_bottom": 60,
         "divider": false,
         "full_width": false,
         "rounded": false
       }
     },
-    "17373031676a505831": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_featured_carousel_rcyVy4": {
-          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "maxwidth": 1080
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_featured_carousel_rcyVy4"
-      ],
-      "settings": {
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 24,
-        "padding_bottom": 12,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "image_with_text_hNJg9H": {
+    "pdp_science": {
       "type": "image-with-text",
       "blocks": {
-        "heading_LYgMyF": {
+        "im": {
+          "type": "image",
+          "settings": {
+            "image_width": "custom",
+            "image_max_width": 50,
+            "image_max_width_mobile": 50
+          }
+        },
+        "hd": {
           "type": "heading",
           "settings": {
-            "heading": "Scientifically proven",
-            "heading_size": "title-md",
+            "heading": "Performance you can contextualize",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
         },
-        "text_BXFcLR": {
+        "tx": {
           "type": "text",
           "settings": {
-            "text": "<p>Backed by science, AirTulip purifies your air within seconds—delivering a clean-air environment that’s over <strong>1,000 times cleaner</strong> than traditional air purifiers.</p>",
+            "text": "<p>Marketing surfaces describe a clean-air zone that is <strong>orders of magnitude cleaner</strong> than typical purifier-in-a-room setups. Use the schematic as a qualitative mental model—pair it with your About page lab narrative for buyers who want receipts.</p>",
             "text_font": "body",
             "text_size": "subtext-md",
             "text_max_size": 32,
@@ -559,30 +650,42 @@
         }
       },
       "block_order": [
-        "heading_LYgMyF",
-        "text_BXFcLR"
+        "im",
+        "hd",
+        "tx"
       ],
+      "disabled": true,
       "settings": {
-        "image": "shopify://shop_images/graph2.png",
-        "image_height": "adapt",
+        "video_url": "",
+        "video_description": "",
+        "video_muted": true,
+        "video_autoplay": true,
+        "video_loop": true,
+        "video_show_play_button": false,
+        "diagram_asset_filename": "airtulip-performance-breathing-zone.svg",
+        "diagram_asset_alt": "Diagram: laminar clean air concentrated at the headboard versus typical mixed room air (illustrative)",
+        "image_height": "500px",
+        "match_column_heights": true,
+        "media_aspect_ratio": "adapt",
+        "media_aspect_ratio_mobile": "inherit",
         "image_width": "large",
         "layout": "image_first",
         "text_alignment": "left",
         "content_position": "align-self-center",
         "image_height_mobile": "auto",
         "text_alignment_mobile": "left",
-        "color_text": "",
+        "color_text": "#171717",
         "color_background": "",
         "gradient_background": "",
-        "color_background_2": "",
+        "color_background_2": "#ffffff",
         "gradient_background_2": "",
         "color_highlight": "",
         "gradient_highlight": "",
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 32,
-        "padding_bottom": 12,
+        "padding_top": 52,
+        "padding_bottom": 52,
         "divider": false,
         "full_width": false,
         "rounded": false,
@@ -590,83 +693,45 @@
         "parallax_direction": "vertical"
       }
     },
-    "multicolumn_with_icons_P8if9A": {
-      "type": "multicolumn-with-icons",
-      "blocks": {
-        "column_qdwTxF": {
-          "type": "column",
-          "settings": {
-            "icon": "star",
-            "custom_icon": "",
-            "heading": "100% Clean Air",
-            "text": "<p>AirTulip creates a completely clean air zone that eliminates airborne pollutants, such as dust, allergens, and even harmful micro-organisms.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "column_DfUKmx": {
-          "type": "column",
-          "settings": {
-            "icon": "organic",
-            "custom_icon": "",
-            "heading": "Whisper Quiet",
-            "text": "<p>We used aeroacoustics to make the headboard whisper quiet, so you can sleep sound.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "column_F4wPLL": {
-          "type": "column",
-          "settings": {
-            "icon": "heart",
-            "custom_icon": "",
-            "heading": "Smart Design, Simple Assembly",
-            "text": "<p>AirTulip is designed to blend into your interior, creating an environment conducive to optimal health and well-being. Easy install.</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "column_qdwTxF",
-        "column_DfUKmx",
-        "column_F4wPLL"
-      ],
+    "full_bleed_overlay_cta_hR8Q6b": {
+      "type": "full-bleed-overlay-cta",
+      "name": "Full-bleed overlay CTA",
       "settings": {
-        "style": "with-border",
-        "columns": 3,
-        "text_alignment": "left",
-        "heading": "AirTulip is not your standard air purifier",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
+        "image_position": "center center",
+        "video": "shopify://files/videos/Air Tulip Video.mp4",
+        "video_url": "",
+        "video_description": "Ambient background video",
+        "fb_video_autoplay": true,
+        "fb_video_loop": true,
+        "video_url_mobile": "",
+        "min_height_vh": 70,
+        "contain_width": true,
+        "fb_overlay_opacity": 35,
+        "overlay_color": "#070f1a",
+        "overlay_text_color": "#ffffff",
+        "overlay_heading_color": "#ffffff",
+        "overlay_heading_scale": 100,
+        "overlay_heading_font_weight": "heading",
+        "top_heading": "Scientifically proven results",
+        "top_text": "<p>Cleanroom-grade air in your breathing zone — validated against ordinary purifiers.</p>",
+        "bottom_heading": "Over 1,000× cleaner",
+        "bottom_text": "<p>Particles per breath drop to cleanroom-level performance while you sleep.</p>",
+        "cta_label": "Learn more about us",
+        "cta_link": "",
+        "cta_style": "primary",
+        "cta_size": "md",
+        "cta_icon": true,
+        "cta_external": false,
+        "cta_alignment": "center",
+        "cta_alignment_mobile": "center",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
-    "image-with-text-1": {
+    "pdp_ownership": {
       "type": "image-with-text",
       "blocks": {
-        "image": {
+        "im": {
           "type": "image",
           "settings": {
             "image_width": "custom",
@@ -674,494 +739,20 @@
             "image_max_width_mobile": 50
           }
         },
-        "heading": {
+        "hd": {
           "type": "heading",
           "settings": {
-            "heading": "Restful Nights, Rejuvenated Mornings",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>AirTulip Sleep’s laminar airflow technology delivers unmatched air purity, helping you wake up clear, refreshed, and ready to take on the day. Experience the transformative power of truly restorative sleep.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "image",
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/custom_resized_822219ee-2b7f-4da5-8ace-fbeff72155af.png",
-        "image_height": "adapt",
-        "image_width": "medium",
-        "layout": "image_first",
-        "text_alignment": "left",
-        "content_position": "align-self-center",
-        "image_mobile": "shopify://shop_images/custom_resized_822219ee-2b7f-4da5-8ace-fbeff72155af.png",
-        "image_height_mobile": "200px",
-        "text_alignment_mobile": "left",
-        "color_text": "#171717",
-        "color_background": "",
-        "gradient_background": "",
-        "color_background_2": "#fafafa",
-        "gradient_background_2": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": false,
-        "parallax_direction": "vertical"
-      }
-    },
-    "image-with-text-2": {
-      "type": "image-with-text",
-      "blocks": {
-        "image": {
-          "type": "image",
-          "settings": {
-            "image_width": "custom",
-            "image_max_width": 50,
-            "image_max_width_mobile": 50
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Clean Air Bubble: Your Personal Sanctuary",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Create a purified air cocoon that eliminates airborne allergens, asthma triggers, and irritants. Surround yourself with clean, soothing air for a healthier, more restful sleep.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "image",
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/Screenshot2023-10-16at16.10.52-min.png",
-        "image_height": "adapt",
-        "image_width": "medium",
-        "layout": "text_first",
-        "text_alignment": "left",
-        "content_position": "align-self-center",
-        "image_mobile": "shopify://shop_images/custom_resized_9147ad35-d34e-4aff-8a6e-58ea6ba2a654.png",
-        "image_height_mobile": "200px",
-        "text_alignment_mobile": "left",
-        "color_text": "#171717",
-        "color_background": "",
-        "gradient_background": "",
-        "color_background_2": "#fafafa",
-        "gradient_background_2": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": false,
-        "parallax_direction": "vertical"
-      }
-    },
-    "image_with_text_4L36Np": {
-      "type": "image-with-text",
-      "blocks": {
-        "image_pAb3L4": {
-          "type": "image",
-          "settings": {
-            "image_width": "custom",
-            "image_max_width": 50,
-            "image_max_width_mobile": 50
-          }
-        },
-        "heading_ikbH7b": {
-          "type": "heading",
-          "settings": {
-            "heading": "Smart Design Meets Effortless Elegance",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_cQVEQH": {
-          "type": "text",
-          "settings": {
-            "text": "<p>AirTulip Sleep reimagines air purification with a sleek, functional headboard that blends seamlessly into your bedroom. Say goodbye to bulky, clunky purifiers—breathe clean air without compromising your style.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "image_pAb3L4",
-        "heading_ikbH7b",
-        "text_cQVEQH"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/510670636876551.jpg",
-        "image_height": "400px",
-        "image_width": "medium",
-        "layout": "image_first",
-        "text_alignment": "left",
-        "content_position": "align-self-center",
-        "image_mobile": "shopify://shop_images/510670636876551.jpg",
-        "image_height_mobile": "200px",
-        "text_alignment_mobile": "left",
-        "color_text": "#171717",
-        "color_background": "",
-        "gradient_background": "",
-        "color_background_2": "#fafafa",
-        "gradient_background_2": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": false,
-        "parallax_direction": "vertical"
-      }
-    },
-    "image_with_text_r7ph76": {
-      "type": "image-with-text",
-      "blocks": {
-        "image_3AX7ry": {
-          "type": "image",
-          "settings": {
-            "image_width": "custom",
-            "image_max_width": 50,
-            "image_max_width_mobile": 50
-          }
-        },
-        "heading_8CnWtq": {
-          "type": "heading",
-          "settings": {
-            "heading": "Effortless Setup, Instant Comfort",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_k8p7yL": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Designed for your convenience, AirTulip Sleep arrives fully assembled. Simply place it behind your bed, plug it in, and enjoy the benefits of clean, pure air—right away.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "image_3AX7ry",
-        "heading_8CnWtq",
-        "text_k8p7yL"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/custom_resized_c38708f3-40af-4312-bcb4-6a21149e5368.png",
-        "image_height": "adapt",
-        "image_width": "medium",
-        "layout": "text_first",
-        "text_alignment": "left",
-        "content_position": "align-self-center",
-        "image_mobile": "shopify://shop_images/custom_resized_c38708f3-40af-4312-bcb4-6a21149e5368.png",
-        "image_height_mobile": "200px",
-        "text_alignment_mobile": "left",
-        "color_text": "#171717",
-        "color_background": "",
-        "gradient_background": "",
-        "color_background_2": "#fafafa",
-        "gradient_background_2": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": false,
-        "parallax_direction": "vertical"
-      }
-    },
-    "rich_text_JANLXw": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_cApdzM": {
-          "type": "heading",
-          "settings": {
-            "heading": "Unpack & Install AirTulip",
+            "heading": "Dial in fabric, filters, and long-term care",
             "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
-        }
-      },
-      "block_order": [
-        "heading_cApdzM"
-      ],
-      "settings": {
-        "text_alignment": "center",
-        "text_alignment_mobile": "center",
-        "heading": "",
-        "heading_size": "title-md",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_width": "small",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 20,
-        "padding_bottom": 12,
-        "divider": false,
-        "narrow": true,
-        "rounded": false
-      }
-    },
-    "video_mj39ed": {
-      "type": "video",
-      "settings": {
-        "transparent_header": false,
-        "video_url": "https://youtu.be/yaWJZRwog8o",
-        "cover_image": "shopify://shop_images/Screenshot_2024-08-28_at_4.56.45_PM.png",
-        "description": "",
-        "enable_video_autoplay": false,
-        "enable_video_looping": false,
-        "image_height": "adapt",
-        "video_url_mobile": "https://youtu.be/yaWJZRwog8o",
-        "cover_image_mobile": "shopify://shop_images/Screenshot_2024-09-16_at_12.22.24_PM.png",
-        "image_height_mobile": "auto",
-        "padding_top": 8,
-        "padding_bottom": 8,
-        "divider": false,
-        "full_width": false,
-        "rounded": true
-      }
-    },
-    "testimonials_ed6QYm": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial_Chf3YJ": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "5-stars",
-            "text": "<p><strong>\"Sinus headaches from pollen allergies disappeared with AirTulip!\"</strong></p><p>I get sinus headaches triggered by pollen allergies that can last for days. With the AirTulip, my headaches have been much more likely to clear up overnight. I don't use a sleep tracker, but I think it does also help with my sleep quality.</p>",
-            "author": "Nathan",
-            "author_info": "",
-            "author_url": "",
-            "image_ratio": "rounded",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
         },
-        "testimonial_GVTeGU": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "5-stars",
-            "text": "<p><strong>\"Finally, a Night of Restful Sleep\"</strong></p><p>I love the AirTulip! I am allergic to everything outside and dog/cat. I have cats and a dog so I create my own misery, I know. I also live in an old house were dust is never ending. I feel with the AirTulip my sleep is deeper and more restful. I feel refreshed when I get up and I am not having allergen issues while sleeping - eye irritation, sneezing, congestion. I am thankful to have found this product!</p>",
-            "author": "Stephanie Kleinjan",
-            "author_info": "",
-            "author_url": "",
-            "image_ratio": "rounded",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "testimonial_gBeHH8": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "quote",
-            "text": "<p><strong>A Breakthrough for My Son's Asthma</strong></p><p>My pre-school son has had no wheeze, no overnight coughing fits and is sleeping significantly better since fitting the AirTulip Sleep onto his bed, this is a huge improvement to our lives given we had at least monthly hospital trips caused by his asthma.</p>",
-            "author": "Andy",
-            "author_info": "",
-            "author_url": "",
-            "image_ratio": "rounded",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_Chf3YJ",
-        "testimonial_GVTeGU",
-        "testimonial_gBeHH8"
-      ],
-      "settings": {
-        "heading": "Why people love AirTulip Sleep",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "rounded": false
-      }
-    },
-    "logo_list_KTrceD": {
-      "type": "logo-list",
-      "blocks": {
-        "logo_iFmV6e": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Eindhoven_University_of_Technology_logo_new.png",
-            "height": 80,
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "logo_iFmV6e"
-      ],
-      "settings": {
-        "layout": "default",
-        "grid_horizontal": 70,
-        "direction": "left",
-        "speed": 5,
-        "heading": "Performance measured & confirmed by",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "image_with_text_ECcm7C": {
-      "type": "image-with-text",
-      "blocks": {
-        "image_qPN97E": {
-          "type": "image",
-          "settings": {
-            "image_width": "custom",
-            "image_max_width": 50,
-            "image_max_width_mobile": 50
-          }
-        },
-        "heading_rPxwiD": {
-          "type": "heading",
-          "settings": {
-            "heading": "Proven by Science, Designed for You",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_gxj3bz": {
+        "tx": {
           "type": "text",
           "settings": {
-            "text": "<p>Extensive research conducted by Eindhoven University of Technology confirms AirTulip Sleep’s exceptional ability to improve air quality—bringing you scientifically-backed peace of mind with every breath.</p>",
+            "text": "<p><br/>Customize your comfort and protect your investment for the long haul. If you are deciding between Pearl and Stone, start with a <strong>free fabric swatch</strong> to see the texture in your space. </p><p>Then, ensure pristine air quality year-round with seamless filter replacements. Best of all, your peace of mind is permanent: maintaining an active filter subscription unlocks a <strong>lifetime warranty on your AirTulip Sleep unit, </strong>keeping you covered forever.</p>",
             "text_font": "body",
             "text_size": "subtext-md",
             "text_max_size": 32,
@@ -1172,35 +763,69 @@
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
+        },
+        "btn_swatch": {
+          "type": "button",
+          "settings": {
+            "button_label": "Order a Free Fabric Swatch",
+            "button_link": "/products/free-air-purifier-headboard-fabric-color-swatch-box",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        },
+        "btn_filters": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Replacement Filters",
+            "button_link": "/products/replacement-filter-set",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
         }
       },
       "block_order": [
-        "image_qPN97E",
-        "heading_rPxwiD",
-        "text_gxj3bz"
+        "im",
+        "hd",
+        "tx",
+        "btn_swatch",
+        "btn_filters"
       ],
       "settings": {
-        "image": "shopify://shop_images/custom_resized_d0ae31bb-594c-4818-918a-5dc39992bcea.png",
-        "image_height": "400px",
+        "image": "shopify://shop_images/custom_resized_822219ee-2b7f-4da5-8ace-fbeff72155af.png",
+        "video_url": "",
+        "video_description": "",
+        "video_muted": true,
+        "video_autoplay": true,
+        "video_loop": true,
+        "video_show_play_button": false,
+        "diagram_asset_filename": "",
+        "diagram_asset_alt": "Diagram illustrating clean air concentrated at the headboard versus mixed room air",
+        "image_height": "adapt",
+        "match_column_heights": true,
+        "media_aspect_ratio": "landscape",
+        "media_aspect_ratio_mobile": "inherit",
         "image_width": "medium",
-        "layout": "image_first",
+        "layout": "text_first",
         "text_alignment": "left",
         "content_position": "align-self-center",
-        "image_mobile": "shopify://shop_images/custom_resized_d0ae31bb-594c-4818-918a-5dc39992bcea.png",
-        "image_height_mobile": "200px",
+        "image_height_mobile": "auto",
         "text_alignment_mobile": "left",
         "color_text": "#171717",
-        "color_background": "",
+        "color_background": "#ffffff",
         "gradient_background": "",
-        "color_background_2": "#fafafa",
+        "color_background_2": "rgba(0,0,0,0)",
         "gradient_background_2": "",
         "color_highlight": "",
         "gradient_highlight": "",
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
+        "padding_top": 60,
+        "padding_bottom": 60,
         "divider": false,
         "full_width": false,
         "rounded": false,
@@ -1208,133 +833,7 @@
         "parallax_direction": "vertical"
       }
     },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "disabled": true,
-      "settings": {
-        "product_limit": 6,
-        "columns": 4,
-        "carousel_on_desktop": true,
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
-        "heading": "You may also like",
-        "heading_size": "title-md",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": true
-      }
-    },
-    "recently-viewed": {
-      "type": "recently-viewed",
-      "disabled": true,
-      "settings": {
-        "product_limit": 6,
-        "columns": 4,
-        "carousel_on_desktop": true,
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
-        "heading": "Recently Viewed",
-        "heading_size": "title-md",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "1724702857f612c3e2": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_PXKrBW": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_PXKrBW"
-      ],
-      "settings": {
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "contact_form_WUaLBd": {
-      "type": "contact-form",
-      "settings": {
-        "heading": "Do you prefer a custom headboard?",
-        "heading_size": "title-md",
-        "heading_alignment": "text-left md:items-end md:flex-row",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "<p>If you are interested in a custom headboard please send us a message below. Custom options can be: custom front board (different colors, with or without lines), custom vinyl wrapping, custom shelf, etc. Let us know your preferences and we will discuss the options with you. </p>",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 20,
-        "padding_bottom": 8,
-        "divider": false,
-        "narrow": true,
-        "rounded": false
-      }
-    },
-    "faq": {
+    "pdp_faq": {
       "type": "faq",
       "blocks": {
         "question-1": {
@@ -1404,7 +903,7 @@
           "type": "contact",
           "settings": {
             "heading": "Didn’t find your answer?",
-            "text": "<p>Don't hestitate to contact us. For support, you can fill in the form below.</p>",
+            "text": "<p>Don't hesitate to contact us—our team replies on weekdays.</p>",
             "show_phone": false,
             "avatar_height": 60,
             "highlighted_text": "none",
@@ -1446,10 +945,137 @@
         "color_button_gradient": "",
         "color_overlay": "#ffffff",
         "overlay_opacity": 4,
-        "padding_top": 84,
-        "padding_bottom": 84,
+        "padding_top": 52,
+        "padding_bottom": 52,
         "divider": false,
         "narrow": false,
+        "rounded": false
+      }
+    },
+    "pdp_review_widget": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_PXKrBW": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_PXKrBW"
+      ],
+      "settings": {
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 52,
+        "padding_bottom": 52,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "pdp_custom_contact": {
+      "type": "contact-form",
+      "settings": {
+        "section_anchor_id": "custom-design",
+        "heading": "Interested In A Custom Headboard Design?",
+        "heading_size": "title-lg tracking-heading",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "<p>Discuss custom fronts, contrasting channels, alternate wraps, shelving, or other bespoke requests, we will outline feasibility and timelines after reviewing your note.</p>",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 52,
+        "padding_bottom": 52,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "product_limit": 6,
+        "columns": 4,
+        "carousel_on_desktop": true,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "heading": "You may also like",
+        "heading_size": "title-lg tracking-heading",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 52,
+        "padding_bottom": 52,
+        "divider": false,
+        "full_width": false,
+        "rounded": true
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "disabled": true,
+      "settings": {
+        "product_limit": 6,
+        "columns": 4,
+        "carousel_on_desktop": true,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "heading": "Recently Viewed",
+        "heading_size": "title-lg tracking-heading",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 52,
+        "padding_bottom": 52,
+        "divider": false,
+        "full_width": false,
         "rounded": false
       }
     }
@@ -1457,26 +1083,18 @@
   "order": [
     "countdown_timer_ynng3X",
     "main-product",
-    "rich_text_ELB3eY",
-    "video_yrA9aV",
-    "help-drawer",
-    "logo_list_VcX8Jn",
-    "17373031676a505831",
-    "image_with_text_hNJg9H",
-    "multicolumn_with_icons_P8if9A",
-    "image-with-text-1",
-    "image-with-text-2",
-    "image_with_text_4L36Np",
-    "image_with_text_r7ph76",
-    "rich_text_JANLXw",
-    "video_mj39ed",
-    "testimonials_ed6QYm",
-    "logo_list_KTrceD",
-    "image_with_text_ECcm7C",
+    "pdp_trust_signals",
+    "pdp_value_split",
+    "pdp_product_explorer",
+    "pdp_shark_spotlight",
+    "pdp_how_it_works",
+    "pdp_science",
+    "full_bleed_overlay_cta_hR8Q6b",
+    "pdp_ownership",
+    "pdp_faq",
+    "pdp_review_widget",
+    "pdp_custom_contact",
     "product-recommendations",
-    "recently-viewed",
-    "1724702857f612c3e2",
-    "contact_form_WUaLBd",
-    "faq"
+    "recently-viewed"
   ]
 }

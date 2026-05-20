@@ -24,19 +24,23 @@
 
 {%- unless product.has_only_default_variant -%}
   {%- liquid
+    assign picker_default_option_value = block.settings.default_option_value | strip
+    assign picker_option_values_order = block.settings.option_values_order | strip
+    assign picker_selected_variant = selected_variant | default: product.selected_or_first_available_variant
+
     case block.settings.picker_type
       when 'button'
         if block.settings.enable_color_swatches
           if block.settings.color_swatch_type == 'variant'
-            render 'product-variant-picker-variant', product: product, product_id: product_id, section_id: section_id, show_variant_labels: block.settings.show_variant_labels, size_chart: block.settings.size_chart, shopify_attributes: block.shopify_attributes, context: 'product', image_ratio: image_ratio, image_ratio_mobile: image_ratio_mobile, image_fill: image_fill
+            render 'product-variant-picker-variant', product: product, product_id: product_id, section_id: section_id, show_variant_labels: block.settings.show_variant_labels, size_chart: block.settings.size_chart, shopify_attributes: block.shopify_attributes, context: 'product', image_ratio: image_ratio, image_ratio_mobile: image_ratio_mobile, image_fill: image_fill, default_option_value: picker_default_option_value, option_values_order: picker_option_values_order, selected_variant: picker_selected_variant
           else
-            render 'product-variant-picker-swatch', product: product, product_id: product_id, section_id: section_id, show_variant_labels: block.settings.show_variant_labels, size_chart: block.settings.size_chart, shopify_attributes: block.shopify_attributes, context: 'product'
+            render 'product-variant-picker-swatch', product: product, product_id: product_id, section_id: section_id, show_variant_labels: block.settings.show_variant_labels, size_chart: block.settings.size_chart, shopify_attributes: block.shopify_attributes, context: 'product', default_option_value: picker_default_option_value, option_values_order: picker_option_values_order, selected_variant: picker_selected_variant
           endif
         else
-          render 'product-variant-picker-button', product: product, product_id: product_id, section_id: section_id, show_variant_labels: block.settings.show_variant_labels, size_chart: block.settings.size_chart, shopify_attributes: block.shopify_attributes, context: 'product'
+          render 'product-variant-picker-button', product: product, product_id: product_id, section_id: section_id, show_variant_labels: block.settings.show_variant_labels, size_chart: block.settings.size_chart, shopify_attributes: block.shopify_attributes, context: 'product', default_option_value: picker_default_option_value, option_values_order: picker_option_values_order, selected_variant: picker_selected_variant
         endif
       when 'dropdown'
-        render 'product-variant-picker-dropdown', product: product, product_id: product_id, section_id: section_id, show_variant_labels: block.settings.show_variant_labels, size_chart: block.settings.size_chart, shopify_attributes: block.shopify_attributes, context: 'product'
+        render 'product-variant-picker-dropdown', product: product, product_id: product_id, section_id: section_id, show_variant_labels: block.settings.show_variant_labels, size_chart: block.settings.size_chart, shopify_attributes: block.shopify_attributes, context: 'product', default_option_value: picker_default_option_value, option_values_order: picker_option_values_order, selected_variant: picker_selected_variant
     endcase
   -%}
 {%- endunless -%}

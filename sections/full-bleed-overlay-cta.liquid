@@ -1,0 +1,638 @@
+{%- liquid
+  if section.index == 1
+    assign loading = 'eager'
+    assign fetchpriority = 'high'
+    assign lazyimg = null
+  else
+    assign loading = 'lazy'
+    assign fetchpriority = 'low'
+    assign lazyimg = 'lazy-image'
+  endif
+
+  assign ih = section.settings.min_height_vh | default: 85
+  assign overlay_a = section.settings.fb_overlay_opacity | times: 0.01
+  if overlay_a > 1
+    assign overlay_a = 1
+  endif
+  if overlay_a < 0
+    assign overlay_a = 0
+  endif
+  assign has_top = false
+  if section.settings.top_heading != blank
+    assign has_top = true
+  endif
+  if section.settings.top_text != blank
+    assign has_top = true
+  endif
+  assign has_bottom = false
+  if section.settings.bottom_heading != blank
+    assign has_bottom = true
+  endif
+  if section.settings.bottom_text != blank
+    assign has_bottom = true
+  endif
+
+  case section.settings.overlay_heading_font_weight
+    when '400'
+      assign fb_heading_fw = '400'
+    when '500'
+      assign fb_heading_fw = '500'
+    when '600'
+      assign fb_heading_fw = '600'
+    when '700'
+      assign fb_heading_fw = '700'
+    when '900'
+      assign fb_heading_fw = '900'
+    when 'heading'
+      assign fb_heading_fw = 'var(--font-heading-weight)'
+    else
+      assign fb_heading_fw = 'var(--font-heading-weight)'
+  endcase
+
+  assign fb_use_video = false
+  if section.settings.video != blank
+    assign fb_use_video = true
+  elsif section.settings.video_url != blank
+    assign fb_use_video = true
+  elsif section.settings.video_mobile != blank
+    assign fb_use_video = true
+  elsif section.settings.video_url_mobile != blank
+    assign fb_use_video = true
+  endif
+
+  assign fb_show_responsive_pair = false
+  if section.settings.video != blank or section.settings.video_url != blank
+    if section.settings.video_mobile != blank or section.settings.video_url_mobile != blank
+      assign fb_show_responsive_pair = true
+    endif
+  endif
+
+  assign fb_vid_desk_video = section.settings.video
+  assign fb_vid_desk_url = section.settings.video_url
+  if fb_vid_desk_video == blank and fb_vid_desk_url == blank
+    assign fb_vid_desk_video = section.settings.video_mobile
+    assign fb_vid_desk_url = section.settings.video_url_mobile
+  endif
+
+  assign fb_cover_desk = section.settings.cover_image
+  if fb_cover_desk == blank
+    assign fb_cover_desk = section.settings.cover_image_mobile
+  endif
+
+  if section.settings.contain_width
+    assign fb_sizes = 'min(100vw, ' | append: settings.page_width | append: 'px)'
+  else
+    assign fb_sizes = '100vw'
+  endif
+
+  capture fb_vid_class
+    echo 'banner__image block w-full h-full fboc-vm'
+    if section.settings.fb_video_autoplay
+      echo ' pointer-events-none'
+    endif
+  endcapture
+
+  assign fb_show_vid_btn = true
+  if section.settings.fb_video_autoplay
+    assign fb_show_vid_btn = false
+  endif
+
+  assign fb_heading_scale = section.settings.overlay_heading_scale | default: 100 | times: 0.01
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    {%- render 'section-variables', section: section -%}
+    --fb-min-h: {{ ih }}vh;
+    --fb-overlay-a: {{ overlay_a }};
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual {
+    position: relative;
+    width: 100%;
+    min-height: var(--fb-min-h);
+    overflow: hidden;
+    background: rgb(var(--color-placeholder) / 0.35);
+  }
+
+  {% if section.settings.contain_width %}
+  #shopify-section-{{ section.id }} .fboc-visual.fboc-visual--rounded {
+    border-radius: var(--border-radius);
+  }
+
+  {% endif %}
+
+  #shopify-section-{{ section.id }} .fboc-visual__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__media--video video-media {
+    aspect-ratio: unset;
+    min-height: 100%;
+    min-width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__media--video video-media img {
+    object-position: {{ section.settings.image_position }};
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__dim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: {{ section.settings.overlay_color }};
+    opacity: var(--fb-overlay-a);
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__layers {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--sp-8);
+    padding: clamp(var(--sp-6), 4vw, var(--sp-12));
+    color: {{ section.settings.overlay_text_color }};
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__layers a {
+    pointer-events: auto;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__layers .rte,
+  #shopify-section-{{ section.id }} .fboc-visual__layers .rte p {
+    color: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__layers .fboc-overlay-heading.heading {
+    color: {{ section.settings.overlay_heading_color }};
+    font-weight: {{ fb_heading_fw }};
+    font-size: calc(var(--title-md) * {{ fb_heading_scale }});
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .fboc-visual__layers .fboc-overlay-heading.heading {
+      font-size: calc(var(--title-lg) * {{ fb_heading_scale }});
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .fboc-visual__layers .fboc-overlay-heading.heading {
+      font-size: calc(58px * {{ fb_heading_scale }});
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    #shopify-section-{{ section.id }} .fboc-visual__layers--stack {
+      justify-content: flex-start;
+    }
+    #shopify-section-{{ section.id }} .fboc-br {
+      align-self: flex-start;
+      text-align: left;
+      margin-top: var(--sp-8);
+    }
+  }
+</style>
+
+<div class="section section--padding{% if section.settings.contain_width %} section--rounded relative{% endif %}">
+  <div class="{% if section.settings.contain_width %}page-width {% endif %}relative">
+    <div class="fboc-visual{% if section.settings.contain_width %} fboc-visual--rounded{% endif %}">
+      <div class="fboc-visual__media media media--height banner__media relative overflow-hidden block w-full h-full{% if fb_use_video %} fboc-visual__media--video{% endif %}">
+        {%- if fb_use_video -%}
+          {%- if fb_show_responsive_pair -%}
+            {%- render 'video',
+              sizes: fb_sizes,
+              loading: loading,
+              fetchpriority: fetchpriority,
+              lazyimage: lazyimg,
+              video: section.settings.video_mobile,
+              video_url: section.settings.video_url_mobile,
+              muted: section.settings.fb_video_autoplay,
+              autoplay: section.settings.fb_video_autoplay,
+              loop: section.settings.fb_video_loop,
+              description: section.settings.video_description,
+              cover_image: section.settings.cover_image_mobile,
+              show_play_button: fb_show_vid_btn,
+              is_mobile: true,
+              class: fb_vid_class
+            -%}
+          {%- endif -%}
+          {%- render 'video',
+            sizes: fb_sizes,
+            loading: loading,
+            fetchpriority: fetchpriority,
+            lazyimage: lazyimg,
+            video: fb_vid_desk_video,
+            video_url: fb_vid_desk_url,
+            muted: section.settings.fb_video_autoplay,
+            autoplay: section.settings.fb_video_autoplay,
+            loop: section.settings.fb_video_loop,
+            description: section.settings.video_description,
+            cover_image: fb_cover_desk,
+            show_play_button: fb_show_vid_btn,
+        {%- elsif section.settings.image != blank -%}
+          {%- capture sizes -%}100vw{%- endcapture -%}
+          {%- if section.settings.image_mobile != blank -%}
+            <source
+              media="(max-width: 767px)"
+              srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1200x' }} 1200w"
+              width="{{ section.settings.image_mobile.width }}"
+              height="{{ section.settings.image_mobile.height }}"
+            >
+          {%- endif -%}
+          {{
+            section.settings.image
+            | image_url: width: section.settings.image.width
+            | image_tag:
+              loading: loading,
+              fetchpriority: fetchpriority,
+              sizes: sizes,
+              widths: '400,600,800,1000,1200,1400,1600,1800,2000,2400,2800,3200,3600,3840',
+              is: lazyimg,
+              class: 'banner__image'
+          }}
+        {%- else -%}
+          {{- 'lifestyle-1' | placeholder_svg_tag: 'banner__image banner__overlay placeholder' -}}
+        {%- endif -%}
+      </div>
+
+      {%- if overlay_a > 0 -%}
+        <div class="fboc-visual__dim banner__overlay absolute top-0 left-0 w-full h-full" aria-hidden="true"></div>
+      {%- endif -%}
+
+      {%- if has_top or has_bottom -%}
+        <div class="fboc-visual__layers fboc-visual__layers--stack w-full h-full">
+          <div class="fboc-tl max-w-lg lg:max-w-xl">
+            {%- if section.settings.top_heading != blank -%}
+              <h3 class="fboc-overlay-heading heading leading-tight tracking-heading m-0">{{ section.settings.top_heading | escape }}</h3>
+            {%- endif -%}
+            {%- if section.settings.top_text != blank -%}
+              <div class="rte subtext-lg md:subtext-xl leading-normal mt-4 opacity-90">{{ section.settings.top_text }}</div>
+            {%- endif -%}
+          </div>
+          <div class="fboc-br max-w-lg lg:max-w-xl self-end text-right">
+            {%- if section.settings.bottom_heading != blank -%}
+              <h3 class="fboc-overlay-heading heading leading-tight tracking-heading m-0">{{ section.settings.bottom_heading | escape }}</h3>
+            {%- endif -%}
+            {%- if section.settings.bottom_text != blank -%}
+              <div class="rte subtext-lg md:subtext-xl leading-normal mt-4 opacity-90">{{ section.settings.bottom_text }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+    <div class="page-width">
+      <div class="rich-text md:text-{{ section.settings.cta_alignment }} text-{{ section.settings.cta_alignment_mobile }} pt-8 md:pt-10">
+        {%- render 'button',
+          label: section.settings.cta_label,
+          link: section.settings.cta_link,
+          style: section.settings.cta_style,
+          size: section.settings.cta_size,
+          external: section.settings.cta_external,
+          show_icon: section.settings.cta_icon
+        -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Full-bleed overlay CTA",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (mobile)",
+      "info": "Optional. Uses desktop image when empty."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image focal point",
+      "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "If you add a hosted video or external YouTube/Vimeo link below, it replaces the still image."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video (hosted)"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["youtube", "vimeo"],
+      "label": "Video URL",
+      "info": "Alternative to hosted video (YouTube or Vimeo)."
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Video poster image",
+      "info": "Optional cover before playback."
+    },
+    {
+      "type": "textarea",
+      "id": "video_description",
+      "label": "Video description",
+      "info": "Short description for screen readers.",
+      "default": "Ambient background video"
+    },
+    {
+      "type": "checkbox",
+      "id": "fb_video_autoplay",
+      "label": "Autoplay video",
+      "info": "When on, video is muted (required for autoplay in browsers).",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "fb_video_loop",
+      "label": "Loop video",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Background video — mobile"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Video (hosted, mobile)"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url_mobile",
+      "accept": ["youtube", "vimeo"],
+      "label": "Video URL (mobile)",
+      "info": "Optional. Uses desktop video URL when empty."
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image_mobile",
+      "label": "Video poster (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "min_height_vh",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Minimum height",
+      "default": 85
+    },
+    {
+      "type": "checkbox",
+      "id": "contain_width",
+      "label": "Constrain image to page width",
+      "default": false,
+      "info": "Off = edge-to-edge (square corners). On = page-width card with theme rounded corners."
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "range",
+      "id": "fb_overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Darken / tint strength",
+      "default": 45
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#0a1628"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Overlay text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Overlay headings (h3)"
+    },
+    {
+      "type": "color",
+      "id": "overlay_heading_color",
+      "label": "Heading color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "overlay_heading_scale",
+      "min": 70,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "label": "Heading size",
+      "default": 100,
+      "info": "Scales overlay h3 sizing from the theme title presets (mobile uses --title-md, desktop uses --title-lg)."
+    },
+    {
+      "type": "select",
+      "id": "overlay_heading_font_weight",
+      "label": "Heading weight",
+      "default": "heading",
+      "options": [
+        { "value": "heading", "label": "Match theme headings" },
+        { "value": "400", "label": "Normal (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "900", "label": "Black (900)" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Top left"
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading",
+      "info": "Rendered as h3."
+    },
+    {
+      "type": "richtext",
+      "id": "top_text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Bottom right"
+    },
+    {
+      "type": "text",
+      "id": "bottom_heading",
+      "label": "Heading",
+      "info": "Rendered as h3."
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Call to action (below image)"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "cta_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "cta_size",
+      "label": "Button size",
+      "default": "md",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_icon",
+      "label": "Show arrow icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_external",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "cta_alignment",
+      "label": "CTA alignment (desktop)",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "cta_alignment_mobile",
+      "label": "CTA alignment (mobile)",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Full-bleed overlay CTA",
+      "settings": {
+        "min_height_vh": 85,
+        "fb_overlay_opacity": 35,
+        "overlay_color": "#070f1a",
+        "overlay_text_color": "#ffffff",
+        "overlay_heading_color": "#ffffff",
+        "overlay_heading_scale": 100,
+        "overlay_heading_font_weight": "heading",
+        "top_heading": "Scientifically proven results",
+        "top_text": "<p>Cleanroom-grade air in your breathing zone — validated against ordinary purifiers.</p>",
+        "bottom_heading": "Over 1,000× cleaner",
+        "bottom_text": "<p>Particles per breath drop to cleanroom-level performance while you sleep.</p>",
+        "cta_label": "Learn more about us",
+        "cta_style": "primary",
+        "cta_icon": true
+      }
+    }
+  ]
+}
+{% endschema %}

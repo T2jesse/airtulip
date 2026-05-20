@@ -4,9 +4,16 @@
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
     {%- render 'section-variables', section: section -%}
   }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg {
+      font-size: 58px;
+      line-height: 1.05;
+    }
+  }
 </style>
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
     {%- render 'section-heading', section: section -%}
 
@@ -50,6 +57,7 @@
 {% schema %}
 {
   "name": "t:sections.multicolumn-with-icons.name",
+  "class": "shopify-section--multicolumn-with-icons",
   "settings": [
     {
       "type": "select",
@@ -115,6 +123,31 @@
       ],
       "default": "title-md",
       "label": "t:sections.global.settings.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "t:sections.global.settings.heading_width.label",
+      "info": "Limits how wide the heading can grow before wrapping to a new line.",
+      "default": "full",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.global.settings.heading_width.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.global.settings.heading_width.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.global.settings.heading_width.options__3.label"
+        },
+        {
+          "value": "full",
+          "label": "No max width"
+        }
+      ]
     },
     {
       "type": "select",

@@ -2925,8 +2925,7 @@
         },
         "promotion-video": {
           "name": "Video de promoción",
-          "settings": {
-          }
+          "settings": {}
         }
       }
     },
@@ -3132,8 +3131,31 @@
         "price": {
           "name": "Precio",
           "settings": {
+            "show_shop_installments": {
+              "label": "Mostrar plazos con Shop Pay",
+              "info": "Muestra el mensaje de plazos con Shop Pay cuando la tienda lo ofrezca — lo gestiona Shopify Payments. Reordena el bloque Precio para colocarlo (por ejemplo, bajo el título)."
+            },
             "show_taxes_notice": {
               "label": "Mostrar aviso sobre impuestos"
+            },
+            "header__compare_at": {
+              "content": "Precio de comparación (tachado)"
+            },
+            "compare_at_color": {
+              "label": "Color del precio de comparación",
+              "info": "Se muestra cuando la variante tiene un precio de comparación mayor que el precio actual. Borra el color para usar el predeterminado del tema."
+            },
+            "compare_at_font_size": {
+              "label": "Tamaño de fuente del precio de comparación",
+              "info": "Solo aplica al importe tachado de comparación."
+            }
+          }
+        },
+        "shop_pay_installments": {
+          "name": "Shop Pay installments",
+          "settings": {
+            "paragraph": {
+              "content": "Shows installment messaging when Shop Pay installments are available. Add this block once, then drag it anywhere in the product information column."
             }
           }
         },
@@ -3270,6 +3292,10 @@
           "settings": {
             "show_quantity_selector": {
               "label": "Mostrar selector de cantidad"
+            },
+            "show_price": {
+              "label": "Mostrar el precio en este bloque",
+              "info": "Actívalo si el precio solo debe verse aquí. Desactívalo si ya usas el bloque Precio en la columna del producto para no duplicarlo."
             },
             "show_dynamic_checkout": {
               "label": "Mostrar botones de pago dinámico",
@@ -3489,6 +3515,22 @@
           "settings": {
             "paragraph": {
               "content": "Mantenga visible el botón Agregar al carrito mientras los clientes navegan y se desplazan."
+            },
+            "layout": {
+              "label": "Diseño",
+              "options__1": {
+                "label": "Barra inferior a todo el ancho"
+              },
+              "options__2": {
+                "label": "Tarjeta flotante"
+              }
+            },
+            "show_thumbnail": {
+              "label": "Mostrar miniatura del producto"
+            },
+            "desktop_max_width_percent": {
+              "label": "Ancho máx. en escritorio",
+              "info": "Solo para la barra a todo el ancho. Limita el ancho en pantallas grandes (la barra sigue centrada)."
             }
           }
         }

@@ -10,7 +10,7 @@
   assign collection = section.settings.collection
   assign products = section.settings.products | default: collection.products
 -%}
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
     {%- capture view_all -%}
       {%- if section.settings.show_view_all and collection != blank and section.settings.product_limit < collection.all_products_count -%}

@@ -1,0 +1,16 @@
+{%- doc -%}
+  Outputs section wrapper classes for the "Make section rounded" setting.
+
+  When rounded is on and full width is off, applies a contained card within page width.
+  Full width ignores rounded (no classes output).
+
+  @param {object} section - Section object
+  @param {boolean} [relative] - Append `relative` (default: true)
+
+  @example
+  <motion class="section section--padding{% render 'section-rounded', section: section %}">
+{%- enddoc -%}
+
+{%- if section.settings.rounded and section.settings.full_width != true -%}
+ section--rounded-contained{% unless relative == false %} relative{% endunless %}
+{%- endif -%}

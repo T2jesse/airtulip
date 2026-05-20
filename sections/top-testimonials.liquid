@@ -1,4 +1,4 @@
-﻿{%- comment -%}
+{%- comment -%}
   Featured reviews carousel. Judge.me does not expose per-review title/body/author to Liquid;
   populate slides manually (e.g. from Judge.me dashboard / PDP widget) or reuse your best quotes.
   JS: assets/top-testimonials.js (Flickity via vendor.js), loaded below after vendor.js + theme.js (defer order).
@@ -78,7 +78,7 @@
   @media screen and (min-width: 1024px) {
     /*
       Normal: .page-width spans 100% of the section (no max-width in theme.css).
-      Narrow: 20% narrower — percentage width avoids calc(var(--page-container) * …)
+      Narrow: 20% narrower � percentage width avoids calc(var(--page-container) * �)
       which some engines drop when the substituted value uses min().
     */
     #shopify-section-{{ section.id }} .page-width.top-testimonials__width--narrow {
@@ -309,7 +309,7 @@
   {%- endif -%}
 </style>
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative{% if tt_section_width == 'narrow' %} top-testimonials__width--narrow{% endif %}">
     {%- render 'section-heading', section: section -%}
 
@@ -381,7 +381,7 @@
 
                     {%- if block.settings.author != blank -%}
                       <cite class="block not-italic font-medium {{ quote_author_size }} mt-auto pt-2">
-                        <span class="opacity-70">—&nbsp;</span>
+                        <span class="opacity-70">�&nbsp;</span>
                         {%- if block.settings.author_url != blank -%}
                           <a href="{{ block.settings.author_url }}" class="reversed-link">{{ block.settings.author }}</a>
                         {%- else -%}

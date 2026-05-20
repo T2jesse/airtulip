@@ -22,7 +22,7 @@
   {%- endfor -%}
 </style>
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width page-width--narrow relative">
     {%- render 'section-heading', section: section -%}
 

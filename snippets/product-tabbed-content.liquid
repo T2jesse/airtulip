@@ -1,0 +1,153 @@
+{%- doc -%}
+  Lateral product tabs: accessible `tabs-element`, optional first tab from `product.description`,
+  and optional extra page content on tab 3 (e.g. size guide).
+
+  @param {object} block - Block object (type: tabbed_content)
+  @param {object} [product] - Product drop; when omitted (placeholders), overview uses rich text only
+
+  @example
+  {% render 'product-tabbed-content', block: block, product: product %}
+{%- enddoc -%}
+
+{%- liquid
+  assign tab_count = block.settings.tab_count | default: 3 | plus: 0
+  if tab_count < 2
+    assign tab_count = 2
+  endif
+  if tab_count > 4
+    assign tab_count = 4
+  endif
+
+  assign tab_suffix = block.id | default: '0'
+
+  assign has_product = false
+  if product != blank
+    assign has_product = true
+  endif
+-%}
+
+<div
+  class="product-tabs product-tabs--lateral product__accordion {{ block.settings.style }}"
+  data-product-tabs
+  {{ block.shopify_attributes }}
+>
+  <tabs-element class="product-tabs__element block w-full" selected-index="0">
+    <div class="product-tabs__nav-scroll relative overflow-visible">
+      <ul class="product-tabs__nav-list flex gap-2 sm:gap-3 m-0 p-0 list-none flex-wrap items-center" role="tablist">
+        {%- for i in (1..4) -%}
+          {%- if i > tab_count -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- case i -%}
+            {%- when 1 -%}
+              {%- assign t_heading = block.settings.tab_1_heading -%}
+              {%- assign t_icon = block.settings.tab_1_icon -%}
+            {%- when 2 -%}
+              {%- assign t_heading = block.settings.tab_2_heading -%}
+              {%- assign t_icon = block.settings.tab_2_icon -%}
+            {%- when 3 -%}
+              {%- assign t_heading = block.settings.tab_3_heading -%}
+              {%- assign t_icon = block.settings.tab_3_icon -%}
+            {%- when 4 -%}
+              {%- assign t_heading = block.settings.tab_4_heading -%}
+              {%- assign t_icon = block.settings.tab_4_icon -%}
+          {%- endcase -%}
+          {%- if t_heading == blank -%}
+            {%- assign t_heading = 'Tab' | append: ' ' | append: i -%}
+          {%- endif -%}
+          <li class="m-0 p-0 list-none">
+            <button
+              type="button"
+              class="product-tabs__tab button self-button inline-flex items-center gap-2 text-sm-base font-semibold leading-tight tracking-tight cursor-pointer{% if forloop.first %} button--primary{% else %} button--secondary{% endif %}"
+              is="hover-button"
+              role="tab"
+              aria-controls="ProductTabPanel-{{ tab_suffix }}-{{ i }}"
+              id="ProductTab-{{ tab_suffix }}-{{ i }}"
+              {% if forloop.first -%}
+                disabled
+              {%- endif -%}
+              data-index="{{ forloop.index0 }}"
+            >
+              <span class="btn-fill opacity-0" data-fill aria-hidden="true"></span>
+              <span class="btn-text inline-flex items-center gap-2">
+                {%- if t_icon != 'none' -%}
+                  <span class="product-tabs__icon shrink-0" aria-hidden="true">
+                    {%- render 'icon-accordion', icon: t_icon, size: 'sm' -%}
+                  </span>
+                {%- endif -%}
+                <span>{{ t_heading | escape }}</span>
+              </span>
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </tabs-element>
+
+  {%- for i in (1..4) -%}
+    {%- if i > tab_count -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- case i -%}
+      {%- when 1 -%}
+        {%- assign t_heading = block.settings.tab_1_heading -%}
+      {%- when 2 -%}
+        {%- assign t_heading = block.settings.tab_2_heading -%}
+      {%- when 3 -%}
+        {%- assign t_heading = block.settings.tab_3_heading -%}
+      {%- when 4 -%}
+        {%- assign t_heading = block.settings.tab_4_heading -%}
+    {%- endcase -%}
+    <div
+      id="ProductTabPanel-{{ tab_suffix }}-{{ i }}"
+      role="tabpanel"
+      aria-labelledby="ProductTab-{{ tab_suffix }}-{{ i }}"
+      class="product-tabs__panel rte text-sm text-opacity"
+      {% unless forloop.first -%}
+        hidden
+      {%- endunless -%}
+    >
+      {%- if t_heading != blank -%}
+        <h3 class="sr-only">{{ t_heading | escape }}</h3>
+      {%- endif -%}
+      <div class="product-tabs__panel-inner">
+        {%- if i == 1 -%}
+          {%- liquid
+            assign show_pd = block.settings.tab_1_show_product_description
+            assign has_desc = false
+            if has_product and product.description != blank
+              assign has_desc = true
+            endif
+          -%}
+          {%- if show_pd and has_desc -%}
+            <div class="rte product-tabs__description">{{ product.description }}</div>
+          {%- endif -%}
+          {%- if block.settings.tab_1_content != blank -%}
+            <div class="rte product-tabs__supplement">{{ block.settings.tab_1_content }}</div>
+          {%- endif -%}
+        {%- elsif i == 2 -%}
+          {% if block.settings.tab_2_content != blank %}
+            {{ block.settings.tab_2_content }}
+          {% endif %}
+          {% if block.settings.tab_2_page != blank %}
+            <div class="rte product-tabs__page-extra">{{ block.settings.tab_2_page.content }}</div>
+          {% endif %}
+        {%- elsif i == 3 -%}
+          {% if block.settings.tab_3_content != blank %}
+            {{ block.settings.tab_3_content }}
+          {% endif %}
+          {% if block.settings.tab_3_page != blank %}
+            <div class="rte product-tabs__page-extra">{{ block.settings.tab_3_page.content }}</div>
+          {% endif %}
+        {%- elsif i == 4 -%}
+          {% if block.settings.tab_4_content != blank %}
+            {{ block.settings.tab_4_content }}
+          {% endif %}
+          {% if block.settings.tab_4_page != blank %}
+            <div class="rte product-tabs__page-extra">{{ block.settings.tab_4_page.content }}</div>
+          {% endif %}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endfor -%}
+</div>

@@ -14,7 +14,7 @@
   endif
 -%}
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <article class="article page-width{% if section.settings.narrow %} page-width--narrow{% endif %} relative" itemscope itemtype="http://schema.org/BlogPosting">
     <div class="rte text-base md:text-lg" itemprop="articleBody">
       {{- article.content -}}
@@ -23,7 +23,7 @@
 </div>
 
 {%- if section.blocks.size > 0 -%}
-  <div class="comments-section section{% if section.settings.rounded %} section--rounded relative{% endif %}">
+  <div class="comments-section section{% render 'section-rounded', section: section %}">
     <div class="page-width{% if section.settings.narrow %} page-width--narrow{% endif %} relative grid gap-8">
       {%- for block in section.blocks -%}
         {%- case block.type -%}

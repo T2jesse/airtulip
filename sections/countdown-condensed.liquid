@@ -6,7 +6,7 @@
   }
 </style>
 
-<div class="section{% if section.settings.rounded %} section--rounded{% endif %} section--padding">
+<div class="section{% render 'section-rounded', section: section, relative: false %} section--padding">
   <div class="countdown-condensed page-width{% if section.settings.full_width %} page-width--full{% endif %} relative flex flex-col gap-2 md:grid grid-cols-12 items-center">
     {%- liquid
       assign with_gradient = false

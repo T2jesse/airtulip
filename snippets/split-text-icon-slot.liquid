@@ -1,0 +1,72 @@
+{%- doc -%}
+  Renders one icon slot for split-text icon_row blocks.
+
+  @param {object} block - Parent block
+  @param {number} slot - Slot index: 1, 2, or 3
+  @param {number} icon_size - Icon width/height in px
+  @param {string} label_size - CSS class for label
+  @param {string} sub_size - CSS class for sub-text
+{%- enddoc -%}
+
+{%- liquid
+  case slot
+    when 2
+      assign theme_icon = block.settings.icon_2_theme
+      assign upload_icon = block.settings.icon_2
+      assign icon_alt = block.settings.icon_2_alt
+      assign label = block.settings.label_2
+      assign sub = block.settings.sub_2
+    when 3
+      assign theme_icon = block.settings.icon_3_theme
+      assign upload_icon = block.settings.icon_3
+      assign icon_alt = block.settings.icon_3_alt
+      assign label = block.settings.label_3
+      assign sub = block.settings.sub_3
+    else
+      assign theme_icon = block.settings.icon_1_theme
+      assign upload_icon = block.settings.icon_1
+      assign icon_alt = block.settings.icon_1_alt
+      assign label = block.settings.label_1
+      assign sub = block.settings.sub_1
+  endcase
+
+  assign has_theme_icon = false
+  if theme_icon != blank and theme_icon != 'none'
+    assign has_theme_icon = true
+  endif
+
+  assign has_upload_icon = false
+  if upload_icon != blank
+    assign has_upload_icon = true
+  endif
+-%}
+
+<div class="mc__icon-item">
+  {%- if has_upload_icon -%}
+    <div class="mc__icon-img-wrap">
+      {{- upload_icon | image_url: width: 96
+        | image_tag:
+          loading: 'lazy',
+          widths: '48,72,96',
+          sizes: '48px',
+          class: 'mc__icon-img',
+          alt: icon_alt | default: label | escape -}}
+    </div>
+  {%- elsif has_theme_icon -%}
+    <div class="mc__icon-img-wrap mc__icon-img-wrap--lucide">
+      {%- render 'lucide-icon',
+        icon: theme_icon,
+        width: icon_size,
+        class: 'mc__icon-lucide'
+      -%}
+    </div>
+  {%- endif -%}
+  <div class="mc__icon-text">
+    {%- if label != blank -%}
+      <p class="mc__icon-label {{ label_size }}">{{- label | escape -}}</p>
+    {%- endif -%}
+    {%- if sub != blank -%}
+      <p class="mc__icon-sub {{ sub_size }}">{{- sub | escape -}}</p>
+    {%- endif -%}
+  </div>
+</div>

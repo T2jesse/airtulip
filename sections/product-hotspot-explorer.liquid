@@ -60,7 +60,7 @@
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
     {%- render 'section-variables', section: section -%}
     --product-explorer-pin-size: {{ section.settings.pin_size }}px;
-    --product-explorer-stage-radius: {% if section.settings.rounded %}var(--rounded-block){% else %}0{% endif %};
+    --product-explorer-media-radius: var(--rounded-block);
     --product-explorer-panel-width: {{ section.settings.panel_width }}px;
     {%- if fixed_image_aspect and explorer_aspect_value != blank -%}
       --product-explorer-aspect-ratio: {{ explorer_aspect_value }};
@@ -103,6 +103,7 @@
       justify-content: center;
     }
   }
+
 </style>
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
@@ -121,7 +122,7 @@
         <div class="product-explorer__stage-wrap">
           <div class="product-explorer__stage">
             {%- if explorer_image != blank -%}
-              <div class="product-explorer__figure{% if fixed_image_aspect %} product-explorer__figure--fixed{% endif %}{% if section.settings.rounded %} product-explorer__figure--rounded{% endif %}">
+              <div class="product-explorer__figure{% if fixed_image_aspect %} product-explorer__figure--fixed{% endif %}">
                 <div class="product-explorer__media-fill">
                   <img
                     id="ProductExplorerImage-{{ section.id }}"
@@ -552,7 +553,7 @@
       "type": "checkbox",
       "id": "rounded",
       "label": "t:sections.global.settings.rounded.label",
-      "default": true
+      "default": false
     }
   ],
   "blocks": [

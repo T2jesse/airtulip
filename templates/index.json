@@ -131,6 +131,10 @@
         "image_height_mobile": "auto",
         "content_position_mobile": "items-end justify-start",
         "text_alignment_mobile": "left",
+        "eyebrow_color": "#ffffff",
+        "eyebrow_label_1": "LIFETIME WARRANTY",
+        "eyebrow_label_2": "Dual HEPA H14",
+        "eyebrow_label_3": "30-NIGHT TRIAL",
         "color_text": "#ffffff",
         "color_highlight": "#e0a580",
         "gradient_highlight": "",
@@ -255,7 +259,7 @@
       ],
       "name": "t:sections.top-testimonials.presets.name",
       "settings": {
-        "heading": "Why people love AirTulip",
+        "heading": "Why People Love AirTulip",
         "heading_size": "title-lg tracking-heading",
         "heading_alignment": "text-center md:items-center",
         "heading_tag": "h2",
@@ -301,8 +305,8 @@
         "padding_top": 72,
         "padding_bottom": 72,
         "divider": false,
-        "rounded": true,
-        "overlap_above": 14
+        "rounded": false,
+        "overlap_above": 0
       }
     },
     "homepage_shark_spotlight": {
@@ -323,9 +327,9 @@
         "heading_size": "title-lg tracking-heading",
         "heading_tag": "h2",
         "text": "<p>Millions watched our founders present AirTulip Sleep on <strong>Shark Tank</strong>—a headboard that delivers filtered, laminar air where you breathe at night. Watch the segment and see why shoppers compare us to every floor purifier they have owned.</p>",
-        "proof_1": "National TV validation for a four-figure sleep investment",
-        "proof_2": "Founder story: engineered for sleep, not showroom CFM",
-        "proof_3": "Stream the full episode in minutes",
+        "proof_1": "",
+        "proof_2": "",
+        "proof_3": "",
         "button_label": "Watch the Shark Tank segment",
         "open_video_in_modal": true,
         "episode_video_url": "https://www.youtube.com/shorts/zHFq9OsfATU",
@@ -336,12 +340,12 @@
         "show_episode_link_in_modal": true,
         "episode_external": true,
         "button_icon": true,
-        "button_secondary_label": "Watch on Hulu",
+        "button_secondary_label": "",
         "button_secondary_link": "https://www.hulu.com/",
         "button_secondary_external": true,
         "narrow": false,
         "color_text": "",
-        "color_background": "#f8f7f6",
+        "color_background": "#fafafa",
         "gradient_background": "",
         "padding_top": 80,
         "padding_bottom": 80,
@@ -372,7 +376,7 @@
         "top_text": "<p>Cleanroom-grade air in your breathing zone, 100% validated against ordinary purifiers.</p>",
         "bottom_heading": "Pure Air, Delivered Directly to You",
         "bottom_text": "<p>Uncompromised, laboratory-grade purity exactly where it matters most: where you sleep.</p>",
-        "cta_label": "Learn more about us",
+        "cta_label": "",
         "cta_link": "",
         "cta_style": "primary",
         "cta_size": "md",
@@ -382,6 +386,81 @@
         "cta_alignment_mobile": "center",
         "padding_top": 60,
         "padding_bottom": 60
+      }
+    },
+    "multicolumn_with_icons_Di4fLz": {
+      "type": "multicolumn-with-icons",
+      "blocks": {
+        "column_tcNR6E": {
+          "type": "column",
+          "settings": {
+            "icon": "shield",
+            "custom_icon": "",
+            "heading": "Clean Air Bubble",
+            "text": "<p>A completely clean air zone that eliminates airborne asthma and allergy triggers</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_LVDk8U": {
+          "type": "column",
+          "settings": {
+            "icon": "heart",
+            "custom_icon": "",
+            "heading": "Improved Health",
+            "text": "<p>Air quality significantly impacts your sleep quality and overall health & well-being</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_4DRbtx": {
+          "type": "column",
+          "settings": {
+            "icon": "star",
+            "custom_icon": "",
+            "heading": "Cleanroom Grade Air flow Control",
+            "text": "<p>We use flow control, laminar air flow, with HEPA H14 & active carbon filtration</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "column_tcNR6E",
+        "column_LVDk8U",
+        "column_4DRbtx"
+      ],
+      "disabled": true,
+      "settings": {
+        "style": "with-border",
+        "columns": 3,
+        "text_alignment": "left",
+        "heading": "The Only Cleanroom-Grade Solution",
+        "heading_size": "title-lg tracking-heading",
+        "heading_max_width": "full",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
       }
     },
     "logo_list_PN4b9x": {
@@ -555,79 +634,6 @@
         "parallax_direction": "vertical"
       }
     },
-    "multicolumn_with_icons_Di4fLz": {
-      "type": "multicolumn-with-icons",
-      "blocks": {
-        "column_tcNR6E": {
-          "type": "column",
-          "settings": {
-            "icon": "shield",
-            "custom_icon": "",
-            "heading": "Clean Air Bubble",
-            "text": "<p>A completely clean air zone that eliminates airborne asthma and allergy triggers</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "column_LVDk8U": {
-          "type": "column",
-          "settings": {
-            "icon": "heart",
-            "custom_icon": "",
-            "heading": "Improved Health",
-            "text": "<p>Air quality significantly impacts your sleep quality and overall health & well-being</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "column_4DRbtx": {
-          "type": "column",
-          "settings": {
-            "icon": "star",
-            "custom_icon": "",
-            "heading": "Cleanroom Grade Air flow Control",
-            "text": "<p>We use flow control, laminar air flow, with HEPA H14 & active carbon filtration</p>",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        }
-      },
-      "block_order": [
-        "column_tcNR6E",
-        "column_LVDk8U",
-        "column_4DRbtx"
-      ],
-      "settings": {
-        "style": "with-border",
-        "columns": 3,
-        "text_alignment": "left",
-        "heading": "The Only Cleanroom-Grade Solution",
-        "heading_size": "title-lg tracking-heading",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
     "split_text_Nwr68R": {
       "type": "split-text",
       "blocks": {
@@ -642,15 +648,38 @@
         "text_48CaxT": {
           "type": "text",
           "settings": {
-            "text": "<p>Clean air at the headboard, designed for sleep—without overlapping the story on your media.</p>",
+            "text": "<p>Did you know standard air purifiers just mix clean air back into the dirty air already in your room? AirTulip Sleep is different. It is the only product on the market designed to completely bypass \"mixed air.\" </p><p>Featuring a revolutionary <strong>laminar flow headboard design</strong>, it delivers a flawless, direct stream of 100% pure air over you while you rest. Stop breathing recycled room air and experience the market's only true pure-air sleep zone.</p>",
             "text_size": "subtext-md"
+          }
+        },
+        "icon_row_split": {
+          "type": "icon_row",
+          "settings": {
+            "icon_1_theme": "funnel",
+            "icon_1": "shopify://shop_images/airtulip_hepa_filters_2.svg",
+            "icon_1_alt": "",
+            "label_1": "HEPA H14 filtration",
+            "sub_1": "Dual filters capture ultrafine particles at your pillow",
+            "icon_2_theme": "volume-x",
+            "icon_2": "shopify://shop_images/airtulip_whisper_quiet_icon_ccfd8287-c71a-4476-b916-1cfe518f516a.svg",
+            "icon_2_alt": "",
+            "label_2": "Whisper-quiet sleep",
+            "sub_2": "As low as 26 dB(A) in Night mode",
+            "icon_3_theme": "air-vent",
+            "icon_3": "shopify://shop_images/laminrar_flow_airtulip.svg",
+            "icon_3_alt": "",
+            "label_3": "Laminar airflow control",
+            "sub_3": "Cleanroom-grade flow in your breathing zone",
+            "icon_size": 44,
+            "label_size": "text-sm",
+            "sub_size": "text-xs"
           }
         },
         "button_VwzLYP": {
           "type": "button",
           "settings": {
             "button_label": "Shop Clean Air",
-            "button_link": "",
+            "button_link": "shopify://products/sleep-air-purifier-headboard",
             "button_style": "primary",
             "button_size": "md",
             "button_icon": true,
@@ -661,10 +690,12 @@
       "block_order": [
         "heading_WcDfJF",
         "text_48CaxT",
+        "icon_row_split",
         "button_VwzLYP"
       ],
       "name": "Split text",
       "settings": {
+        "image_asset": "",
         "video_url": "",
         "video_description": "Background video",
         "split_video_autoplay": true,
@@ -676,6 +707,98 @@
         "media_span_percent": 60,
         "media_shade": false,
         "image_heading_fallback": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_heading": "#171717",
+        "color_supporting_text": "#171717",
+        "content_column_background": "#ffffff",
+        "mobile_stack_background": "#ffffff",
+        "heading_line_height_pct": 100,
+        "desktop_text_align": "left",
+        "content_alignment_mobile": "left",
+        "split_overlay_stack_gap_px": 28,
+        "min_height_px": 520,
+        "min_height_px_mobile": 340,
+        "rounded": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "split_text_benefits": {
+      "type": "split-text",
+      "blocks": {
+        "heading_benefits": {
+          "type": "heading",
+          "settings": {
+            "heading": "Perfect Sleep Every Night",
+            "heading_size": "title-md-lg tracking-heading",
+            "heading_tag": "h2"
+          }
+        },
+        "text_benefits": {
+          "type": "text",
+          "settings": {
+            "text": "<p>If allergies or asthma disrupt your nights, <strong>where you breathe</strong> matters. AirTulip Sleep purifies the air at your pillow—not the far corner of the room—so you are not cycling through pollen, dust, and pet dander already in your bedroom.</p><p>That helps reduce exposure to the ultrafine triggers behind <strong>histamine-driven congestion, irritation, and flare-ups</strong>. Many customers report easier overnight breathing and fewer wake-ups tied to <strong>asthma, allergies, and sleep-apnea-related discomfort</strong> when pillow-side air stays clean.</p><p>You get a personal purified bubble while you sleep—<strong>effectively zero particles</strong> in the only zone that counts: where your face and lungs are all night.</p>",
+            "text_size": "subtext-md"
+          }
+        },
+        "icon_row_benefits": {
+          "type": "icon_row",
+          "settings": {
+            "icon_1_theme": "heart",
+            "icon_1": "shopify://shop_images/health-filled-svgrepo-com.svg",
+            "icon_1_alt": "",
+            "label_1": "Allergens & histamines",
+            "sub_1": "Pollen, dust & pet dander—addressed at your pillow",
+            "icon_2_theme": "moon",
+            "icon_2": "shopify://shop_images/sunset-svgrepo-com.svg",
+            "icon_2_alt": "",
+            "label_2": "Easier overnight breathing",
+            "sub_2": "Less congestion and irritation that keeps you awake",
+            "icon_3_theme": "shield-check",
+            "icon_3": "shopify://shop_images/lungs-organ-svgrepo-com.svg",
+            "icon_3_alt": "",
+            "label_3": "Asthma & sleep support",
+            "sub_3": "Fewer breathing-related disruptions through the night",
+            "icon_size": 44,
+            "label_size": "text-sm",
+            "sub_size": "text-xs"
+          }
+        },
+        "button_benefits": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop AirTulip Sleep",
+            "button_link": "shopify://products/sleep-air-purifier-headboard",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_icon": true,
+            "button_external": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_benefits",
+        "text_benefits",
+        "icon_row_benefits",
+        "button_benefits"
+      ],
+      "name": "Split text — benefits",
+      "settings": {
+        "image": "shopify://shop_images/airtulip_couple_sleeping_with_pure_air_from_airtulip_headboard.jpg",
+        "image_asset": "airtulip-split-benefits-sleep.webp",
+        "video_url": "",
+        "video_description": "Background video",
+        "split_video_autoplay": true,
+        "split_video_loop": true,
+        "video_url_mobile": "",
+        "media_flush_edge": false,
+        "media_side": "left",
+        "media_span_percent": 60,
+        "media_shade": false,
+        "image_heading_fallback": "Woman sleeping peacefully with AirTulip Sleep headboard and teal-orange night lighting",
+        "color_background": "",
+        "gradient_background": "",
         "color_heading": "#171717",
         "color_supporting_text": "#171717",
         "content_column_background": "#ffffff",
@@ -846,210 +969,6 @@
         "rounded": false
       }
     },
-    "images_with_text_T9rEXy": {
-      "type": "images-with-text",
-      "blocks": {
-        "heading_96znK3": {
-          "type": "heading",
-          "settings": {
-            "heading": "Your Nighttime Sanctuary From Allergies & Asthma",
-            "heading_size": "title-lg tracking-heading",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_GyLEWt": {
-          "type": "text",
-          "settings": {
-            "text": "<p>AirTulip creates your personal clean air sanctuary, delivering cleanroom-grade air purification where it matters most. You can finally enjoy undisturbed and peaceful sleep.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "button_WpxHdW": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_link": "shopify://products/sleep-air-purifier-headboard",
-            "button_style": "primary",
-            "button_size": "md",
-            "button_external": false,
-            "button_icon": true
-          }
-        }
-      },
-      "block_order": [
-        "heading_96znK3",
-        "text_GyLEWt",
-        "button_WpxHdW"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/Screenshot_2024-09-05_at_11.20.38_AM.png",
-        "image_ratio": "adapt",
-        "image_width": "medium",
-        "layout": "image_first",
-        "text_alignment": "left",
-        "text_alignment_mobile": "left",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": true
-      }
-    },
-    "images_with_text_X6nrYD": {
-      "type": "images-with-text",
-      "blocks": {
-        "heading_bjEwKy": {
-          "type": "heading",
-          "settings": {
-            "heading": "Transform Your Sleep With Clean Air",
-            "heading_size": "title-lg tracking-heading",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_WDyp6A": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Transform your bedroom into a clean air haven with AirTulip's air purification system. By creating the purest possible breathing environment, we help you achieve deeper, more restorative sleep. Wake up feeling truly refreshed with deeper, more restorative rest.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "button_TKDFq4": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_link": "shopify://products/sleep-air-purifier-headboard",
-            "button_style": "primary",
-            "button_size": "md",
-            "button_external": false,
-            "button_icon": true
-          }
-        }
-      },
-      "block_order": [
-        "heading_bjEwKy",
-        "text_WDyp6A",
-        "button_TKDFq4"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/Screenshot_2024-09-16_at_12.22.54_PM_12c2fb0d-8bab-4209-a567-da5a757b8cd1.png",
-        "image_ratio": "adapt",
-        "image_width": "medium",
-        "layout": "text_first",
-        "text_alignment": "left",
-        "text_alignment_mobile": "left",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": true
-      }
-    },
-    "images_with_text_WGTQpi": {
-      "type": "images-with-text",
-      "blocks": {
-        "heading_km9hmf": {
-          "type": "heading",
-          "settings": {
-            "heading": "Maximize Recovery While You Sleep",
-            "heading_size": "title-lg tracking-heading",
-            "heading_tag": "h2",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "text_Uc6ee9": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Optimize your recovery with AirTulip's air purification system. By creating an environment with air that's 1,000 times cleaner than traditional purifiers, we help maximize your body's overnight recovery potential. </p><p>Elite performers understand that clean air is crucial for peak performance. Optimize recovery and enhance your body's natural restoration process.</p>",
-            "text_font": "body",
-            "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
-            "secondary_color": false,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "button_cBPtQR": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop Now",
-            "button_link": "shopify://products/sleep-air-purifier-headboard",
-            "button_style": "primary",
-            "button_size": "md",
-            "button_external": false,
-            "button_icon": true
-          }
-        }
-      },
-      "block_order": [
-        "heading_km9hmf",
-        "text_Uc6ee9",
-        "button_cBPtQR"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/person-in-black-running-in-the-green-outdoors.jpg",
-        "image_ratio": "adapt",
-        "image_width": "medium",
-        "layout": "image_first",
-        "text_alignment": "left",
-        "text_alignment_mobile": "left",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "divider": false,
-        "full_width": false,
-        "rounded": false,
-        "enable_parallax": true
-      }
-    },
     "image_with_text_jy7Xc7": {
       "type": "image-with-text",
       "blocks": {
@@ -1098,9 +1017,18 @@
       "disabled": true,
       "settings": {
         "image": "shopify://shop_images/graph2.png",
+        "video_url": "",
+        "video_description": "",
+        "video_muted": true,
+        "video_autoplay": true,
+        "video_loop": true,
+        "video_show_play_button": false,
         "diagram_asset_filename": "",
         "diagram_asset_alt": "Diagram illustrating clean air concentrated at the headboard versus mixed room air",
         "image_height": "adapt",
+        "match_column_heights": true,
+        "media_aspect_ratio": "adapt",
+        "media_aspect_ratio_mobile": "inherit",
         "image_width": "medium",
         "layout": "text_first",
         "text_alignment": "left",
@@ -1245,7 +1173,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Sleep in a Cleanroom-grade Quality Space",
+            "heading": "Sleep in a Cleanroom-Grade Quality Space",
             "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
@@ -1317,19 +1245,17 @@
   },
   "order": [
     "image_with_text_overlay_xAGVpd",
-    "homepage_shark_spotlight",
     "top_testimonials_DeNDcE",
+    "homepage_shark_spotlight",
     "full_bleed_overlay_cta_gjNt74",
+    "multicolumn_with_icons_Di4fLz",
     "logo_list_PN4b9x",
     "countdown_timer_KVHK76",
-    "multicolumn_with_icons_Di4fLz",
     "split_text_Nwr68R",
+    "split_text_benefits",
     "video_3MUXjz",
     "rich_text_JNxpha",
     "newsletter_9QCrN3",
-    "images_with_text_T9rEXy",
-    "images_with_text_X6nrYD",
-    "images_with_text_WGTQpi",
     "image_with_text_jy7Xc7",
     "logo_list_XgPTNp",
     "rich_text_BDtqXr",

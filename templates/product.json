@@ -111,6 +111,15 @@
             "option_values_order": "King, Queen, Twin"
           }
         },
+        "pdp_custom_design_link": {
+          "type": "scroll_anchor_link",
+          "settings": {
+            "link_label": "Request a custom headboard design",
+            "anchor_id": "custom-design",
+            "anchor_id_custom": "",
+            "tooltip_text": "Share your vision for custom fronts, channels, wraps, or shelving. We will follow up with feasibility and timelines."
+          }
+        },
         "price_QR8YtK": {
           "type": "price",
           "settings": {
@@ -129,15 +138,6 @@
             "enable_back_in_stock": false,
             "show_back_in_stock_name": false,
             "show_back_in_stock_phone": false
-          }
-        },
-        "pdp_custom_design_link": {
-          "type": "scroll_anchor_link",
-          "settings": {
-            "link_label": "Request a custom headboard design",
-            "anchor_id": "custom-design",
-            "anchor_id_custom": "",
-            "tooltip_text": "Share your vision for custom fronts, channels, wraps, or shelving. We will follow up with feasibility and timelines."
           }
         },
         "affirm_pay_over_time_messaging_product_block_BiBYHe": {
@@ -207,9 +207,9 @@
         "title",
         "judge_me_reviews_preview_badge_VYGRJr",
         "variant_picker",
+        "pdp_custom_design_link",
         "price_QR8YtK",
         "buy_buttons",
-        "pdp_custom_design_link",
         "affirm_pay_over_time_messaging_product_block_BiBYHe",
         "shop_pay_installments_7pLmQe",
         "liquid_f9YK6r",
@@ -360,6 +360,7 @@
       ],
       "settings": {
         "image": "shopify://shop_images/AirTulipProductFrontAngle_square.jpg",
+        "image_asset": "",
         "video_url": "",
         "video_description": "Background video",
         "split_video_autoplay": true,
@@ -396,11 +397,12 @@
             "heading": "Breathing zone delivery",
             "text": "<p>Filtered air exits across the headboard fabric as <strong>laminar, low-turbulence flow</strong> aimed at where you breathe—not just into the room corners like a floor purifier.</p>",
             "panel_media_type": "none",
+            "panel_image": "shopify://shop_images/airtulip_couple_sleeping_with_pure_air_from_airtulip_headboard.jpg",
             "panel_image_alt": "",
             "panel_video_url": "",
             "position_x": 50,
             "position_y": 28,
-            "featured": true
+            "featured": false
           }
         },
         "hs_hepa": {
@@ -475,7 +477,7 @@
         "description": "<p>Explore how laminar delivery, industrial filtration, and American hand assembly work together—without leaving the product page.</p>",
         "hint": "Hover or tap each point to explore",
         "details_heading": "",
-        "button_label": "Read the engineering story",
+        "button_label": "",
         "button_link": "shopify://pages/about",
         "button_external": false,
         "button_icon": true,
@@ -491,7 +493,7 @@
         "padding_bottom": 60,
         "divider": false,
         "full_width": false,
-        "rounded": true
+        "rounded": false
       }
     },
     "pdp_shark_spotlight": {
@@ -704,7 +706,7 @@
         "fb_video_autoplay": true,
         "fb_video_loop": true,
         "video_url_mobile": "",
-        "min_height_vh": 70,
+        "min_height_vh": 55,
         "contain_width": true,
         "fb_overlay_opacity": 35,
         "overlay_color": "#070f1a",

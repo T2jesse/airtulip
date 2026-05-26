@@ -387,14 +387,33 @@
     }
   }
 
+  /* Match rich-text / image-with-text description typography (body + subtext-* + leading-normal). */
   {{ sid }} .mc__rte.rte {
     width: 100%;
     max-width: 100%;
     opacity: 1;
     visibility: visible;
     mix-blend-mode: normal;
+    font-family: var(--font-body-family);
+    font-style: var(--font-body-style);
+    font-weight: var(--font-body-weight);
+    letter-spacing: var(--font-body-letter-spacing);
+    line-height: 1.6;
     color: {{ clr_body }} !important;
     -webkit-text-fill-color: {{ clr_body }} !important;
+  }
+
+  {{ sid }} .mc__rte.rte :is(p, li, span, a) {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+  }
+
+  {{ sid }} .mc__rte.rte :is(strong, b) {
+    font-family: inherit;
+    font-weight: 600;
   }
 
   {{ sid }} .mc__rte.rte *,
@@ -481,6 +500,95 @@
   {{ sid }} .mc__app {
     width: 100%;
   }
+
+  /* ── Icon row block ── */
+  {{ sid }} .mc__icon-row {
+    display: flex;
+    gap: var(--sp-4, 1rem);
+    width: 100%;
+  }
+
+  /* 1 slot: icon left, text right (horizontal item) */
+  {{ sid }} .mc__icon-row--1 .mc__icon-item {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-3, 0.75rem);
+    flex: 1;
+  }
+
+  /* 2 slots: stretch evenly */
+  {{ sid }} .mc__icon-row--2 {
+    justify-content: stretch;
+  }
+
+  {{ sid }} .mc__icon-row--2 .mc__icon-item {
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-2, 0.5rem);
+  }
+
+  /* 3 slots: equal thirds */
+  {{ sid }} .mc__icon-row--3 .mc__icon-item {
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-2, 0.5rem);
+  }
+
+  {{ sid }} .mc__icon-item {
+    display: flex;
+    min-width: 0;
+  }
+
+  {{ sid }} .mc__icon-img-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  {{ sid }} .mc__icon-img-wrap--lucide {
+    color: {{ clr_heading }};
+  }
+
+  {{ sid }} .mc__icon-lucide {
+    display: block;
+  }
+
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'icon_row' -%}
+      {{ sid }} .mc__icon-img {
+        width: {{ block.settings.icon_size | default: 44 }}px;
+        height: {{ block.settings.icon_size | default: 44 }}px;
+        object-fit: contain;
+        display: block;
+      }
+    {%- endif -%}
+  {%- endfor -%}
+
+  {{ sid }} .mc__icon-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-0d5, 0.125rem);
+    min-width: 0;
+  }
+
+  {{ sid }} .mc__icon-label {
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.3;
+    color: {{ clr_heading }};
+    -webkit-text-fill-color: {{ clr_heading }};
+  }
+
+  {{ sid }} .mc__icon-sub {
+    margin: 0;
+    line-height: 1.4;
+    opacity: 0.75;
+    color: {{ clr_body }};
+    -webkit-text-fill-color: {{ clr_body }};
+  }
 </style>
 
 <div class="section section--padding{% if section.settings.rounded %} section--rounded relative{% endif %}">
@@ -540,6 +648,34 @@
                 {% endif %}
                 {{ section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: loading_attr, fetchpriority: fetchprio, sizes: sizes_primary, widths: '375,550,720,940,1210,1600,2000,2400,3200', is: lazyimg, class: 'mc-img', alt: alt_primary }}
               </picture>
+            {% elsif section.settings.image_asset != blank %}
+              {%- liquid
+                assign alt_primary = section.settings.image_heading_fallback | default: 'AirTulip Sleep headboard' | escape
+                assign asset_file = section.settings.image_asset | strip
+                assign asset_img_class = 'mc-img'
+                if lazyimg != blank
+                  assign asset_img_class = asset_img_class | append: ' ' | append: lazyimg
+                endif
+              -%}
+              <img
+                src="{{ asset_file | asset_img_url: width: 1200 }}"
+                srcset="
+                  {{- asset_file | asset_img_url: width: 375 }} 375w,
+                  {{- asset_file | asset_img_url: width: 550 }} 550w,
+                  {{- asset_file | asset_img_url: width: 720 }} 720w,
+                  {{- asset_file | asset_img_url: width: 940 }} 940w,
+                  {{- asset_file | asset_img_url: width: 1210 }} 1210w,
+                  {{- asset_file | asset_img_url: width: 1600 }} 1600w
+                "
+                sizes="{{ sizes_primary }}"
+                alt="{{ alt_primary }}"
+                class="{{ asset_img_class }}"
+                loading="{{ loading_attr }}"
+                {% if fetchprio != 'auto' %}fetchpriority="{{ fetchprio }}"{% endif %}
+                width="1200"
+                height="800"
+                decoding="async"
+              >
             {% else %}
               {{ 'image' | placeholder_svg_tag: 'mc__ph' }}
             {% endif %}
@@ -568,7 +704,7 @@
                 {% when 'text' %}
                   {% if block.settings.text != blank %}
                     {% assign ts = block.settings.text_size | default: 'subtext-md' %}
-                    <div class="rte mc__rte {{ ts }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+                    <div class="rte body mc__rte {{ ts }} leading-normal" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
                   {% endif %}
 
                 {% when 'button' %}
@@ -586,6 +722,67 @@
                       -%}
                     </div>
                   {% endif %}
+
+                {% when 'icon_row' %}
+                  {%- liquid
+                    assign ir_slots = 0
+
+                    assign ir_s1 = false
+                    if block.settings.icon_1 != blank or block.settings.icon_1_theme != blank and block.settings.icon_1_theme != 'none' or block.settings.label_1 != blank or block.settings.sub_1 != blank
+                      assign ir_s1 = true
+                      assign ir_slots = 1
+                    endif
+
+                    assign ir_s2 = false
+                    if block.settings.icon_2 != blank or block.settings.icon_2_theme != blank and block.settings.icon_2_theme != 'none' or block.settings.label_2 != blank or block.settings.sub_2 != blank
+                      assign ir_s2 = true
+                      assign ir_slots = 2
+                    endif
+
+                    assign ir_s3 = false
+                    if block.settings.icon_3 != blank or block.settings.icon_3_theme != blank and block.settings.icon_3_theme != 'none' or block.settings.label_3 != blank or block.settings.sub_3 != blank
+                      assign ir_s3 = true
+                      assign ir_slots = 3
+                    endif
+
+                    assign ir_label_size = block.settings.label_size | default: 'text-sm'
+                    assign ir_sub_size = block.settings.sub_size | default: 'text-xs'
+                    assign ir_icon_size = block.settings.icon_size | default: 44
+                  -%}
+                  {%- if ir_slots > 0 -%}
+                    <div
+                      class="mc__icon-row mc__icon-row--{{ ir_slots }}"
+                      {{ block.shopify_attributes }}
+                    >
+                      {%- if ir_s1 -%}
+                        {%- render 'split-text-icon-slot',
+                          block: block,
+                          slot: 1,
+                          icon_size: ir_icon_size,
+                          label_size: ir_label_size,
+                          sub_size: ir_sub_size
+                        -%}
+                      {%- endif -%}
+                      {%- if ir_s2 -%}
+                        {%- render 'split-text-icon-slot',
+                          block: block,
+                          slot: 2,
+                          icon_size: ir_icon_size,
+                          label_size: ir_label_size,
+                          sub_size: ir_sub_size
+                        -%}
+                      {%- endif -%}
+                      {%- if ir_s3 -%}
+                        {%- render 'split-text-icon-slot',
+                          block: block,
+                          slot: 3,
+                          icon_size: ir_icon_size,
+                          label_size: ir_label_size,
+                          sub_size: ir_sub_size
+                        -%}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
 
                 {% when '@app' %}
                   <div class="mc__app" {{ block.shopify_attributes }}>
@@ -621,7 +818,13 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image",
-      "info": "Used when no video is set."
+      "info": "Used when no video is set. Overrides theme asset below."
+    },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Theme asset image",
+      "info": "Filename from theme /assets (e.g. photo.webp). Used when Image above is empty and no video is set."
     },
     {
       "type": "image_picker",
@@ -942,6 +1145,222 @@
             { "value": "subtext-md", "label": "Medium" },
             { "value": "subtext-lg", "label": "Large" },
             { "value": "subtext-xl", "label": "Extra large" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "icon_row",
+      "name": "Icon row (up to 3)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Lucide icons (lucide.dev, MIT). Pick one per slot or upload a custom image — upload overrides Lucide. Leave a slot empty to hide it."
+        },
+        { "type": "header", "content": "Icon 1" },
+        {
+          "type": "select",
+          "id": "icon_1_theme",
+          "label": "Lucide icon",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "funnel", "label": "Funnel — filtration" },
+            { "value": "layers", "label": "Layers — dual filters" },
+            { "value": "shield-check", "label": "Shield check" },
+            { "value": "volume-x", "label": "Volume off — quiet" },
+            { "value": "moon", "label": "Moon — sleep" },
+            { "value": "headphone", "label": "Headphones" },
+            { "value": "air-vent", "label": "Air vent — airflow" },
+            { "value": "wind", "label": "Wind — airflow" },
+            { "value": "focus", "label": "Focus — breathing zone" },
+            { "value": "target", "label": "Target — zone" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "star", "label": "Star" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "planet", "label": "Globe" },
+            { "value": "recycling", "label": "Recycle" },
+            { "value": "check_mark", "label": "Circle check" },
+            { "value": "lightning", "label": "Zap" },
+            { "value": "award", "label": "Award" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "support", "label": "Life buoy" },
+            { "value": "users", "label": "Users" },
+            { "value": "time", "label": "Clock" },
+            { "value": "eye", "label": "Eye" },
+            { "value": "plane", "label": "Plane" },
+            { "value": "wrench", "label": "Wrench" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_1",
+          "label": "Custom icon upload",
+          "info": "Optional. Overrides the Lucide icon above."
+        },
+        {
+          "type": "text",
+          "id": "icon_1_alt",
+          "label": "Icon 1 alt text"
+        },
+        {
+          "type": "text",
+          "id": "label_1",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "sub_1",
+          "label": "Sub-text"
+        },
+        { "type": "header", "content": "Icon 2" },
+        {
+          "type": "select",
+          "id": "icon_2_theme",
+          "label": "Lucide icon",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "funnel", "label": "Funnel — filtration" },
+            { "value": "layers", "label": "Layers — dual filters" },
+            { "value": "shield-check", "label": "Shield check" },
+            { "value": "volume-x", "label": "Volume off — quiet" },
+            { "value": "moon", "label": "Moon — sleep" },
+            { "value": "headphone", "label": "Headphones" },
+            { "value": "air-vent", "label": "Air vent — airflow" },
+            { "value": "wind", "label": "Wind — airflow" },
+            { "value": "focus", "label": "Focus — breathing zone" },
+            { "value": "target", "label": "Target — zone" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "star", "label": "Star" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "planet", "label": "Globe" },
+            { "value": "recycling", "label": "Recycle" },
+            { "value": "check_mark", "label": "Circle check" },
+            { "value": "lightning", "label": "Zap" },
+            { "value": "award", "label": "Award" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "support", "label": "Life buoy" },
+            { "value": "users", "label": "Users" },
+            { "value": "time", "label": "Clock" },
+            { "value": "eye", "label": "Eye" },
+            { "value": "plane", "label": "Plane" },
+            { "value": "wrench", "label": "Wrench" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_2",
+          "label": "Custom icon upload",
+          "info": "Optional. Overrides the Lucide icon above."
+        },
+        {
+          "type": "text",
+          "id": "icon_2_alt",
+          "label": "Icon 2 alt text"
+        },
+        {
+          "type": "text",
+          "id": "label_2",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "sub_2",
+          "label": "Sub-text"
+        },
+        { "type": "header", "content": "Icon 3" },
+        {
+          "type": "select",
+          "id": "icon_3_theme",
+          "label": "Lucide icon",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "funnel", "label": "Funnel — filtration" },
+            { "value": "layers", "label": "Layers — dual filters" },
+            { "value": "shield-check", "label": "Shield check" },
+            { "value": "volume-x", "label": "Volume off — quiet" },
+            { "value": "moon", "label": "Moon — sleep" },
+            { "value": "headphone", "label": "Headphones" },
+            { "value": "air-vent", "label": "Air vent — airflow" },
+            { "value": "wind", "label": "Wind — airflow" },
+            { "value": "focus", "label": "Focus — breathing zone" },
+            { "value": "target", "label": "Target — zone" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "star", "label": "Star" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "planet", "label": "Globe" },
+            { "value": "recycling", "label": "Recycle" },
+            { "value": "check_mark", "label": "Circle check" },
+            { "value": "lightning", "label": "Zap" },
+            { "value": "award", "label": "Award" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "support", "label": "Life buoy" },
+            { "value": "users", "label": "Users" },
+            { "value": "time", "label": "Clock" },
+            { "value": "eye", "label": "Eye" },
+            { "value": "plane", "label": "Plane" },
+            { "value": "wrench", "label": "Wrench" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_3",
+          "label": "Custom icon upload",
+          "info": "Optional. Overrides the Lucide icon above."
+        },
+        {
+          "type": "text",
+          "id": "icon_3_alt",
+          "label": "Icon 3 alt text"
+        },
+        {
+          "type": "text",
+          "id": "label_3",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "sub_3",
+          "label": "Sub-text"
+        },
+        { "type": "header", "content": "Appearance" },
+        {
+          "type": "range",
+          "id": "icon_size",
+          "label": "Icon size",
+          "min": 24,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "default": 44
+        },
+        {
+          "type": "select",
+          "id": "label_size",
+          "label": "Label size",
+          "default": "text-sm",
+          "options": [
+            { "value": "text-xs", "label": "X-small" },
+            { "value": "text-sm", "label": "Small" },
+            { "value": "text-base", "label": "Base" },
+            { "value": "subtext-md", "label": "Medium" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "sub_size",
+          "label": "Sub-text size",
+          "default": "text-xs",
+          "options": [
+            { "value": "text-xs", "label": "X-small" },
+            { "value": "text-sm", "label": "Small" },
+            { "value": "text-base", "label": "Base" }
           ]
         }
       ]

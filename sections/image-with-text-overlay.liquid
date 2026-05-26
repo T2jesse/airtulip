@@ -24,6 +24,9 @@
   #shopify-section-{{ section.id }} {
     --section-padding-top: {{ section.settings.padding_top }}px;
     --section-padding-bottom: {{ hero_pad_bottom }}px;
+    {%- if section.settings.eyebrow_color != blank and section.settings.eyebrow_color != 'rgba(0,0,0,0)' -%}
+      --banner-eyebrow-color: {{ section.settings.eyebrow_color }};
+    {%- endif -%}
     {%- render 'section-variables', section: section -%}
     {%- if section.settings.image != blank and section.settings.image_height == 'adapt' %}
       --ratio-percent: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
@@ -82,6 +85,46 @@
   {%- endif -%}
 
   {%- endif -%}
+
+  #shopify-section-{{ section.id }} .banner__eyebrow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: clamp(0.875rem, 1.6vw, 1.5rem);
+    row-gap: var(--sp-2);
+    margin: 0 0 var(--sp-4);
+    max-width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .banner__eyebrow-item {
+    flex: 0 1 auto;
+    margin: 0;
+    max-width: 100%;
+    font-family: var(--font-body-family);
+    font-size: clamp(0.6875rem, 0.62rem + 0.28vw, 0.8125rem);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--banner-eyebrow-color, rgb(var(--color-foreground)));
+  }
+
+  #shopify-section-{{ section.id }} .banner__eyebrow-bullet {
+    flex: 0 0 auto;
+    width: 0.3125rem;
+    height: 0.3125rem;
+    border-radius: 50%;
+    background-color: var(--banner-eyebrow-color, rgb(var(--color-foreground)));
+    opacity: 0.9;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .banner__eyebrow-row {
+      flex-wrap: nowrap;
+      column-gap: clamp(1rem, 2.2vw, 1.75rem);
+    }
+  }
 </style>
 
 {%- if section.settings.show_bottom_logo_marquee and iwto_overlay_logo_count > 0 -%}
@@ -123,6 +166,7 @@
                 endif
 
                 assign delay = 0
+                assign iwto_eyebrow_done = false
               -%}
               {%- for block in section.blocks -%}
                 {%- case block.type -%}
@@ -154,6 +198,43 @@
                     {%- endif -%}
 
                   {%- when 'heading' -%}
+                    {%- unless iwto_eyebrow_done -%}
+                      {%- liquid
+                        assign iwto_eyebrow_done = true
+                        assign eyebrow_1 = section.settings.eyebrow_label_1 | strip
+                        assign eyebrow_2 = section.settings.eyebrow_label_2 | strip
+                        assign eyebrow_3 = section.settings.eyebrow_label_3 | strip
+                        assign eyebrow_count = 0
+                        if eyebrow_1 != blank
+                          assign eyebrow_count = eyebrow_count | plus: 1
+                        endif
+                        if eyebrow_2 != blank
+                          assign eyebrow_count = eyebrow_count | plus: 1
+                        endif
+                        if eyebrow_3 != blank
+                          assign eyebrow_count = eyebrow_count | plus: 1
+                        endif
+                      -%}
+                      {%- if eyebrow_count > 0 -%}
+                        <div class="banner__eyebrow-row banner__eyebrow-row--count-{{ eyebrow_count }}" role="group" aria-label="Highlights">
+                          {%- if eyebrow_1 != blank -%}
+                            <p class="banner__eyebrow-item">{{ eyebrow_1 | escape }}</p>
+                          {%- endif -%}
+                          {%- if eyebrow_1 != blank and eyebrow_2 != blank -%}
+                            <span class="banner__eyebrow-bullet" aria-hidden="true"></span>
+                          {%- endif -%}
+                          {%- if eyebrow_2 != blank -%}
+                            <p class="banner__eyebrow-item">{{ eyebrow_2 | escape }}</p>
+                          {%- endif -%}
+                          {%- if eyebrow_2 != blank and eyebrow_3 != blank -%}
+                            <span class="banner__eyebrow-bullet" aria-hidden="true"></span>
+                          {%- endif -%}
+                          {%- if eyebrow_3 != blank -%}
+                            <p class="banner__eyebrow-item">{{ eyebrow_3 | escape }}</p>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                    {%- endunless -%}
                     {%- if block.settings.heading != blank -%}
                       {%- assign delay = delay | plus: 1 -%}
                       {%- liquid
@@ -687,6 +768,35 @@
       "id": "text_alignment_mobile",
       "default": "left",
       "label": "t:sections.global.settings.text_alignment_mobile.label"
+    },
+    {
+      "type": "header",
+      "content": "Eyebrow labels (above heading)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Up to 3 small capitalized labels in a row, placed directly above the main heading block (not above logo marquee blocks)."
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_label_1",
+      "label": "Label 1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_label_2",
+      "label": "Label 2"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_label_3",
+      "label": "Label 3"
     },
     {
       "type": "header",

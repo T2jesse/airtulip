@@ -15833,13 +15833,29 @@ video-media:not([playing]) .deferred-poster .play-button .icon:last-child:not(:o
 .template-product .split-text .mc__title,
 .template-product [id^="shopify-section-pdp_"] .title-wrapper .heading,
 .template-product [id^="shopify-section-pdp_"] .image-with-text .rich-text .heading,
-.template-product [id^="shopify-section-pdp_"] .image-with-text .heading {
+  .template-product [id^="shopify-section-pdp_"] .image-with-text .heading {
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
   font-weight: var(--font-heading-weight);
   letter-spacing: var(--font-heading-letter-spacing);
   text-transform: var(--font-heading-text-transform);
   line-height: 1.05;
+}
+
+/* Split text — description/body matches rich-text & image-with-text blocks */
+.template-index .split-text .mc__rte.rte.body,
+.template-product .split-text .mc__rte.rte.body {
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  letter-spacing: var(--font-body-letter-spacing);
+  line-height: 1.6;
+}
+
+.template-index .split-text .mc__rte.rte.body :is(strong, b),
+.template-product .split-text .mc__rte.rte.body :is(strong, b) {
+  font-family: inherit;
+  font-weight: 600;
 }
 
 @media screen and (min-width: 1024px) {
@@ -16832,7 +16848,6 @@ product-hotspot-explorer,
 }
 
 .product-explorer__stage {
-  border-radius: var(--product-explorer-stage-radius);
   background-color: rgb(var(--color-background));
   box-shadow: 0 8px 32px rgb(0 0 0 / 0.08);
   border: 1px solid rgb(var(--color-border) / 0.35);
@@ -16846,14 +16861,15 @@ product-hotspot-explorer,
   line-height: 0;
 }
 
-.product-explorer__figure--rounded {
-  border-radius: var(--product-explorer-stage-radius);
+.product-explorer__media-fill {
+  border-radius: var(--product-explorer-media-radius, var(--rounded-block));
   overflow: hidden;
+  clip-path: inset(0 round var(--product-explorer-media-radius, var(--rounded-block)));
+  transform: translateZ(0);
 }
 
 .product-explorer__figure--fixed {
   aspect-ratio: var(--product-explorer-aspect-ratio);
-  overflow: hidden;
 }
 
 .product-explorer__figure--fixed .product-explorer__media-fill {
@@ -16883,6 +16899,7 @@ product-hotspot-explorer,
 
 .product-explorer__image {
   display: block;
+  border-radius: var(--product-explorer-media-radius, var(--rounded-block));
 }
 
 .product-explorer__pin {
@@ -16893,8 +16910,17 @@ product-hotspot-explorer,
   z-index: 4;
 }
 
+/* Lift hovered/active pin (and its tooltip) above sibling hotspot icons */
+.product-explorer__pin:hover,
+.product-explorer__pin:focus-within,
+.product-explorer__pin.is-active,
+.product-explorer__pin.is-highlighted {
+  z-index: 40;
+}
+
 .product-explorer__pin-button {
   position: relative;
+  z-index: 1;
   width: calc(var(--product-explorer-pin-size) + 12px);
   height: calc(var(--product-explorer-pin-size) + 12px);
   padding: 0;
@@ -16958,7 +16984,7 @@ product-hotspot-explorer,
 
 .product-explorer__panel {
   position: absolute;
-  z-index: 5;
+  z-index: 10;
   width: min(var(--product-explorer-panel-width, 17.5rem), 72vw);
   padding: var(--sp-3) var(--sp-3d5);
   border-radius: var(--rounded-block);

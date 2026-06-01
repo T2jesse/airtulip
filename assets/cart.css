@@ -279,6 +279,12 @@ table.no-headings td:last-child {
   opacity: 0.65;
 }
 
+/* theme.css .price__sale::before is a positioned strikethrough; without position:relative on the span it can paint across the drawer */
+.cart-drawer-upsell-dual-prices__subscribe .price__sale::before,
+.cart-drawer-upsell-card__price .price__sale::before {
+  display: none;
+}
+
 .cart-drawer-upsell-card__form .select {
   min-height: 2.25rem;
   padding-block: var(--sp-1d5);

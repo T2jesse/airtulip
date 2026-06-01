@@ -120,7 +120,7 @@ if (!customElements.get('cart-drawer')) {
             const onSale = subscribeCompareCents > subscribeCents;
             subscribeEl.classList.toggle('price--on-sale', onSale);
             subscribeEl.innerHTML = onSale
-              ? `<span class="price__regular whitespace-nowrap font-medium">${theme.Currency.formatMoney(subscribeCents, moneyFormat)}</span><span class="price__sale whitespace-nowrap">${theme.Currency.formatMoney(subscribeCompareCents, moneyFormat)}</span>`
+              ? `<span class="price__regular whitespace-nowrap font-medium">${theme.Currency.formatMoney(subscribeCents, moneyFormat)}</span><span class="price__sale inline-flex items-center h-auto relative whitespace-nowrap">${theme.Currency.formatMoney(subscribeCompareCents, moneyFormat)}</span>`
               : `<span class="price__regular whitespace-nowrap font-medium">${theme.Currency.formatMoney(subscribeCents, moneyFormat)}</span>`;
           }
 

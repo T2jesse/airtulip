@@ -76,7 +76,7 @@
           {%- endif -%}
         </span>
         {%- if subscribe_on_sale -%}
-          <span class="price__sale whitespace-nowrap">
+          <span class="price__sale inline-flex items-center h-auto relative whitespace-nowrap">
             {%- if settings.currency_code_enabled -%}
               {{- subscribe_compare | money_with_currency -}}
             {%- else -%}

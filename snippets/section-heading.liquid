@@ -56,14 +56,7 @@
         {%- endif -%}
 
         {%- if section.settings.description != blank -%}
-          {%- liquid
-            if section.settings.heading_size == 'title-sm' or section.settings.heading_size == 'title-md'
-              assign subtext_size = 'subtext-md'
-            else
-              assign subtext_size = 'subtext-lg'
-            endif
-          -%}
-          <div class="description rte leading-normal {{ subtext_size }}">
+          <div class="description rte leading-normal description-copy">
             {{- section.settings.description -}}
           </div>
         {%- endif -%}

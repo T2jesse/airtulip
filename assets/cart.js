@@ -72,6 +72,113 @@ if (!customElements.get('cart-drawer')) {
         if (this.recentlyViewed) {
           this.recentlyViewed.addEventListener('is-empty', this.onRecentlyViewedEmpty.bind(this));
         }
+
+        this.initCartUpsellPricing();
+      }
+
+      initCartUpsellPricing() {
+        this.querySelectorAll('.cart-drawer-upsell-card__variant').forEach((select) => {
+          if (select.dataset.upsellBound === 'true') return;
+          select.dataset.upsellBound = 'true';
+          select.addEventListener('change', () => this.updateCartUpsellPrice(select));
+        });
+      }
+
+      updateCartUpsellPrice(select) {
+        const option = select.selectedOptions[0];
+        const card = select.closest('.cart-drawer-upsell-card');
+        if (!option || !card) return;
+
+        const moneyFormat = theme.settings.currencyCodeEnabled
+          ? theme.settings.moneyWithCurrencyFormat
+          : theme.settings.moneyFormat;
+
+        const onetimeCents = parseInt(option.dataset.onetimePrice, 10);
+        const subscribeCents = parseInt(option.dataset.subscribePrice, 10);
+        const subscribeCompareCents = parseInt(option.dataset.subscribeCompare, 10) || 0;
+        const planId = option.dataset.sellingPlanId || '';
+
+        const dualPriceEl = card.querySelector('[data-cart-upsell-dual-price]');
+        if (dualPriceEl) {
+          dualPriceEl.dataset.variantId = option.value;
+          dualPriceEl.dataset.onetimePrice = String(onetimeCents);
+          dualPriceEl.dataset.subscribePrice = String(subscribeCents);
+          dualPriceEl.dataset.subscribeCompare = String(subscribeCompareCents);
+          if (planId) {
+            dualPriceEl.dataset.sellingPlanId = planId;
+          } else {
+            delete dualPriceEl.dataset.sellingPlanId;
+          }
+
+          const onetimeEl = dualPriceEl.querySelector('[data-cart-upsell-onetime-price]');
+          if (onetimeEl) {
+            onetimeEl.textContent = theme.Currency.formatMoney(onetimeCents, moneyFormat);
+          }
+
+          const subscribeEl = dualPriceEl.querySelector('[data-cart-upsell-subscribe-price]');
+          if (subscribeEl) {
+            const onSale = subscribeCompareCents > subscribeCents;
+            subscribeEl.classList.toggle('price--on-sale', onSale);
+            subscribeEl.innerHTML = onSale
+              ? `<span class="price__regular whitespace-nowrap font-medium">${theme.Currency.formatMoney(subscribeCents, moneyFormat)}</span><span class="price__sale whitespace-nowrap">${theme.Currency.formatMoney(subscribeCompareCents, moneyFormat)}</span>`
+              : `<span class="price__regular whitespace-nowrap font-medium">${theme.Currency.formatMoney(subscribeCents, moneyFormat)}</span>`;
+          }
+
+          card.querySelectorAll('.cart-drawer-upsell-card__onetime-id, .cart-drawer-upsell-card__subscribe-id').forEach((input) => {
+            input.value = option.value;
+          });
+          const subscribePlanInput = card.querySelector('.cart-drawer-upsell-card__subscribe-plan');
+          if (subscribePlanInput && planId) {
+            subscribePlanInput.value = planId;
+          }
+          return;
+        }
+
+        const priceEl = card.querySelector('[data-cart-upsell-price]');
+        if (!priceEl) return;
+
+        const displayCents = parseInt(option.dataset.displayPrice, 10);
+        const compareCents = parseInt(option.dataset.comparePrice, 10) || 0;
+        const onSale = compareCents > displayCents;
+
+        priceEl.classList.toggle('price--on-sale', onSale);
+        priceEl.dataset.variantId = option.value;
+        priceEl.dataset.displayPrice = String(displayCents);
+        priceEl.dataset.comparePrice = String(compareCents);
+
+        let html = '';
+        if (onSale) {
+          html += `<span class="sr-only">${theme.strings?.salePrice || 'Sale price'}</span>`;
+        }
+        html += `<span class="price__regular whitespace-nowrap">${theme.Currency.formatMoney(displayCents, moneyFormat)}</span>`;
+        if (onSale) {
+          html += `<span class="sr-only">${theme.strings?.regularPrice || 'Regular price'}</span>`;
+          html += `<span class="price__sale inline-flex items-center h-auto relative">${theme.Currency.formatMoney(compareCents, moneyFormat)}</span>`;
+        }
+        priceEl.innerHTML = html;
+
+        const planInput = card.querySelector('.cart-drawer-upsell-card__selling-plan');
+        if (planInput) {
+          if (planId) {
+            planInput.value = planId;
+            planInput.disabled = false;
+            planInput.setAttribute('name', 'selling_plan');
+          } else {
+            planInput.value = '';
+            planInput.disabled = true;
+            planInput.removeAttribute('name');
+          }
+        }
+
+        const singleIdInput = card.querySelector('.cart-drawer-upsell-card__single-id');
+        if (singleIdInput) {
+          singleIdInput.value = option.value;
+        }
+
+        const submitButton = card.querySelector('[data-variant-id]');
+        if (submitButton) {
+          submitButton.dataset.variantId = option.value;
+        }
       }
 
       disconnectedCallback() {
@@ -103,6 +210,8 @@ if (!customElements.get('cart-drawer')) {
         const parsedHTML = new DOMParser().parseFromString(responseText, 'text/html');
 
         document.getElementById(id).innerHTML = parsedHTML.getElementById(id).innerHTML;
+
+        this.initCartUpsellPricing();
 
         if (event.detail.open === true) {
           this.show();
@@ -190,6 +299,7 @@ if (!customElements.get('cart-items')) {
               }
             }
             miniCart.innerHTML = updatedElement.innerHTML;
+            miniCart.closest('cart-drawer')?.initCartUpsellPricing?.();
           }
         }
 

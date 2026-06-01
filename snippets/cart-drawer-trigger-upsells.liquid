@@ -1,0 +1,220 @@
+{%- doc -%}
+  Renders cart-drawer upsells from theme settings when a trigger product is in the cart.
+
+  @param {string} section_id - Cart drawer section id (for quick-add / quick-view ids)
+{%- enddoc -%}
+
+{%- if settings.cart_upsell_enabled and cart != empty -%}
+  {%- liquid
+    assign upsell_handles_seen = ','
+    assign upsell_product_1 = blank
+    assign upsell_product_2 = blank
+    assign upsell_product_3 = blank
+    assign upsell_product_4 = blank
+
+    assign rule_1_trigger = settings.cart_upsell_rule_1_trigger
+    assign rule_1_offers = settings.cart_upsell_rule_1_offers
+    assign rule_2_trigger = settings.cart_upsell_rule_2_trigger
+    assign rule_2_offers = settings.cart_upsell_rule_2_offers
+    assign rule_3_trigger = settings.cart_upsell_rule_3_trigger
+    assign rule_3_offers = settings.cart_upsell_rule_3_offers
+
+    if settings.cart_upsell_rule_1_enabled and rule_1_trigger != blank and rule_1_offers != blank
+      assign rule_1_triggered = false
+      for cart_item in cart.items
+        if cart_item.product_id == rule_1_trigger.id
+          assign rule_1_triggered = true
+          break
+        endif
+      endfor
+
+      if rule_1_triggered
+        for offer in rule_1_offers
+          assign offer_handle_marker = ',' | append: offer.handle | append: ','
+          unless upsell_handles_seen contains offer_handle_marker
+            assign offer_in_cart = false
+            for cart_item in cart.items
+              if cart_item.product_id == offer.id
+                assign offer_in_cart = true
+                break
+              endif
+            endfor
+            unless offer_in_cart
+              assign upsell_handles_seen = upsell_handles_seen | append: offer.handle | append: ','
+              if upsell_product_1 == blank
+                assign upsell_product_1 = offer
+              elsif upsell_product_2 == blank
+                assign upsell_product_2 = offer
+              elsif upsell_product_3 == blank
+                assign upsell_product_3 = offer
+              elsif upsell_product_4 == blank
+                assign upsell_product_4 = offer
+              endif
+            endunless
+          endunless
+        endfor
+      endif
+    endif
+
+    if settings.cart_upsell_rule_2_enabled and rule_2_trigger != blank and rule_2_offers != blank
+      assign rule_2_triggered = false
+      for cart_item in cart.items
+        if cart_item.product_id == rule_2_trigger.id
+          assign rule_2_triggered = true
+          break
+        endif
+      endfor
+
+      if rule_2_triggered
+        for offer in rule_2_offers
+          assign offer_handle_marker = ',' | append: offer.handle | append: ','
+          unless upsell_handles_seen contains offer_handle_marker
+            assign offer_in_cart = false
+            for cart_item in cart.items
+              if cart_item.product_id == offer.id
+                assign offer_in_cart = true
+                break
+              endif
+            endfor
+            unless offer_in_cart
+              assign upsell_handles_seen = upsell_handles_seen | append: offer.handle | append: ','
+              if upsell_product_1 == blank
+                assign upsell_product_1 = offer
+              elsif upsell_product_2 == blank
+                assign upsell_product_2 = offer
+              elsif upsell_product_3 == blank
+                assign upsell_product_3 = offer
+              elsif upsell_product_4 == blank
+                assign upsell_product_4 = offer
+              endif
+            endunless
+          endunless
+        endfor
+      endif
+    endif
+
+    if settings.cart_upsell_rule_3_enabled and rule_3_trigger != blank and rule_3_offers != blank
+      assign rule_3_triggered = false
+      for cart_item in cart.items
+        if cart_item.product_id == rule_3_trigger.id
+          assign rule_3_triggered = true
+          break
+        endif
+      endfor
+
+      if rule_3_triggered
+        for offer in rule_3_offers
+          assign offer_handle_marker = ',' | append: offer.handle | append: ','
+          unless upsell_handles_seen contains offer_handle_marker
+            assign offer_in_cart = false
+            for cart_item in cart.items
+              if cart_item.product_id == offer.id
+                assign offer_in_cart = true
+                break
+              endif
+            endfor
+            unless offer_in_cart
+              assign upsell_handles_seen = upsell_handles_seen | append: offer.handle | append: ','
+              if upsell_product_1 == blank
+                assign upsell_product_1 = offer
+              elsif upsell_product_2 == blank
+                assign upsell_product_2 = offer
+              elsif upsell_product_3 == blank
+                assign upsell_product_3 = offer
+              elsif upsell_product_4 == blank
+                assign upsell_product_4 = offer
+              endif
+            endunless
+          endunless
+        endfor
+      endif
+    endif
+
+    assign cart_upsell_has_offers = false
+    if upsell_product_1 != blank or upsell_product_2 != blank or upsell_product_3 != blank or upsell_product_4 != blank
+      assign cart_upsell_has_offers = true
+    endif
+  -%}
+
+  {%- if cart_upsell_has_offers -%}
+    <div class="cart-drawer-upsells complementary-products flex flex-col gap-5" data-cart-upsells>
+      <p class="cart-drawer-upsells__heading font-medium text-lg leading-tight">
+        {{- settings.cart_upsell_heading | default: 'You may also like' | escape -}}
+      </p>
+      <div class="horizontal-products grid gap-4">
+        {%- if upsell_product_1 != blank -%}
+          {%- render 'cart-drawer-upsell-card',
+            product: upsell_product_1,
+            section_id: section_id,
+            block_suffix: '1',
+            image_ratio: settings.product_image_ratio,
+            image_fill: settings.product_image_fill,
+            show_vendor: settings.cart_upsell_show_vendor,
+            show_price: settings.cart_upsell_show_price,
+            match_cart_variant: settings.cart_upsell_match_cart_variant,
+            dual_purchase: settings.cart_upsell_dual_purchase,
+            prefer_subscription: settings.cart_upsell_prefer_subscription_price,
+            add_as_subscription: settings.cart_upsell_add_as_subscription,
+            onetime_label: settings.cart_upsell_onetime_label,
+            subscribe_label: settings.cart_upsell_subscribe_label,
+            subscription_note: settings.cart_upsell_subscription_note
+          -%}
+        {%- endif -%}
+        {%- if upsell_product_2 != blank -%}
+          {%- render 'cart-drawer-upsell-card',
+            product: upsell_product_2,
+            section_id: section_id,
+            block_suffix: '2',
+            image_ratio: settings.product_image_ratio,
+            image_fill: settings.product_image_fill,
+            show_vendor: settings.cart_upsell_show_vendor,
+            show_price: settings.cart_upsell_show_price,
+            match_cart_variant: settings.cart_upsell_match_cart_variant,
+            dual_purchase: settings.cart_upsell_dual_purchase,
+            prefer_subscription: settings.cart_upsell_prefer_subscription_price,
+            add_as_subscription: settings.cart_upsell_add_as_subscription,
+            onetime_label: settings.cart_upsell_onetime_label,
+            subscribe_label: settings.cart_upsell_subscribe_label,
+            subscription_note: settings.cart_upsell_subscription_note
+          -%}
+        {%- endif -%}
+        {%- if upsell_product_3 != blank -%}
+          {%- render 'cart-drawer-upsell-card',
+            product: upsell_product_3,
+            section_id: section_id,
+            block_suffix: '3',
+            image_ratio: settings.product_image_ratio,
+            image_fill: settings.product_image_fill,
+            show_vendor: settings.cart_upsell_show_vendor,
+            show_price: settings.cart_upsell_show_price,
+            match_cart_variant: settings.cart_upsell_match_cart_variant,
+            dual_purchase: settings.cart_upsell_dual_purchase,
+            prefer_subscription: settings.cart_upsell_prefer_subscription_price,
+            add_as_subscription: settings.cart_upsell_add_as_subscription,
+            onetime_label: settings.cart_upsell_onetime_label,
+            subscribe_label: settings.cart_upsell_subscribe_label,
+            subscription_note: settings.cart_upsell_subscription_note
+          -%}
+        {%- endif -%}
+        {%- if upsell_product_4 != blank -%}
+          {%- render 'cart-drawer-upsell-card',
+            product: upsell_product_4,
+            section_id: section_id,
+            block_suffix: '4',
+            image_ratio: settings.product_image_ratio,
+            image_fill: settings.product_image_fill,
+            show_vendor: settings.cart_upsell_show_vendor,
+            show_price: settings.cart_upsell_show_price,
+            match_cart_variant: settings.cart_upsell_match_cart_variant,
+            dual_purchase: settings.cart_upsell_dual_purchase,
+            prefer_subscription: settings.cart_upsell_prefer_subscription_price,
+            add_as_subscription: settings.cart_upsell_add_as_subscription,
+            onetime_label: settings.cart_upsell_onetime_label,
+            subscribe_label: settings.cart_upsell_subscribe_label,
+            subscription_note: settings.cart_upsell_subscription_note
+          -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}

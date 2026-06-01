@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -40,13 +31,10 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>See some of your most asked questions about Airtulip Sleep here. Please reach out and send us a message with any questions or concerns beyond what you find here. We've love to talk with you!</p>",
-            "text_font": "body",
+            "text": "<p>Welcome to our FAQ, we are so happy to have you here and as a client. We have tried to answer the most common questions.</p>",
             "text_size": "subtext-md",
             "text_max_size": 32,
-            "text_line_height": 1.6,
-            "text_letter_spacing": 0,
-            "text_capitalize": false,
+            "text_font": "body",
             "secondary_color": false,
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -74,15 +62,15 @@
         "highlighted_text": "none",
         "highlighted_scribble": "circle",
         "color_text": "",
-        "color_background": "#f2f2f2",
+        "color_background": "",
         "gradient_background": "",
         "color_highlight": "",
         "gradient_highlight": "",
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 60,
-        "padding_bottom": 60,
+        "padding_top": 72,
+        "padding_bottom": 0,
         "divider": false,
         "narrow": false,
         "rounded": false
@@ -167,7 +155,7 @@
           "type": "question",
           "settings": {
             "title": "What payment options do you accept?",
-            "text": "<p>We accept major credit and debit cards, Shop Pay, and other methods shown at checkout. Financing or HSA/FSA options may appear on the product page when available.</p><p>We also offer financing through our partnership with Affirm. Click the link on the product page to see your potential interest-free monthly plan options. <a href=\"/products/sleep-air-purifier-headboard\" title=\"AirTulip Sleep - Air Purifying Headboard\">Airtulip Sleep</a></p>",
+            "text": "<p>We accept major credit and debit cards, Shop Pay, and other methods shown at checkout. Financing or HSA/FSA options may appear on the product page when available.</p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }

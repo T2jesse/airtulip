@@ -1,0 +1,75 @@
+{%- doc -%}
+  Upsell price for cart drawer. Prefers Shopify selling plan allocation pricing
+  (subscription deal + compare-at) when present; otherwise variant compare_at / price.
+
+  @param {object} product
+  @param {object} variant
+  @param {boolean} [prefer_subscription] - Use lowest selling_plan_allocation when available
+  @param {string} [class] - Wrapper classes
+{%- enddoc -%}
+
+{%- liquid
+  assign v = variant | default: product.selected_or_first_available_variant
+  assign display_price = v.price
+  assign compare_price = v.compare_at_price
+  assign selling_plan_id = ''
+  assign has_selling_plan = false
+
+  if prefer_subscription and v.selling_plan_allocations.size > 0
+    assign best_allocation = v.selling_plan_allocations.first
+    assign display_price = best_allocation.price
+    assign selling_plan_id = best_allocation.selling_plan.id
+    assign has_selling_plan = true
+
+    for allocation in v.selling_plan_allocations
+      if allocation.price < display_price
+        assign display_price = allocation.price
+        assign best_allocation = allocation
+        assign selling_plan_id = allocation.selling_plan.id
+      endif
+    endfor
+
+    if best_allocation.compare_at_price > display_price
+      assign compare_price = best_allocation.compare_at_price
+    elsif v.price > display_price
+      assign compare_price = v.price
+    endif
+  endif
+
+  assign on_sale = false
+  if compare_price != blank and compare_price > display_price
+    assign on_sale = true
+  endif
+-%}
+
+<div
+  class="price cart-drawer-upsell-price{% if on_sale %} price--on-sale{% endif %}{% if class != blank %} {{ class }}{% endif %}"
+  data-cart-upsell-price
+  data-variant-id="{{ v.id }}"
+  data-display-price="{{ display_price }}"
+  data-compare-price="{{ compare_price }}"
+  {% if has_selling_plan %}data-selling-plan-id="{{ selling_plan_id }}"{% endif %}
+>
+  {%- if on_sale -%}
+    <span class="sr-only">{{ 'products.price.sale_price' | t }}</span>
+  {%- endif -%}
+
+  <span class="price__regular whitespace-nowrap">
+    {%- if settings.currency_code_enabled -%}
+      {{- display_price | money_with_currency -}}
+    {%- else -%}
+      {{- display_price | money -}}
+    {%- endif -%}
+  </span>
+
+  {%- if on_sale -%}
+    <span class="sr-only">{{ 'products.price.regular_price' | t }}</span>
+    <span class="price__sale inline-flex items-center h-auto relative">
+      {%- if settings.currency_code_enabled -%}
+        {{- compare_price | money_with_currency -}}
+      {%- else -%}
+        {{- compare_price | money -}}
+      {%- endif -%}
+    </span>
+  {%- endif -%}
+</div>

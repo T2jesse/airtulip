@@ -226,3 +226,75 @@ table.no-headings td:last-child {
 .cart__form+.gift-wrapping {
   padding-block-start: var(--sp-4);
 }
+
+/* Cart drawer — compact header / content (no tabs, no free-shipping bar) */
+.cart-drawer .cart-drawer__header {
+  padding-block: var(--sp-5) var(--sp-4);
+}
+
+@media screen and (min-width: 1024px) {
+  .cart-drawer .cart-drawer__header {
+    padding-inline: var(--sp-12);
+    padding-block: var(--sp-6) var(--sp-4);
+  }
+}
+
+.cart-drawer .cart-drawer__scrollable {
+  padding-block-start: var(--sp-4);
+}
+
+@media screen and (min-width: 1024px) {
+  .cart-drawer .cart-drawer__scrollable {
+    padding-block-start: var(--sp-5);
+  }
+}
+
+/* Trigger-based cart drawer upsells (theme settings) */
+.cart-drawer-upsells {
+  padding-block-start: var(--sp-2);
+  border-block-start: 1px solid rgb(var(--color-border-light));
+}
+
+.cart-drawer-upsells .horizontal-products {
+  gap: var(--sp-4);
+}
+
+.cart-drawer-upsells .horizontal-product {
+  padding: var(--sp-3);
+  border: 1px solid rgb(var(--color-border-light));
+  border-radius: var(--rounded-block);
+  background-color: rgb(var(--color-background));
+}
+
+.cart-drawer-upsell-card__actions {
+  min-width: 7.5rem;
+}
+
+.cart-drawer-upsell-card--dual .cart-drawer-upsell-card__actions {
+  min-width: 8.75rem;
+}
+
+.cart-drawer-upsell-dual-prices__subscribe .price__sale {
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+
+.cart-drawer-upsell-card__form .select {
+  min-height: 2.25rem;
+  padding-block: var(--sp-1d5);
+  padding-inline: var(--sp-2d5);
+}
+
+.cart-drawer-upsell-card__form .button--small {
+  min-height: 2.5rem;
+  padding-inline: var(--sp-3);
+}
+
+.cart-drawer-upsell-card__price .price__sale {
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+
+[data-rounded-block=round] .cart-drawer-upsells .horizontal-product {
+  border-radius: var(--rounded-block);
+}

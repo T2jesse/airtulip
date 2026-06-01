@@ -73,6 +73,86 @@
 
   assign poster = section.settings.cover_image | default: section.settings.cover_image_mobile
 
+  assign ar_mob_mode = section.settings.media_aspect_ratio_mobile | default: 'auto'
+  assign ar_desk_mode = section.settings.media_aspect_ratio_desktop | default: 'auto'
+  assign ar_mob_ratio = blank
+  assign ar_desk_ratio = blank
+  assign ar_mob_on = false
+  assign ar_desk_on = false
+  assign ar_crop_on = false
+
+  case ar_mob_mode
+    when 'square'
+      assign ar_mob_ratio = 1
+      assign ar_mob_on = true
+    when 'portrait'
+      assign ar_mob_ratio = 0.8
+      assign ar_mob_on = true
+    when 'landscape'
+      assign ar_mob_ratio = 1.3333333333
+      assign ar_mob_on = true
+    when 'landscape_32'
+      assign ar_mob_ratio = 1.5
+      assign ar_mob_on = true
+    when 'wide'
+      assign ar_mob_ratio = 1.7777777778
+      assign ar_mob_on = true
+    when 'tall'
+      assign ar_mob_ratio = 0.75
+      assign ar_mob_on = true
+    when 'adapt'
+      assign adapt_mob_img = section.settings.image_mobile | default: section.settings.image
+      if adapt_mob_img == blank
+        assign adapt_mob_img = section.settings.cover_image_mobile | default: poster
+      endif
+      if adapt_mob_img != blank
+        assign ar_mob_ratio = adapt_mob_img.aspect_ratio
+        assign ar_mob_on = true
+      else
+        assign ar_mob_ratio = 1.7777777778
+        assign ar_mob_on = true
+      endif
+  endcase
+
+  case ar_desk_mode
+    when 'square'
+      assign ar_desk_ratio = 1
+      assign ar_desk_on = true
+    when 'portrait'
+      assign ar_desk_ratio = 0.8
+      assign ar_desk_on = true
+    when 'landscape'
+      assign ar_desk_ratio = 1.3333333333
+      assign ar_desk_on = true
+    when 'landscape_32'
+      assign ar_desk_ratio = 1.5
+      assign ar_desk_on = true
+    when 'wide'
+      assign ar_desk_ratio = 1.7777777778
+      assign ar_desk_on = true
+    when 'tall'
+      assign ar_desk_ratio = 0.75
+      assign ar_desk_on = true
+    when 'adapt'
+      assign adapt_desk_img = section.settings.image | default: poster
+      if adapt_desk_img != blank
+        assign ar_desk_ratio = adapt_desk_img.aspect_ratio
+        assign ar_desk_on = true
+      else
+        assign ar_desk_ratio = 1.7777777778
+        assign ar_desk_on = true
+      endif
+  endcase
+
+  if ar_mob_mode == 'auto' and ar_desk_on
+    assign ar_mob_on = true
+    assign ar_mob_ratio = ar_desk_ratio
+  endif
+
+  if ar_mob_on or ar_desk_on
+    assign ar_crop_on = true
+  endif
+
   assign sv_mute = section.settings.split_video_autoplay | default: true
   assign sv_loop = section.settings.split_video_loop | default: true
 
@@ -115,6 +195,12 @@
     --mc-h-lh: {{ lh }};
     --mc-heading: {{ clr_heading }};
     --mc-body: {{ clr_body }};
+    {%- if ar_mob_on -%}
+    --mc-ar-ratio-mob: {{ ar_mob_ratio }};
+    {%- endif -%}
+    {%- if ar_desk_on -%}
+    --mc-ar-ratio-desk: {{ ar_desk_ratio }};
+    {%- endif -%}
     {%- render 'section-variables', section: section -%}
   }
 
@@ -156,6 +242,7 @@
 
   {{ sid }} .mc__media {
     position: relative;
+    display: block;
     width: 100%;
     min-height: var(--mc-min-mob);
     overflow: hidden;
@@ -164,10 +251,43 @@
   }
 
   {% if section.settings.rounded %}
-  {{ sid }} .mc__media {
+  {{ sid }} .mc__media,
+  {{ sid }} .mc__aspect--crop {
     border-radius: var(--border-radius);
   }
   {% endif %}
+
+  /* Auto: media cell fills row / min-height. Crop: frame fits inside cell (ratio is a ceiling). */
+  {{ sid }} .mc__aspect--fill {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  {{ sid }}.mc--ar-mob .mc__media {
+    container-type: inline-size;
+    container-name: mc-media-mob;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  {{ sid }}.mc--ar-mob .mc__aspect--crop {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: var(--mc-ar-ratio-mob);
+    max-height: min(90vh, 100%);
+    height: auto;
+    overflow: hidden;
+    flex-shrink: 0;
+    border-radius: inherit;
+  }
 
   /* Inner box always has explicit height → absolute poster/video can fill it */
   {{ sid }} .mc__fill {
@@ -241,7 +361,9 @@
     overflow: visible;
     flex: 1 1 auto;
     min-width: 0;
-    padding: var(--sp-8) clamp(var(--sp-4), 5vw, var(--sp-8)) var(--sp-10);
+    /* Mobile stack: no horizontal padding so copy aligns with full-bleed media above */
+    padding-block: var(--sp-8) var(--sp-10);
+    padding-inline: 0;
     text-align: {{ section.settings.content_alignment_mobile }};
     background: {{ clr_col_mobile }};
     color: {{ clr_body }} !important;
@@ -296,6 +418,49 @@
       min-height: var(--mc-min-desk);
       align-self: stretch;
       background-color: transparent;
+    }
+
+    {{ sid }}.mc--ar-mob:not(.mc--ar-desk) .mc__media {
+      min-height: var(--mc-min-desk);
+      align-self: stretch;
+      display: block;
+      container-type: normal;
+    }
+
+    {{ sid }}.mc--ar-mob:not(.mc--ar-desk) .mc__aspect--crop {
+      width: 100%;
+      max-height: none;
+      aspect-ratio: var(--mc-ar-ratio-mob);
+    }
+
+    {{ sid }}.mc--ar-desk .mc__media {
+      container-type: size;
+      container-name: mc-media-desk;
+      align-self: stretch;
+      min-height: 0;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background-color: transparent;
+    }
+
+  /*
+    Largest frame with chosen width/height ratio that fits inside the media column (ceiling, not floor).
+    min( column width , column height × ratio ) × ratio crop via object-fit on .mc__fill.
+  */
+    {{ sid }}.mc--ar-desk .mc__aspect--crop {
+      position: relative;
+      z-index: 0;
+      width: min(100cqw, calc(100cqh * var(--mc-ar-ratio-desk)));
+      max-width: 100cqw;
+      max-height: 100cqh;
+      aspect-ratio: var(--mc-ar-ratio-desk);
+      height: auto;
+      overflow: hidden;
+      flex-shrink: 0;
+      border-radius: inherit;
     }
 
     {{ sid }} .mc__copy {
@@ -595,10 +760,11 @@
   <div class="page-width">
     <div
       id="MediaContent-{{ section.id }}"
-      class="mc{% if has_section_bg %} mc--section-bg{% endif %}{% if media_flush %} mc--flush{% endif %} {% if media_right %}mc--media-right{% else %}mc--media-left{% endif %}"
+      class="mc{% if has_section_bg %} mc--section-bg{% endif %}{% if media_flush %} mc--flush{% endif %}{% if ar_mob_on %} mc--ar-mob{% endif %}{% if ar_desk_on %} mc--ar-desk{% endif %} {% if media_right %}mc--media-right{% else %}mc--media-left{% endif %}"
     >
       <div class="mc__row">
         <div class="mc__media">
+          <div class="mc__aspect{% if ar_crop_on %} mc__aspect--crop{% else %} mc__aspect--fill{% endif %}">
           <div class="mc__fill">
             {% if use_video %}
               {% if dual_video %}
@@ -684,6 +850,7 @@
           {% if section.settings.media_shade %}
             <div class="mc__shade" aria-hidden="true"></div>
           {% endif %}
+          </div>
         </div>
 
         <div class="mc__copy">
@@ -703,7 +870,7 @@
 
                 {% when 'text' %}
                   {% if block.settings.text != blank %}
-                    {% assign ts = block.settings.text_size | default: 'subtext-md' %}
+                    {% assign ts = block.settings.text_size | default: 'description-copy' %}
                     <div class="rte body mc__rte {{ ts }} leading-normal" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
                   {% endif %}
 
@@ -1022,6 +1189,44 @@
     },
     {
       "type": "header",
+      "content": "Media frame"
+    },
+    {
+      "type": "select",
+      "id": "media_aspect_ratio_mobile",
+      "label": "Media aspect ratio (mobile)",
+      "default": "auto",
+      "info": "Caps the media crop frame to this ratio (image/video use cover inside). The frame shrinks to fit beside the text—it will not grow past the ratio. Auto uses minimum height only.",
+      "options": [
+        { "value": "auto", "label": "Auto (minimum height)" },
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "landscape", "label": "Landscape (4:3)" },
+        { "value": "landscape_32", "label": "Landscape (3:2)" },
+        { "value": "wide", "label": "Wide (16:9)" },
+        { "value": "tall", "label": "Tall (3:4)" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_aspect_ratio_desktop",
+      "label": "Media aspect ratio (desktop)",
+      "default": "auto",
+      "info": "Large screens only. Auto stretches media to the text column height. Fixed ratios crop inside the largest frame that fits in the column (ratio is a ceiling).",
+      "options": [
+        { "value": "auto", "label": "Auto (match text column)" },
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "landscape", "label": "Landscape (4:3)" },
+        { "value": "landscape_32", "label": "Landscape (3:2)" },
+        { "value": "wide", "label": "Wide (16:9)" },
+        { "value": "tall", "label": "Tall (3:4)" }
+      ]
+    },
+    {
+      "type": "header",
       "content": "Height"
     },
     {
@@ -1033,7 +1238,7 @@
       "step": 10,
       "unit": "px",
       "default": 480,
-      "info": "Adds a minimum for the whole row when media is beside copy."
+      "info": "Minimum for the row when media is beside copy. With a fixed desktop aspect ratio, also acts as a floor for the media frame."
     },
     {
       "type": "range",
@@ -1043,7 +1248,8 @@
       "max": 640,
       "step": 10,
       "unit": "px",
-      "default": 320
+      "default": 320,
+      "info": "Used when mobile aspect ratio is Auto; also a minimum when a ratio is set."
     },
     {
       "type": "header",
@@ -1139,10 +1345,11 @@
           "type": "select",
           "id": "text_size",
           "label": "Size",
-          "default": "subtext-md",
+          "default": "description-copy",
           "options": [
+            { "value": "description-copy", "label": "Standard (16px tablet+)" },
             { "value": "subtext-sm", "label": "Small" },
-            { "value": "subtext-md", "label": "Medium" },
+            { "value": "subtext-md", "label": "Medium (same as standard)" },
             { "value": "subtext-lg", "label": "Large" },
             { "value": "subtext-xl", "label": "Extra large" }
           ]

@@ -104,6 +104,39 @@
     }
   }
 
+  /* Match PDP section headings (multicolumn-with-icons, image-with-text, etc.) */
+  #shopify-section-{{ section.id }} .product-explorer__stage {
+    background-color: transparent;
+    border-radius: var(--product-explorer-media-radius);
+  }
+
+  #shopify-section-{{ section.id }} .product-explorer__media-fill {
+    border-radius: var(--product-explorer-media-radius);
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading {
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: var(--font-heading-letter-spacing);
+    text-transform: var(--font-heading-text-transform);
+    line-height: 1.05;
+  }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-xl {
+      font-size: 58px;
+      line-height: 1.05;
+    }
+
+    #shopify-section-{{ section.id }} .title-wrapper .heading .split-words .word {
+      font-size: inherit;
+      line-height: inherit;
+    }
+  }
+
 </style>
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
@@ -230,7 +263,7 @@
                         </p>
                       {%- endif -%}
                       {%- if block.settings.text != blank -%}
-                        <div class="product-explorer__panel-text rte text-sm leading-normal">
+                        <div class="product-explorer__panel-text rte">
                           {{- block.settings.text -}}
                         </div>
                       {%- endif -%}
@@ -389,6 +422,48 @@
       ],
       "default": "h2",
       "label": "t:sections.global.settings.heading_tag.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "t:sections.global.settings.heading_width.label",
+      "info": "Limits how wide the heading can grow before wrapping to a new line.",
+      "default": "full",
+      "options": [
+        { "value": "small", "label": "t:sections.global.settings.heading_width.options__1.label" },
+        { "value": "medium", "label": "t:sections.global.settings.heading_width.options__2.label" },
+        { "value": "large", "label": "t:sections.global.settings.heading_width.options__3.label" },
+        { "value": "full", "label": "No max width" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "highlighted_text",
+      "options": [
+        { "value": "none", "label": "t:sections.global.settings.highlighted_text.options__1.label" },
+        { "value": "text", "label": "t:sections.global.settings.highlighted_text.options__2.label" },
+        { "value": "full_text", "label": "t:sections.global.settings.highlighted_text.options__3.label" },
+        { "value": "half_text", "label": "t:sections.global.settings.highlighted_text.options__4.label" },
+        { "value": "underline", "label": "t:sections.global.settings.highlighted_text.options__5.label" },
+        { "value": "stencil", "label": "t:sections.global.settings.highlighted_text.options__6.label" },
+        { "value": "scribble", "label": "t:sections.global.settings.highlighted_text.options__7.label" }
+      ],
+      "default": "none",
+      "label": "t:sections.global.settings.highlighted_text.label"
+    },
+    {
+      "visible_if": "{{ section.settings.highlighted_text == 'scribble' }}",
+      "type": "select",
+      "id": "highlighted_scribble",
+      "options": [
+        { "value": "circle", "label": "t:sections.global.settings.highlighted_scribble.options__1.label" },
+        { "value": "basic-underline", "label": "t:sections.global.settings.highlighted_scribble.options__2.label" },
+        { "value": "sketch-underline", "label": "t:sections.global.settings.highlighted_scribble.options__3.label" },
+        { "value": "squiggle-underline", "label": "t:sections.global.settings.highlighted_scribble.options__4.label" },
+        { "value": "squiggle-underline-2", "label": "t:sections.global.settings.highlighted_scribble.options__5.label" }
+      ],
+      "default": "circle",
+      "label": "t:sections.global.settings.highlighted_scribble.label"
     },
     {
       "type": "text",

@@ -35,6 +35,11 @@
     elsif settings.rounded_input == 'square'
       assign rounded_input = 0
     endif
+
+    assign label_swatch_radius = '0px'
+    if settings.rounded_swatch == 'round' or settings.rounded_swatch == 'round-slight'
+      assign label_swatch_radius = '5px'
+    endif
   -%}
 
   :root {
@@ -78,6 +83,7 @@
 
     /*! Buttons */
     --buttons-radius: var(--rounded-button);
+    --label-swatch-radius: {{ label_swatch_radius }};
     --buttons-border-width: {{ settings.buttons_border_thickness }}px;
     --buttons-border-opacity: {{ settings.buttons_border_opacity | divided_by: 100.0 }};
     --buttons-shadow-opacity: {{ settings.buttons_shadow_opacity | divided_by: 100.0 }};
@@ -181,6 +187,13 @@
     --text-2sm: {{ settings.type_body_size | minus: 3 | at_least: 12 | divided_by: 16.0 }}rem;
     --text-sm: {{ settings.type_body_size | minus: 2 | at_least: 12 | divided_by: 16.0 }}rem;
     --text-base: {{ settings.type_body_size | divided_by: 16.0 }}rem;
+    {%- liquid
+      assign copy_size_px = settings.type_body_size | at_most: 16
+      assign copy_mobile_px = settings.type_body_size | minus: 2 | at_least: 12 | at_most: 14
+    -%}
+    --copy-font-size: {{ copy_size_px | divided_by: 16.0 }}rem;
+    --copy-font-size-mobile: {{ copy_mobile_px | divided_by: 16.0 }}rem;
+    --copy-line-height: 1.6;
     --text-lg: {{ settings.type_body_size | plus: 2 | divided_by: 16.0 }}rem;
     --text-xl: {{ settings.type_body_size | plus: 4 | divided_by: 16.0 }}rem;
     --text-2xl: {{ settings.type_body_size | plus: 8 | divided_by: 16.0 }}rem;

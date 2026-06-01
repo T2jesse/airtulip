@@ -5,11 +5,11 @@
 {%- endcomment -%}
 {%- liquid
   assign tt_shadow_on = section.settings.card_shadow_enable | default: true
-  assign tt_blur = section.settings.card_shadow_blur | default: 28
+  assign tt_blur = section.settings.card_shadow_blur | default: 24
   assign tt_spread = section.settings.card_shadow_spread | default: 0
-  assign tt_opacity = section.settings.card_shadow_opacity | default: 14
-  assign tt_angle = section.settings.card_shadow_angle | default: 135
-  assign tt_distance = section.settings.card_shadow_distance | default: 10
+  assign tt_opacity = section.settings.card_shadow_opacity | default: 8
+  assign tt_angle = section.settings.card_shadow_angle | default: 0
+  assign tt_distance = section.settings.card_shadow_distance | default: 0
   if section.settings.star_color != blank
     assign tt_star_rgb = section.settings.star_color.rgb
   else
@@ -26,8 +26,9 @@
   endcase
   if tt_shadow_on
     assign tt_spread_abs = tt_spread | abs
-    assign tt_vp_pad_y = tt_blur | plus: tt_distance | plus: tt_spread_abs | plus: 16
-    assign tt_vp_pad_x = tt_blur | plus: tt_distance | plus: tt_spread_abs | plus: 12
+    assign tt_shadow_extent = tt_blur | times: 0.45 | round
+    assign tt_vp_pad_y = tt_shadow_extent | plus: tt_spread_abs | plus: 10
+    assign tt_vp_pad_x = tt_shadow_extent | plus: tt_spread_abs | plus: 8
   else
     assign tt_vp_pad_y = 0
     assign tt_vp_pad_x = 0
@@ -43,6 +44,10 @@
   endif
   if section.settings.testimonial_text_color != blank
     assign tt_testimonial_text_rgb = section.settings.testimonial_text_color.rgb
+  endif
+  if section.settings.card_background_color != blank and section.settings.card_background_color != 'rgba(0,0,0,0)'
+    assign tt_card_bg_rgb = section.settings.card_background_color.rgb
+    assign tt_card_bg_alpha = section.settings.card_background_color.alpha
   endif
   assign tt_quote_trim = section.settings.quote_trim_enable | default: false
   assign tt_quote_max_height = section.settings.quote_max_height | default: 260
@@ -115,8 +120,8 @@
 
   {%- if tt_shadow_on -%}
   #shopify-section-{{ section.id }} .top-testimonials__slide-inner {
-    box-shadow: var(--tt-card-sx, 0px) var(--tt-card-sy, 0px) var(--tt-card-blur) var(--tt-card-spread)
-      rgba(0, 0, 0, var(--tt-card-opacity));
+    /* Centered blur — even halo on all edges (incl. top); angle/distance unused */
+    box-shadow: 0 0 var(--tt-card-blur) var(--tt-card-spread) rgba(0, 0, 0, var(--tt-card-opacity));
   }
   {%- else -%}
   #shopify-section-{{ section.id }} .top-testimonials__slide-inner {
@@ -130,6 +135,9 @@
     gap: var(--sp-4);
     padding: clamp(var(--sp-6), 2.63vw, var(--sp-10));
     border-radius: var(--rounded-card);
+    {%- if tt_card_bg_rgb != blank -%}
+    background-color: rgb({{ tt_card_bg_rgb }} / {{ tt_card_bg_alpha }});
+    {%- endif -%}
   }
 
   #shopify-section-{{ section.id }} .top-testimonials-carousel__track {
@@ -663,6 +671,13 @@
       "info": "Applies to the review body and author line. Leave empty to use the section text color."
     },
     {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background",
+      "default": "#ffffff",
+      "info": "Background for every review card in this section."
+    },
+    {
       "type": "select",
       "id": "star_size",
       "label": "Star size",
@@ -768,8 +783,8 @@
       "max": 360,
       "step": 5,
       "label": "Shadow angle",
-      "info": "Direction of the shadow in degrees.",
-      "default": 135
+      "info": "Legacy offset control; shadow renders evenly on all sides. Leave at 0.",
+      "default": 0
     },
     {
       "visible_if": "{{ section.settings.card_shadow_enable }}",
@@ -780,8 +795,8 @@
       "step": 1,
       "unit": "px",
       "label": "Shadow distance",
-      "info": "How far the shadow is offset from the card.",
-      "default": 10
+      "info": "Legacy offset control; use 0 for an even shadow around the card.",
+      "default": 0
     },
     {
       "visible_if": "{{ section.settings.card_shadow_enable }}",
@@ -793,7 +808,7 @@
       "unit": "px",
       "label": "Shadow blur",
       "info": "Softens the edge of the shadow.",
-      "default": 28
+      "default": 24
     },
     {
       "visible_if": "{{ section.settings.card_shadow_enable }}",
@@ -817,7 +832,7 @@
       "unit": "%",
       "label": "Shadow opacity",
       "info": "How strong the shadow appears.",
-      "default": 14
+      "default": 8
     },
     {
       "type": "header",

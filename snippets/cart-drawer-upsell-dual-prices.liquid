@@ -1,0 +1,90 @@
+{%- doc -%}
+  One-time + subscription prices for cart upsell (Shopify variant + selling_plan_allocations).
+
+  @param {object} variant
+  @param {string} [onetime_label] - Label for one-time row
+  @param {string} [subscribe_label] - Label for subscription row
+  @param {string} [class] - Wrapper classes
+{%- enddoc -%}
+
+{%- liquid
+  assign v = variant
+  assign onetime_price = v.price
+  assign subscribe_price = onetime_price
+  assign subscribe_compare = onetime_price
+  assign selling_plan_id = ''
+
+  if v.selling_plan_allocations.size > 0
+    assign best_allocation = v.selling_plan_allocations.first
+    assign subscribe_price = best_allocation.price
+    assign selling_plan_id = best_allocation.selling_plan.id
+
+    for allocation in v.selling_plan_allocations
+      if allocation.price < subscribe_price
+        assign subscribe_price = allocation.price
+        assign best_allocation = allocation
+        assign selling_plan_id = allocation.selling_plan.id
+      endif
+    endfor
+
+    if best_allocation.compare_at_price > subscribe_price
+      assign subscribe_compare = best_allocation.compare_at_price
+    elsif onetime_price > subscribe_price
+      assign subscribe_compare = onetime_price
+    endif
+  endif
+
+  assign subscribe_on_sale = false
+  if subscribe_compare > subscribe_price
+    assign subscribe_on_sale = true
+  endif
+-%}
+
+<div
+  class="cart-drawer-upsell-dual-prices grid gap-2 text-sm{% if class != blank %} {{ class }}{% endif %}"
+  data-cart-upsell-dual-price
+  data-variant-id="{{ v.id }}"
+  data-onetime-price="{{ onetime_price }}"
+  data-subscribe-price="{{ subscribe_price }}"
+  data-subscribe-compare="{{ subscribe_compare }}"
+  {% if selling_plan_id != '' %}data-selling-plan-id="{{ selling_plan_id }}"{% endif %}
+>
+  <div class="cart-drawer-upsell-dual-prices__row flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0">
+    <span class="cart-drawer-upsell-dual-prices__label text-xs text-opacity font-medium">
+      {{- onetime_label | default: 'One-time' | escape -}}
+    </span>
+    <span class="price cart-drawer-upsell-dual-prices__onetime whitespace-nowrap font-medium" data-cart-upsell-onetime-price>
+      {%- if settings.currency_code_enabled -%}
+        {{- onetime_price | money_with_currency -}}
+      {%- else -%}
+        {{- onetime_price | money -}}
+      {%- endif -%}
+    </span>
+  </div>
+
+  {%- if v.selling_plan_allocations.size > 0 -%}
+    <div class="cart-drawer-upsell-dual-prices__row flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0">
+      <span class="cart-drawer-upsell-dual-prices__label text-xs text-opacity font-medium">
+        {{- subscribe_label | default: 'Subscribe' | escape -}}
+      </span>
+      <span class="price cart-drawer-upsell-dual-prices__subscribe flex flex-wrap items-baseline gap-2 justify-end{% if subscribe_on_sale %} price--on-sale{% endif %}" data-cart-upsell-subscribe-price>
+        <span class="price__regular whitespace-nowrap font-medium">
+          {%- if settings.currency_code_enabled -%}
+            {{- subscribe_price | money_with_currency -}}
+          {%- else -%}
+            {{- subscribe_price | money -}}
+          {%- endif -%}
+        </span>
+        {%- if subscribe_on_sale -%}
+          <span class="price__sale whitespace-nowrap">
+            {%- if settings.currency_code_enabled -%}
+              {{- subscribe_compare | money_with_currency -}}
+            {%- else -%}
+              {{- subscribe_compare | money -}}
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </span>
+    </div>
+  {%- endif -%}
+</div>

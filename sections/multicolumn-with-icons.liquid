@@ -1,8 +1,36 @@
+{%- liquid
+  assign clr_body = section.settings.color_supporting_text
+  if clr_body == blank or clr_body == 'rgba(0,0,0,0)'
+    assign clr_body = '#394a60'
+  endif
+-%}
+
 <style>
   #shopify-section-{{ section.id }} {
     --section-padding-top: {{ section.settings.padding_top }}px;
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
     {%- render 'section-variables', section: section -%}
+  }
+
+  /* Column descriptions — size via .description-copy; color per section */
+  #shopify-section-{{ section.id }} .column__text.rte.body {
+    color: {{ clr_body }};
+    -webkit-text-fill-color: {{ clr_body }};
+  }
+
+  #shopify-section-{{ section.id }} .column__text.rte.body :is(p, li, span, a) {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    color: inherit;
+    -webkit-text-fill-color: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .column__text.rte.body :is(strong, b) {
+    font-family: inherit;
+    font-weight: 600;
   }
 
   @media screen and (min-width: 1024px) {
@@ -43,7 +71,7 @@
               </p>
             {%- endif -%}
             {%- if block.settings.text != blank -%}
-              <div class="column__text rte">
+              <div class="column__text rte leading-normal body description-copy">
                 {{- block.settings.text -}}
               </div>
             {%- endif -%}
@@ -329,6 +357,13 @@
       "type": "color",
       "id": "color_text",
       "label": "t:sections.global.settings.color_text.label"
+    },
+    {
+      "type": "color",
+      "id": "color_supporting_text",
+      "label": "Column description color",
+      "default": "#394a60",
+      "info": "Body text under column headings. Default matches split-text supporting copy (#394a60)."
     },
     {
       "type": "color",

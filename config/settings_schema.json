@@ -1085,6 +1085,116 @@
             "label": "t:settings_schema.cart.settings.cart_icon.options__4.label"
           }
         ]
+      },
+      {
+        "type": "header",
+        "content": "Cart drawer trigger upsells"
+      },
+      {
+        "type": "paragraph",
+        "content": "When a trigger product is in the cart, show the linked upsell products in the cart drawer. Products already in the cart are hidden. Configure up to three rules (enough for a small catalog)."
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_enabled",
+        "label": "Enable trigger-based cart upsells",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_heading",
+        "label": "Upsell heading",
+        "default": "Complete your setup"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_show_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_show_price",
+        "label": "Show price",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_match_cart_variant",
+        "label": "Match upsell variant to cart (Size / Bed)",
+        "default": true,
+        "info": "When the upsell has variants, pre-select the option that matches the headboard (or other item) already in the cart."
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_subscription_note",
+        "label": "Subscription price note (optional)",
+        "default": "Subscription price shown. One-time price on product page.",
+        "info": "Shown under the upsell price. Cart add is one-time unless you use Shopify selling plans (see theme docs). Appstle subscription widgets do not run inside the cart drawer."
+      },
+      {
+        "type": "header",
+        "content": "Upsell rule 1"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_rule_1_enabled",
+        "label": "Enable rule 1",
+        "default": true
+      },
+      {
+        "type": "product",
+        "id": "cart_upsell_rule_1_trigger",
+        "label": "Trigger product"
+      },
+      {
+        "type": "product_list",
+        "id": "cart_upsell_rule_1_offers",
+        "label": "Upsell products",
+        "limit": 2,
+        "info": "Shown when the trigger product is in the cart."
+      },
+      {
+        "type": "header",
+        "content": "Upsell rule 2"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_rule_2_enabled",
+        "label": "Enable rule 2",
+        "default": true
+      },
+      {
+        "type": "product",
+        "id": "cart_upsell_rule_2_trigger",
+        "label": "Trigger product"
+      },
+      {
+        "type": "product_list",
+        "id": "cart_upsell_rule_2_offers",
+        "label": "Upsell products",
+        "limit": 2
+      },
+      {
+        "type": "header",
+        "content": "Upsell rule 3"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_rule_3_enabled",
+        "label": "Enable rule 3",
+        "default": true
+      },
+      {
+        "type": "product",
+        "id": "cart_upsell_rule_3_trigger",
+        "label": "Trigger product"
+      },
+      {
+        "type": "product_list",
+        "id": "cart_upsell_rule_3_offers",
+        "label": "Upsell products",
+        "limit": 2
       }
     ]
   },

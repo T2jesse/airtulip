@@ -113,6 +113,7 @@
         },
         "pdp_custom_design_link": {
           "type": "scroll_anchor_link",
+          "disabled": true,
           "settings": {
             "link_label": "Request a custom headboard design",
             "anchor_id": "custom-design",
@@ -127,6 +128,10 @@
             "compare_at_color": "#737373",
             "compare_at_font_size": 14
           }
+        },
+        "appstle_subscription_appstle_subscription_product_page_widget_DdpFWY": {
+          "type": "shopify://apps/appstle-subscription/blocks/appstle-subscription-product-page-widget/fe257d39-6f88-4f35-ab08-bd437e3aa94e",
+          "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -157,7 +162,6 @@
         },
         "liquid_f9YK6r": {
           "type": "liquid",
-          "name": "HSA FSA Snippet",
           "settings": {
             "liquid": "<div id=\"truemed-prequalify\" style=\"font-size: 14px;\" icon-height=\"12\" data-public-id=\"tm_qual_r9u205ahnk\"></div>\n<script src=\"https://static.truemed.com/widgets/product-page-widget.min.js\" defer></script>"
           }
@@ -173,18 +177,27 @@
             "tab_1_heading": "Overview",
             "tab_1_icon": "none",
             "tab_1_content": "",
-            "tab_2_heading": "Details",
+            "tab_2_heading": "Features & Details",
             "tab_2_icon": "check_mark",
-            "tab_2_content": "<p><strong>Aerodynamics Technology</strong></p><ul><li>Patent-pending</li><li>Advanced laminar air flow technology</li><li>Particulate-free air zone where you sleep</li></ul><p><strong>3 Modes</strong></p><ul><li>Whisper mode for quietest operation</li><li>Night mode for the most stable bubble</li><li>Day mode for high cleaning power of the entire room</li></ul><p><strong>Advanced Acoustics</strong></p><ul><li>Own fan design using noise reduction technology</li><li>Computer generated curved acoustic insulation channels</li><li>26 dB(A) in whisper mode</li><li>30 dB(A) in night mode</li></ul><p><strong>Cleanroom Filters</strong></p><ul><li>Dual Industrial HEPA-H14 Filters in metal cassettes (single in Twin)</li><li>Dual full-width Active Carbon Filters (single in Twin)</li><li>2 Pre-filters (1 in Twin)</li></ul><p><strong>Local bespoke Production</strong></p><ul><li>All our products are sustainable and handcrafted in New York City</li></ul>",
+            "tab_2_content": "<p><strong>Aerodynamics Technology</strong></p><ul><li>Patent-pending</li><li>Advanced laminar air flow technology</li><li>Particulate-free air zone where you sleep</li></ul><p><strong>Cleanroom Filters</strong></p><ul><li>Dual Industrial HEPA-H14 Filters in metal cassettes (single in Twin)</li><li>Dual full-width Active Carbon Filters (single in Twin)</li><li>2 Pre-filters (1 in Twin)</li></ul><p><strong>Local bespoke Production</strong></p><ul><li>All our products are sustainable and handcrafted in New York City</li></ul>",
             "tab_2_page": "",
-            "tab_3_heading": "Dimensions",
-            "tab_3_icon": "map_pin",
-            "tab_3_content": "<p><strong>AirTulip Queen</strong></p><ul><li>Fits Full and Queen size beds</li><li>Width: 70\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 130 lbs</li></ul><p></p><p><strong>AirTulip King</strong></p><ul><li>Fits King and California King beds</li><li>Width: 79\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 130 lbs</li></ul><p></p><p><strong>AirTulip Twin</strong></p><ul><li>Fits Twin size and childrens beds</li><li>Width: 42\" | Depth: 11\" | Height: 45\"</li><li>Comes with 2 sets of legs to adjust the height to your mattress</li><li>Weight: 80 lbs</li></ul>",
+            "tab_3_heading": "",
+            "tab_3_icon": "none",
+            "tab_3_content": "",
             "tab_3_page": "headboard-dimensions",
-            "tab_4_heading": "Shipping",
+            "tab_4_heading": "Delivery & Shipping",
             "tab_4_icon": "truck",
-            "tab_4_content": "<p><strong>Headboard fulfillment:</strong> AirTulip Sleep is <strong>made to order</strong> with an approximately <strong>8-week production lead time</strong>. We keep you informed on build progress and your estimated ship date.</p><p><strong>Replacement filters:</strong> Typical delivery is within about <strong>two weeks</strong> when ordered separately.</p>",
+            "tab_4_content": "<p><strong>Replacement filters:</strong> Typical delivery is within about <strong>two weeks</strong> when ordered separately.</p>",
             "tab_4_page": ""
+          }
+        },
+        "complementary": {
+          "type": "complementary",
+          "settings": {
+            "heading": "Pairs well with",
+            "product_limit": 4,
+            "show_vendor": false,
+            "show_price": true
           }
         },
         "sticky_buy_button": {
@@ -203,11 +216,13 @@
         "variant_picker",
         "pdp_custom_design_link",
         "price_QR8YtK",
+        "appstle_subscription_appstle_subscription_product_page_widget_DdpFWY",
         "buy_buttons",
         "affirm_pay_over_time_messaging_product_block_BiBYHe",
         "shop_pay_installments_7pLmQe",
         "liquid_f9YK6r",
         "pdp_product_tabs",
+        "complementary",
         "sticky_buy_button"
       ],
       "settings": {
@@ -291,9 +306,9 @@
         "style": "with-border",
         "columns": 4,
         "text_alignment": "left",
-        "heading": "Bespoke American Craftsmanship, 100% Guaranteed",
+        "heading": "Bespoke American Craftsmanship, Fully Guaranteed",
         "heading_size": "title-lg tracking-heading",
-        "heading_max_width": "large",
+        "heading_max_width": "medium",
         "heading_alignment": "text-center md:items-center",
         "heading_tag": "h2",
         "subheading": "",
@@ -326,7 +341,7 @@
         "h1": {
           "type": "heading",
           "settings": {
-            "heading": "Not Just Another Air Purifier",
+            "heading": "Not Another Floor Air Purifier",
             "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2"
           }
@@ -334,15 +349,15 @@
         "x1": {
           "type": "text",
           "settings": {
-            "text": "<p>Standard air purifiers are designed for rooms, not your lungs. Fluid dynamics show that chaotic, swirling fan air continuously re-contaminates your immediate environment before you can breathe it.</p><p>AirTulip Sleep replaces the noise and clutter of traditional floor units by introducing aerospace engineering to the bedroom. By utilizing <strong>Controlled Laminar Airflow Technology</strong>—the exact same science used in hospital ICUs and semiconductor cleanrooms—we push a perfectly uniform bubble of air over your bed and you. It forms an invisible, draft-free barrier that isolates you from airborne allergens, dust, and pet dander instantly.</p>",
-            "text_size": "description-copy"
+            "text": "<p>AirTulip Sleep pulls air through industrial-grade filtration and delivers it across the headboard fabric using <strong>laminar, low-turbulence airflow</strong> aimed at your breathing zone—so cleaner air is directed where you actually breathe at night.</p><p>Use the tabs above for full specs; this section is the “why it exists” story serious buyers need before a four-figure decision.</p>",
+            "text_size": "subtext-md"
           }
         },
         "b1": {
           "type": "button",
           "settings": {
-            "button_label": "Buy Airtulip Sleep",
-            "button_link": "shopify://products/sleep-air-purifier-headboard",
+            "button_label": "Read the engineering story",
+            "button_link": "/pages/about",
             "button_style": "secondary",
             "button_size": "md",
             "button_icon": true,
@@ -356,7 +371,7 @@
         "b1"
       ],
       "settings": {
-        "image": "shopify://shop_images/airtulip_sleep_-_other_brand_air_purifier_army.webp",
+        "image": "shopify://shop_images/AirTulipProductFrontAngle_square.jpg",
         "image_asset": "",
         "video_url": "",
         "video_description": "Background video",
@@ -372,7 +387,7 @@
         "gradient_background": "",
         "color_heading": "#0a1628",
         "color_supporting_text": "#394a60",
-        "content_column_background": "rgba(0,0,0,0)",
+        "content_column_background": "#ffffff",
         "mobile_stack_background": "#ffffff",
         "heading_line_height_pct": 112,
         "desktop_text_align": "left",
@@ -391,14 +406,14 @@
         "hs_breathing_zone": {
           "type": "hotspot",
           "settings": {
-            "heading": "Easy to use control",
+            "heading": "Breathing zone delivery",
             "text": "<p>Filtered air exits across the headboard fabric as <strong>laminar, low-turbulence flow</strong> aimed at where you breathe—not just into the room corners like a floor purifier.</p>",
             "panel_media_type": "none",
             "panel_image": "shopify://shop_images/airtulip_couple_sleeping_with_pure_air_from_airtulip_headboard.jpg",
             "panel_image_alt": "",
             "panel_video_url": "",
-            "position_x": 57,
-            "position_y": 10,
+            "position_x": 50,
+            "position_y": 28,
             "featured": false
           }
         },
@@ -410,8 +425,8 @@
             "panel_media_type": "none",
             "panel_image_alt": "",
             "panel_video_url": "",
-            "position_x": 13,
-            "position_y": 54,
+            "position_x": 15,
+            "position_y": 57,
             "featured": false
           }
         },
@@ -423,8 +438,8 @@
             "panel_media_type": "none",
             "panel_image_alt": "",
             "panel_video_url": "",
-            "position_x": 57,
-            "position_y": 38,
+            "position_x": 50,
+            "position_y": 65,
             "featured": false
           }
         },
@@ -436,8 +451,8 @@
             "panel_media_type": "none",
             "panel_image_alt": "",
             "panel_video_url": "",
-            "position_x": 45,
-            "position_y": 59,
+            "position_x": 55,
+            "position_y": 35,
             "featured": false
           }
         },
@@ -449,21 +464,8 @@
             "panel_media_type": "none",
             "panel_image_alt": "",
             "panel_video_url": "",
-            "position_x": 61,
-            "position_y": 75,
-            "featured": false
-          }
-        },
-        "hotspot_iiC3hc": {
-          "type": "hotspot",
-          "settings": {
-            "heading": "Feature",
-            "text": "<p>Easy release proprietary buckles integrated into a built-in wooden shelf surface. Release the buckles to replace the <strong>HEPA H14</strong> filters inside the unit.</p>",
-            "panel_media_type": "none",
-            "panel_image_alt": "",
-            "panel_video_url": "",
-            "position_x": 27,
-            "position_y": 19,
+            "position_x": 50,
+            "position_y": 91,
             "featured": false
           }
         }
@@ -473,21 +475,21 @@
         "hs_hepa",
         "hs_acoustics",
         "hs_upholstery",
-        "hs_legs",
-        "hotspot_iiC3hc"
+        "hs_legs"
       ],
+      "disabled": true,
       "settings": {
-        "image": "shopify://shop_images/airtulip_sleep_headboard_exploded_view_41fc1cb2-5fbb-4084-a166-a9ab8b4d607f.jpg",
+        "image": "shopify://shop_images/AirTulipProductFrontAngle_square.jpg",
         "image_aspect_ratio": "landscape",
         "align_sidebar_to_image": true,
-        "heading": "Inside Your Clean-Air Headboard",
+        "heading": "Inside your clean-air headboard",
         "heading_size": "title-lg tracking-heading",
         "heading_alignment": "text-center md:items-center",
         "heading_tag": "h2",
         "heading_max_width": "full",
         "highlighted_text": "none",
         "highlighted_scribble": "circle",
-        "subheading": "",
+        "subheading": "Interactive product tour",
         "description": "<p>Explore how laminar delivery, industrial filtration, and American hand assembly work together—without leaving the product page.</p>",
         "hint": "Hover or tap each point to explore",
         "details_heading": "",
@@ -501,7 +503,7 @@
         "panel_media_ratio": "landscape",
         "panel_media_rounded": true,
         "color_text": "#171717",
-        "color_background": "rgba(0,0,0,0)",
+        "color_background": "#fafafa",
         "gradient_background": "",
         "padding_top": 60,
         "padding_bottom": 60,
@@ -512,6 +514,7 @@
     },
     "pdp_shark_spotlight": {
       "type": "shark-tank-spotlight",
+      "disabled": true,
       "settings": {
         "media_type": "image",
         "media_image": "shopify://shop_images/air-tulip-shark-tank-update-1_jpg.webp",
@@ -600,7 +603,7 @@
         "style": "with-border",
         "columns": 3,
         "text_alignment": "left",
-        "heading": "What You're Investing In",
+        "heading": "What you are actually investing in",
         "heading_size": "title-lg tracking-heading",
         "heading_max_width": "full",
         "heading_alignment": "text-center md:items-center",
@@ -735,9 +738,9 @@
         "overlay_text_shadow_offset_x": 0,
         "overlay_text_shadow_opacity": 45,
         "overlay_text_shadow_color": "#000000",
-        "top_heading": "Scientifically Proven Results",
-        "top_text": "<p>Cleanroom-grade air in your breathing zone, validated against ordinary purifiers.</p>",
-        "bottom_heading": "Over 1,000× Cleaner Air",
+        "top_heading": "Scientifically proven results",
+        "top_text": "<p>Cleanroom-grade air in your breathing zone — validated against ordinary purifiers.</p>",
+        "bottom_heading": "Over 1,000× cleaner",
         "bottom_text": "<p>Particles per breath drop to cleanroom-level performance while you sleep.</p>",
         "cta_label": "Learn more about us",
         "cta_link": "",
@@ -765,7 +768,7 @@
         "hd": {
           "type": "heading",
           "settings": {
-            "heading": "Fabric, Filters, and Long-Term Care",
+            "heading": "Dial in fabric, filters, and long-term care",
             "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
@@ -817,6 +820,7 @@
         "btn_swatch",
         "btn_filters"
       ],
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/custom_resized_822219ee-2b7f-4da5-8ace-fbeff72155af.png",
         "video_url": "",

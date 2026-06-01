@@ -1,0 +1,253 @@
+{%- doc -%}
+  Cart drawer upsell: variant match, dual one-time + subscribe when selling plans exist.
+
+  @param {object} product
+  @param {string} section_id
+  @param {string} [block_suffix]
+  @param {string} [image_ratio]
+  @param {boolean} [image_fill]
+  @param {boolean} [show_vendor]
+  @param {boolean} [show_price]
+  @param {boolean} [match_cart_variant]
+  @param {boolean} [dual_purchase] - Show separate Add to cart + Subscribe when plans exist
+  @param {boolean} [prefer_subscription] - Single-button mode: show subscription price
+  @param {boolean} [add_as_subscription] - Single-button mode: POST selling_plan
+  @param {string} [subscribe_label]
+  @param {string} [onetime_label]
+  @param {string} [subscription_note]
+{%- enddoc -%}
+
+{%- liquid
+  assign upsell_variant = product.selected_or_first_available_variant
+  assign show_variant_picker = false
+
+  if match_cart_variant and cart != empty and product.variants.size > 1
+    for cart_item in cart.items
+      for option in cart_item.options_with_values
+        assign option_name_down = option.name | downcase
+        if option_name_down contains 'size' or option_name_down contains 'bed' or option_name_down contains 'twin' or option_name_down contains 'queen' or option_name_down contains 'king'
+          for variant in product.variants
+            if variant.available
+              if variant.option1 == option.value or variant.option2 == option.value or variant.option3 == option.value
+                assign upsell_variant = variant
+                break
+              endif
+            endif
+          endfor
+        endif
+      endfor
+    endfor
+  endif
+
+  if product.variants.size > 1
+    assign show_variant_picker = true
+  endif
+
+  assign form_suffix = product.id
+  if block_suffix != blank
+    assign form_suffix = form_suffix | append: '-' | append: block_suffix
+  endif
+
+  assign onetime_form_id = 'CartUpsellOnetime-' | append: section_id | append: '-' | append: form_suffix
+  assign subscribe_form_id = 'CartUpsellSubscribe-' | append: section_id | append: '-' | append: form_suffix
+  assign single_form_id = 'CartUpsellForm-' | append: section_id | append: '-' | append: form_suffix
+  assign variant_select_id = 'CartUpsellVariant-' | append: section_id | append: '-' | append: form_suffix
+
+  assign upsell_selling_plan_id = ''
+  if upsell_variant.selling_plan_allocations.size > 0
+    assign upsell_best_allocation = upsell_variant.selling_plan_allocations.first
+    assign upsell_selling_plan_id = upsell_best_allocation.selling_plan.id
+    for allocation in upsell_variant.selling_plan_allocations
+      if allocation.price < upsell_best_allocation.price
+        assign upsell_best_allocation = allocation
+        assign upsell_selling_plan_id = allocation.selling_plan.id
+      endif
+    endfor
+  endif
+
+  assign use_dual_purchase = false
+  if dual_purchase and upsell_variant.selling_plan_allocations.size > 0
+    assign use_dual_purchase = true
+  endif
+-%}
+
+<div class="horizontal-product cart-drawer-upsell-card flex items-center gap-4 md:gap-6 w-full{% if use_dual_purchase %} cart-drawer-upsell-card--dual{% endif %}">
+  <a
+    class="horizontal-product__media media media--{{ image_ratio }}{% unless image_fill %} media--contain{% endunless %} relative overflow-hidden shrink-0"
+    href="{{ product.url }}"
+    tabindex="-1"
+  >
+    {%- if product.featured_media -%}
+      {{- product.featured_media | image_url: width: product.featured_media.width | image_tag: loading: 'lazy', widths: '180,360,540', is: 'lazy-image' -}}
+    {%- else -%}
+      {{- 'product-1' | placeholder_svg_tag -}}
+    {%- endif -%}
+  </a>
+
+  <div class="horizontal-product__details flex flex-col justify-start gap-1d5 grow min-w-0">
+    <div class="flex flex-col gap-1">
+      {%- if show_vendor -%}
+        <p class="text-xs text-opacity">{{ product.vendor }}</p>
+      {%- endif -%}
+      <a href="{{ product.url }}" class="horizontal-product__title reversed-link font-medium text-base leading-tight" tabindex="-1">
+        {{- product.title | escape -}}
+      </a>
+    </div>
+
+    {%- if show_price -%}
+      <div class="cart-drawer-upsell-card__price">
+        {%- if use_dual_purchase -%}
+          {%- render 'cart-drawer-upsell-dual-prices',
+            variant: upsell_variant,
+            onetime_label: onetime_label,
+            subscribe_label: subscribe_label
+          -%}
+        {%- else -%}
+          {%- render 'cart-drawer-upsell-price',
+            product: product,
+            variant: upsell_variant,
+            prefer_subscription: prefer_subscription,
+            class: 'flex flex-wrap items-baseline gap-2 text-sm'
+          -%}
+        {%- endif -%}
+        {%- if subscription_note != blank -%}
+          <p class="cart-drawer-upsell-card__note text-xs text-opacity leading-snug mt-1">{{ subscription_note }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="horizontal-product__quantity cart-drawer-upsell-card__actions shrink-0 text-sm">
+    {%- if product.available -%}
+      {%- if show_variant_picker -%}
+        <label class="sr-only" for="{{ variant_select_id }}">{{ 'products.product.product_variants' | t }}</label>
+        <select
+          id="{{ variant_select_id }}"
+          class="select text-xs w-full cart-drawer-upsell-card__variant"
+          {% if use_dual_purchase -%}
+            data-dual-purchase="true"
+          {%- endif -%}
+        >
+          {%- for variant in product.variants -%}
+            {%- liquid
+              assign opt_onetime = variant.price
+              assign opt_compare = variant.compare_at_price
+              assign opt_subscribe = opt_onetime
+              assign opt_sub_compare = opt_onetime
+              assign opt_plan_id = ''
+
+              if variant.selling_plan_allocations.size > 0
+                assign opt_allocation = variant.selling_plan_allocations.first
+                assign opt_subscribe = opt_allocation.price
+                assign opt_plan_id = opt_allocation.selling_plan.id
+
+                for allocation in variant.selling_plan_allocations
+                  if allocation.price < opt_subscribe
+                    assign opt_subscribe = allocation.price
+                    assign opt_allocation = allocation
+                    assign opt_plan_id = allocation.selling_plan.id
+                  endif
+                endfor
+
+                if opt_allocation.compare_at_price > opt_subscribe
+                  assign opt_sub_compare = opt_allocation.compare_at_price
+                elsif opt_onetime > opt_subscribe
+                  assign opt_sub_compare = opt_onetime
+                endif
+              endif
+
+              if prefer_subscription and variant.selling_plan_allocations.size > 0
+                assign opt_display = opt_subscribe
+                if opt_sub_compare > opt_subscribe
+                  assign opt_compare = opt_sub_compare
+                endif
+              else
+                assign opt_display = opt_onetime
+              endif
+            -%}
+            <option
+              value="{{ variant.id }}"
+              {% if variant.id == upsell_variant.id %}selected{% endif %}
+              {% unless variant.available %}disabled{% endunless %}
+              data-onetime-price="{{ opt_onetime }}"
+              data-subscribe-price="{{ opt_subscribe }}"
+              data-subscribe-compare="{{ opt_sub_compare }}"
+              data-display-price="{{ opt_display }}"
+              data-compare-price="{{ opt_compare }}"
+              {% if opt_plan_id != '' %}data-selling-plan-id="{{ opt_plan_id }}"{% endif %}
+            >
+              {{- variant.title | escape -}}
+            </option>
+          {%- endfor -%}
+        </select>
+      {%- endif -%}
+
+      {%- if use_dual_purchase -%}
+        <div class="cart-drawer-upsell-card__forms grid gap-2">
+          {%- form 'product', product, id: onetime_form_id, is: 'product-form', class: 'cart-drawer-upsell-card__form' -%}
+            <input type="hidden" name="id" value="{{ upsell_variant.id }}" class="cart-drawer-upsell-card__onetime-id">
+            <button
+              type="submit"
+              class="button button--secondary button--small w-full"
+              is="hover-button"
+              aria-label="{{ 'products.product.add_to_cart' | t | escape }}: {{ product.title | escape }}"
+            >
+              <span class="btn-fill" data-fill></span>
+              <span class="btn-text">{{ 'products.product.add_to_cart' | t }}</span>
+            </button>
+          {%- endform -%}
+
+          {%- form 'product', product, id: subscribe_form_id, is: 'product-form', class: 'cart-drawer-upsell-card__form' -%}
+            <input type="hidden" name="id" value="{{ upsell_variant.id }}" class="cart-drawer-upsell-card__subscribe-id">
+            <input type="hidden" name="selling_plan" value="{{ upsell_selling_plan_id }}" class="cart-drawer-upsell-card__subscribe-plan">
+            <button
+              type="submit"
+              class="button button--primary button--small w-full"
+              is="hover-button"
+              aria-label="{{ subscribe_label | default: 'Subscribe' | escape }}: {{ product.title | escape }}"
+            >
+              <span class="btn-fill" data-fill></span>
+              <span class="btn-text">{{ subscribe_label | default: 'Subscribe' | escape }}</span>
+            </button>
+          {%- endform -%}
+        </div>
+      {%- else -%}
+        {%- form 'product', product, id: single_form_id, is: 'product-form', class: 'cart-drawer-upsell-card__form grid gap-2' -%}
+          {%- if add_as_subscription -%}
+            <input
+              type="hidden"
+              class="cart-drawer-upsell-card__selling-plan"
+              {% if upsell_selling_plan_id != '' %}
+                name="selling_plan"
+                value="{{ upsell_selling_plan_id }}"
+              {% else %}
+                disabled
+              {% endif %}
+            >
+          {%- endif -%}
+
+          {%- unless show_variant_picker -%}
+            <input type="hidden" name="id" value="{{ upsell_variant.id }}">
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ upsell_variant.id }}" class="cart-drawer-upsell-card__single-id">
+          {%- endunless -%}
+
+          <button
+            type="submit"
+            class="button button--primary button--small w-full"
+            is="hover-button"
+            data-variant-id="{{ upsell_variant.id }}"
+            aria-label="{{ 'products.product.add_to_cart' | t | escape }}: {{ product.title | escape }}"
+          >
+            <span class="btn-fill" data-fill></span>
+            <span class="btn-text">{{ 'products.product.add_to_cart' | t }}</span>
+          </button>
+        {%- endform -%}
+      {%- endif -%}
+    {%- else -%}
+      <span class="button button--primary button--small w-full" disabled>
+        {{- 'products.product.sold_out' | t -}}
+      </span>
+    {%- endif -%}
+  </div>
+</div>

@@ -98,6 +98,16 @@
   endif
 
   assign fb_heading_scale = section.settings.overlay_heading_scale | default: 100 | times: 0.01
+
+  assign fb_text_shadow_enabled = section.settings.overlay_text_shadow_enabled
+  assign fb_shadow_x = section.settings.overlay_text_shadow_offset_x | default: 0
+  assign fb_shadow_y = section.settings.overlay_text_shadow_offset_y | default: 2
+  assign fb_shadow_blur = section.settings.overlay_text_shadow_blur | default: 16
+  assign fb_shadow_opacity = section.settings.overlay_text_shadow_opacity | default: 45 | times: 0.01
+  assign fb_shadow_color = section.settings.overlay_text_shadow_color
+  if fb_shadow_color == blank
+    assign fb_shadow_color = '#000000'
+  endif
 -%}
 
 <style>
@@ -107,6 +117,11 @@
     {%- render 'section-variables', section: section -%}
     --fb-min-h: {{ ih }}vh;
     --fb-overlay-a: {{ overlay_a }};
+    {%- if fb_text_shadow_enabled -%}
+    --fb-text-shadow: {{ fb_shadow_x }}px {{ fb_shadow_y }}px {{ fb_shadow_blur }}px rgb({{ fb_shadow_color.rgb }} / {{ fb_shadow_opacity }});
+    {%- else -%}
+    --fb-text-shadow: none;
+    {%- endif -%}
   }
 
   #shopify-section-{{ section.id }} .fboc-visual {
@@ -181,6 +196,12 @@
     color: {{ section.settings.overlay_heading_color }};
     font-weight: {{ fb_heading_fw }};
     font-size: calc(var(--title-md) * {{ fb_heading_scale }});
+    text-shadow: var(--fb-text-shadow);
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__layers .rte,
+  #shopify-section-{{ section.id }} .fboc-visual__layers .rte :is(p, li, span, a) {
+    text-shadow: var(--fb-text-shadow);
   }
 
   @media screen and (min-width: 768px) {
@@ -198,11 +219,12 @@
   @media screen and (max-width: 767px) {
     #shopify-section-{{ section.id }} .fboc-visual__layers--stack {
       justify-content: flex-start;
+      min-height: 100%;
     }
     #shopify-section-{{ section.id }} .fboc-br {
       align-self: flex-start;
       text-align: left;
-      margin-top: var(--sp-8);
+      margin-top: auto;
     }
   }
 </style>
@@ -280,7 +302,7 @@
               <h3 class="fboc-overlay-heading heading leading-tight tracking-heading m-0">{{ section.settings.top_heading | escape }}</h3>
             {%- endif -%}
             {%- if section.settings.top_text != blank -%}
-              <div class="rte subtext-lg md:subtext-xl leading-normal mt-4 opacity-90">{{ section.settings.top_text }}</div>
+              <div class="rte description-copy leading-normal mt-4 opacity-90">{{ section.settings.top_text }}</div>
             {%- endif -%}
           </div>
           <div class="fboc-br max-w-lg lg:max-w-xl self-end text-right">
@@ -288,7 +310,7 @@
               <h3 class="fboc-overlay-heading heading leading-tight tracking-heading m-0">{{ section.settings.bottom_heading | escape }}</h3>
             {%- endif -%}
             {%- if section.settings.bottom_text != blank -%}
-              <div class="rte subtext-lg md:subtext-xl leading-normal mt-4 opacity-90">{{ section.settings.bottom_text }}</div>
+              <div class="rte description-copy leading-normal mt-4 opacity-90">{{ section.settings.bottom_text }}</div>
             {%- endif -%}
           </div>
         </div>
@@ -489,6 +511,59 @@
       ]
     },
     {
+      "type": "checkbox",
+      "id": "overlay_text_shadow_enabled",
+      "label": "Text shadow on overlay copy",
+      "default": true,
+      "info": "Improves readability over photos and video. Applies to overlay headings and body text."
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_shadow_blur",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Shadow blur",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_shadow_offset_y",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow offset (vertical)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_shadow_offset_x",
+      "min": -16,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow offset (horizontal)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_shadow_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Shadow strength",
+      "default": 45
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_shadow_color",
+      "label": "Shadow color",
+      "default": "#000000"
+    },
+    {
       "type": "header",
       "content": "Top left"
     },
@@ -624,6 +699,12 @@
         "overlay_heading_color": "#ffffff",
         "overlay_heading_scale": 100,
         "overlay_heading_font_weight": "heading",
+        "overlay_text_shadow_enabled": true,
+        "overlay_text_shadow_blur": 16,
+        "overlay_text_shadow_offset_y": 2,
+        "overlay_text_shadow_offset_x": 0,
+        "overlay_text_shadow_opacity": 45,
+        "overlay_text_shadow_color": "#000000",
         "top_heading": "Scientifically proven results",
         "top_text": "<p>Cleanroom-grade air in your breathing zone — validated against ordinary purifiers.</p>",
         "bottom_heading": "Over 1,000× cleaner",

@@ -7719,10 +7719,12 @@ details.active .drawer__promotions .mega-menu__item,
 
 .dropdown__corner {
   inset-block-start: 0;
+  inset-block-end: auto;
 }
 
 .dropdown__corner.top.left {
-  --tw-scale-x: -1;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
   --tw-rotate: 0;
   left: calc(var(--border-radius) * -1);
 }
@@ -7731,6 +7733,45 @@ details.active .drawer__promotions .mega-menu__item,
   --tw-scale-y: 1;
   --tw-rotate: 0;
   right: calc(var(--border-radius) * -1);
+}
+
+/* Dropdown corners use a mirrored left SVG; hide stroke outline to avoid a vertical seam */
+.dropdown__corner path:last-child {
+  display: none;
+}
+
+/* Tablet (768–1023px): desktop nav grid + dropdown corner visibility; mobile keeps drawer */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .header--left {
+    --header-grid-template: "logo navigation icons" /auto minmax(0, 1fr) auto;
+  }
+
+  .header--left-center {
+    --header-grid-template: "logo navigation icons" /minmax(0, 1fr) fit-content(70%) minmax(0, 1fr);
+  }
+
+  .header--center-left {
+    --header-grid-template: "navigation logo icons" /minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  .header--center-split {
+    --header-grid-template: "tools navigation logo navigation-split icons" /5rem minmax(0, 1fr) auto minmax(0, 1fr) 5rem;
+  }
+
+  .header--center-split .header__icons--start {
+    display: flex;
+  }
+
+  .header__navigation,
+  .header__menu,
+  .header .dropdown,
+  .header .dropdown__container {
+    overflow: visible;
+  }
+
+  .header__menu>ul.with-block .menu__item {
+    padding-inline: var(--sp-4);
+  }
 }
 
 .dropdown .dropdown {

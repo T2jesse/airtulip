@@ -1,0 +1,41 @@
+{%- doc -%}
+  Compact lifetime-warranty note shown above filter subscription upsells in the cart drawer.
+
+  @param {object} product - Upsell product to evaluate
+{%- enddoc -%}
+
+{%- liquid
+  assign show_callout = false
+
+  unless settings.cart_upsell_lifetime_warranty_enabled
+    assign show_callout = false
+  else
+    assign warranty_handles_raw = settings.cart_upsell_lifetime_warranty_handles | default: 'replacement-filter-set'
+    assign warranty_handles = warranty_handles_raw | split: ','
+
+    for handle_part in warranty_handles
+      assign handle_stripped = handle_part | strip
+      if handle_stripped != blank and product.handle == handle_stripped
+        assign show_callout = true
+        break
+      endif
+    endfor
+
+    unless show_callout
+      if product.handle contains 'filter'
+        assign show_callout = true
+      endif
+    endunless
+  endunless
+-%}
+
+{%- if show_callout -%}
+  <div class="cart-drawer-upsell-warranty flex items-start gap-2d5">
+    <span class="cart-drawer-upsell-warranty__icon shrink-0" aria-hidden="true">
+      {%- render 'icon-guarantee', icon: 'shield', width: 20, class: 'block' -%}
+    </span>
+    <p class="cart-drawer-upsell-warranty__text text-xs leading-snug text-opacity m-0">
+      {{- settings.cart_upsell_lifetime_warranty_text | default: 'Your AirTulip includes a 1-year warranty. Subscribe to filter delivery for lifetime coverage while your subscription stays active.' | escape -}}
+    </p>
+  </div>
+{%- endif -%}

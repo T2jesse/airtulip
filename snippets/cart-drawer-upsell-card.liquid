@@ -9,6 +9,7 @@
   @param {boolean} [show_vendor]
   @param {boolean} [show_price]
   @param {boolean} [match_cart_variant]
+  @param {object} [trigger_product] - Trigger product in cart; used to pick the correlated upsell variant
   @param {boolean} [dual_purchase] - Show separate Add to cart + Subscribe when plans exist
   @param {boolean} [prefer_subscription] - Single-button mode: show subscription price
   @param {boolean} [add_as_subscription] - Single-button mode: POST selling_plan
@@ -21,25 +22,40 @@
   assign upsell_variant = product.selected_or_first_available_variant
   assign show_variant_picker = false
 
-  if match_cart_variant and cart != empty and product.variants.size > 1
+  if match_cart_variant and trigger_product != blank and cart != empty and product.variants.size > 1
+    assign trigger_cart_item = blank
     for cart_item in cart.items
-      for option in cart_item.options_with_values
-        assign option_name_down = option.name | downcase
-        if option_name_down contains 'size' or option_name_down contains 'bed' or option_name_down contains 'twin' or option_name_down contains 'queen' or option_name_down contains 'king'
-          for variant in product.variants
-            if variant.available
-              if variant.option1 == option.value or variant.option2 == option.value or variant.option3 == option.value
-                assign upsell_variant = variant
-                break
-              endif
+      if cart_item.product_id == trigger_product.id
+        assign trigger_cart_item = cart_item
+        break
+      endif
+    endfor
+
+    if trigger_cart_item != blank
+      assign matched_variant = blank
+      assign matched_score = 0
+
+      for variant in product.variants
+        if variant.available
+          assign score = 0
+          for option in trigger_cart_item.options_with_values
+            if variant.option1 == option.value or variant.option2 == option.value or variant.option3 == option.value
+              assign score = score | plus: 1
             endif
           endfor
+
+          if score > matched_score
+            assign matched_score = score
+            assign matched_variant = variant
+          endif
         endif
       endfor
-    endfor
-  endif
 
-  if product.variants.size > 1
+      if matched_variant != blank
+        assign upsell_variant = matched_variant
+      endif
+    endif
+  elsif product.variants.size > 1
     assign show_variant_picker = true
   endif
 
@@ -71,7 +87,7 @@
   endif
 -%}
 
-<div class="horizontal-product cart-drawer-upsell-card flex items-center gap-4 md:gap-6 w-full{% if use_dual_purchase %} cart-drawer-upsell-card--dual{% endif %}">
+<div class="horizontal-product cart-drawer-upsell-card flex gap-4 md:gap-5 w-full{% if use_dual_purchase %} cart-drawer-upsell-card--dual items-start{% else %} items-center{% endif %}">
   <a
     class="horizontal-product__media media media--{{ image_ratio }}{% unless image_fill %} media--contain{% endunless %} relative overflow-hidden shrink-0"
     href="{{ product.url }}"
@@ -202,7 +218,7 @@
             <input type="hidden" name="selling_plan" value="{{ upsell_selling_plan_id }}" class="cart-drawer-upsell-card__subscribe-plan">
             <button
               type="submit"
-              class="button button--primary button--small w-full"
+              class="button button--secondary button--small w-full"
               is="hover-button"
               aria-label="{{ subscribe_label | default: 'Subscribe' | escape }}: {{ product.title | escape }}"
             >

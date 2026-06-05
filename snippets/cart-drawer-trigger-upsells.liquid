@@ -11,6 +11,10 @@
     assign upsell_product_2 = blank
     assign upsell_product_3 = blank
     assign upsell_product_4 = blank
+    assign upsell_trigger_1 = blank
+    assign upsell_trigger_2 = blank
+    assign upsell_trigger_3 = blank
+    assign upsell_trigger_4 = blank
 
     assign rule_1_trigger = settings.cart_upsell_rule_1_trigger
     assign rule_1_offers = settings.cart_upsell_rule_1_offers
@@ -43,12 +47,16 @@
               assign upsell_handles_seen = upsell_handles_seen | append: offer.handle | append: ','
               if upsell_product_1 == blank
                 assign upsell_product_1 = offer
+                assign upsell_trigger_1 = rule_1_trigger
               elsif upsell_product_2 == blank
                 assign upsell_product_2 = offer
+                assign upsell_trigger_2 = rule_1_trigger
               elsif upsell_product_3 == blank
                 assign upsell_product_3 = offer
+                assign upsell_trigger_3 = rule_1_trigger
               elsif upsell_product_4 == blank
                 assign upsell_product_4 = offer
+                assign upsell_trigger_4 = rule_1_trigger
               endif
             endunless
           endunless
@@ -80,12 +88,16 @@
               assign upsell_handles_seen = upsell_handles_seen | append: offer.handle | append: ','
               if upsell_product_1 == blank
                 assign upsell_product_1 = offer
+                assign upsell_trigger_1 = rule_2_trigger
               elsif upsell_product_2 == blank
                 assign upsell_product_2 = offer
+                assign upsell_trigger_2 = rule_2_trigger
               elsif upsell_product_3 == blank
                 assign upsell_product_3 = offer
+                assign upsell_trigger_3 = rule_2_trigger
               elsif upsell_product_4 == blank
                 assign upsell_product_4 = offer
+                assign upsell_trigger_4 = rule_2_trigger
               endif
             endunless
           endunless
@@ -117,12 +129,16 @@
               assign upsell_handles_seen = upsell_handles_seen | append: offer.handle | append: ','
               if upsell_product_1 == blank
                 assign upsell_product_1 = offer
+                assign upsell_trigger_1 = rule_3_trigger
               elsif upsell_product_2 == blank
                 assign upsell_product_2 = offer
+                assign upsell_trigger_2 = rule_3_trigger
               elsif upsell_product_3 == blank
                 assign upsell_product_3 = offer
+                assign upsell_trigger_3 = rule_3_trigger
               elsif upsell_product_4 == blank
                 assign upsell_product_4 = offer
+                assign upsell_trigger_4 = rule_3_trigger
               endif
             endunless
           endunless
@@ -137,14 +153,17 @@
   -%}
 
   {%- if cart_upsell_has_offers -%}
-    <div class="cart-drawer-upsells complementary-products flex flex-col gap-5" data-cart-upsells>
+    <div class="cart-drawer-upsells complementary-products flex flex-col gap-4" data-cart-upsells>
       <p class="cart-drawer-upsells__heading font-medium text-lg leading-tight">
         {{- settings.cart_upsell_heading | default: 'You may also like' | escape -}}
       </p>
       <div class="horizontal-products grid gap-4">
         {%- if upsell_product_1 != blank -%}
+          <div class="cart-drawer-upsell-item grid gap-2">
+          {%- render 'cart-drawer-upsell-warranty-callout', product: upsell_product_1 -%}
           {%- render 'cart-drawer-upsell-card',
             product: upsell_product_1,
+            trigger_product: upsell_trigger_1,
             section_id: section_id,
             block_suffix: '1',
             image_ratio: settings.product_image_ratio,
@@ -159,10 +178,14 @@
             subscribe_label: settings.cart_upsell_subscribe_label,
             subscription_note: settings.cart_upsell_subscription_note
           -%}
+          </div>
         {%- endif -%}
         {%- if upsell_product_2 != blank -%}
+          <div class="cart-drawer-upsell-item grid gap-2">
+          {%- render 'cart-drawer-upsell-warranty-callout', product: upsell_product_2 -%}
           {%- render 'cart-drawer-upsell-card',
             product: upsell_product_2,
+            trigger_product: upsell_trigger_2,
             section_id: section_id,
             block_suffix: '2',
             image_ratio: settings.product_image_ratio,
@@ -177,10 +200,14 @@
             subscribe_label: settings.cart_upsell_subscribe_label,
             subscription_note: settings.cart_upsell_subscription_note
           -%}
+          </div>
         {%- endif -%}
         {%- if upsell_product_3 != blank -%}
+          <div class="cart-drawer-upsell-item grid gap-2">
+          {%- render 'cart-drawer-upsell-warranty-callout', product: upsell_product_3 -%}
           {%- render 'cart-drawer-upsell-card',
             product: upsell_product_3,
+            trigger_product: upsell_trigger_3,
             section_id: section_id,
             block_suffix: '3',
             image_ratio: settings.product_image_ratio,
@@ -195,10 +222,14 @@
             subscribe_label: settings.cart_upsell_subscribe_label,
             subscription_note: settings.cart_upsell_subscription_note
           -%}
+          </div>
         {%- endif -%}
         {%- if upsell_product_4 != blank -%}
+          <div class="cart-drawer-upsell-item grid gap-2">
+          {%- render 'cart-drawer-upsell-warranty-callout', product: upsell_product_4 -%}
           {%- render 'cart-drawer-upsell-card',
             product: upsell_product_4,
+            trigger_product: upsell_trigger_4,
             section_id: section_id,
             block_suffix: '4',
             image_ratio: settings.product_image_ratio,
@@ -213,6 +244,7 @@
             subscribe_label: settings.cart_upsell_subscribe_label,
             subscription_note: settings.cart_upsell_subscription_note
           -%}
+          </div>
         {%- endif -%}
       </div>
     </div>

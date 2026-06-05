@@ -39,14 +39,14 @@
 <div class="header__icons header__icons--{{ context }} flex justify-{{ context }} z-2">
   <div class="header__buttons flex items-center gap-1d5">
     {%- if show_toggle -%}
-      <button class="menu-toggle-button hidden lg:flex items-center justify-center" type="button" is="menu-toggle" aria-controls="MenuToggle" aria-expanded="false">
+      <button class="menu-toggle-button hidden md:flex items-center justify-center" type="button" is="menu-toggle" aria-controls="MenuToggle" aria-expanded="false">
         <span class="sr-only">{{ 'general.drawers.navigation' | t }}</span>
         {%- render 'icon', icon: 'hamburger', size: 'lg' -%}
       </button>
     {%- endif -%}
 
     {%- if enable_language_selector or enable_country_selector -%}
-      <div class="header__menu hidden lg:flex">
+      <div class="header__menu hidden md:flex">
         <ul class="flex flex-nowrap list-menu with-block">
           {%- if enable_language_selector -%}
             <li class="localization">
@@ -187,7 +187,7 @@
     {%- endif -%}
 
     {%- if show_account and shop.customer_accounts_enabled -%}
-      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="hidden lg:flex items-center justify-center" is="magnet-link" rel="nofollow">
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="hidden md:flex items-center justify-center" is="magnet-link" rel="nofollow">
         <span class="sr-only">
           {%- liquid
             if customer
@@ -210,7 +210,7 @@
     {%- endif -%}
 
     {%- if show_hamburger -%}
-      <button class="menu-drawer-button flex items-center justify-center" type="button" is="magnet-button" aria-controls="MenuDrawer" aria-expanded="false">
+      <button class="menu-drawer-button flex md:hidden items-center justify-center" type="button" is="magnet-button" aria-controls="MenuDrawer" aria-expanded="false">
         <span class="sr-only">{{ 'general.drawers.navigation' | t }}</span>
         {%- render 'icon', icon: 'hamburger', size: 'lg' -%}
       </button>

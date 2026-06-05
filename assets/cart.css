@@ -241,16 +241,52 @@ table.no-headings td:last-child {
 
 .cart-drawer .cart-drawer__scrollable {
   padding-block-start: var(--sp-4);
+  padding-inline: var(--sp-2d5);
 }
 
 @media screen and (min-width: 1024px) {
   .cart-drawer .cart-drawer__scrollable {
     padding-block-start: var(--sp-5);
+    padding-inline: var(--sp-6);
   }
+}
+
+/* Keep cart drawer above newsletter teasers, app widgets, and fixed UI when open */
+cart-drawer#CartDrawer.drawer[active],
+cart-drawer#CartDrawer.drawer[open] {
+  z-index: 99999;
+}
+
+body.has-modal-open .newsletter-bar,
+body.has-modal-opening .newsletter-bar {
+  z-index: 1;
 }
 
 /* Trigger-based cart drawer upsells (theme settings) */
 .cart-drawer-upsells {
+  padding-block-start: var(--sp-3);
+  border-block-start: 1px solid rgb(var(--color-border-light));
+}
+
+.cart-drawer-upsell-warranty {
+  padding-block: var(--sp-2d5);
+  padding-inline: var(--sp-1d5);
+  border: 1px solid rgb(var(--color-border-light));
+  border-radius: var(--rounded-block);
+  background-color: rgb(var(--color-foreground) / 0.03);
+}
+
+.cart-drawer-upsell-warranty__icon {
+  width: var(--sp-5);
+  height: var(--sp-5);
+  color: rgb(var(--color-foreground) / 0.75);
+}
+
+.cart-drawer-upsell-item .horizontal-product {
+  padding-block-end: 0;
+}
+
+.cart-drawer-upsell-item + .cart-drawer-upsell-item {
   padding-block-start: var(--sp-2);
   border-block-start: 1px solid rgb(var(--color-border-light));
 }
@@ -260,7 +296,8 @@ table.no-headings td:last-child {
 }
 
 .cart-drawer-upsells .horizontal-product {
-  padding: var(--sp-3);
+  padding-block: var(--sp-3);
+  padding-inline: var(--sp-1d5);
   border: 1px solid rgb(var(--color-border-light));
   border-radius: var(--rounded-block);
   background-color: rgb(var(--color-background));
@@ -270,8 +307,35 @@ table.no-headings td:last-child {
   min-width: 7.5rem;
 }
 
+.cart-drawer-upsell-card--dual {
+  flex-wrap: wrap;
+}
+
+.cart-drawer-upsell-card--dual .horizontal-product__media {
+  flex-shrink: 0;
+}
+
+.cart-drawer-upsell-card--dual .horizontal-product__details {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 .cart-drawer-upsell-card--dual .cart-drawer-upsell-card__actions {
-  min-width: 8.75rem;
+  flex: 1 1 100%;
+  min-width: 0;
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.cart-drawer-upsell-card--dual .cart-drawer-upsell-card__forms {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-2);
+}
+
+@media screen and (max-width: 399px) {
+  .cart-drawer-upsell-card--dual .cart-drawer-upsell-card__forms {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .cart-drawer-upsell-dual-prices__subscribe .price__sale {

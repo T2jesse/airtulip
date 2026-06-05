@@ -80,6 +80,7 @@
     "product_color_swatch_type": "file",
     "product_save_type": "percent",
     "cart_type": "drawer",
+    "cart_drawer_show_utilities": false,
     "cart_icon": "cart",
     "cart_upsell_enabled": true,
     "cart_upsell_heading": "Extend Your Airtulip Warranty - For Life",
@@ -87,6 +88,9 @@
     "cart_upsell_show_price": true,
     "cart_upsell_match_cart_variant": true,
     "cart_upsell_subscription_note": "",
+    "cart_upsell_lifetime_warranty_enabled": true,
+    "cart_upsell_lifetime_warranty_text": "Your AirTulip includes a 1-year warranty. Subscribe to filter delivery for lifetime coverage while your subscription stays active.",
+    "cart_upsell_lifetime_warranty_handles": "replacement-filter-set",
     "cart_upsell_rule_1_enabled": true,
     "cart_upsell_rule_1_trigger": "sleep-air-purifier-headboard",
     "cart_upsell_rule_1_offers": [

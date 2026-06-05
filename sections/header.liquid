@@ -17,13 +17,13 @@
     assign link_count = link_count | divided_by: 2
   endif
 
-  assign main_menu_class = 'lg:justify-start'
+  assign main_menu_class = 'md:justify-start'
   case header_layout
     when 'center-split'
-      assign main_menu_class = 'lg:justify-end'
+      assign main_menu_class = 'md:justify-end'
 
     when 'center'
-      assign main_menu_class = 'lg:justify-center'
+      assign main_menu_class = 'md:justify-center'
   endcase
 
   assign show_toggle = false
@@ -47,8 +47,8 @@
     endif
   -%}
   
-  <div class="header__navigation hidden lg:flex lg:gap-5 {{ main_menu_class }}"{% if header_layout == 'center' %} id="MenuToggle"{% endif %}>
-    <nav class="header__menu hidden lg:flex" role="navigation" aria-label="Primary">
+  <div class="header__navigation hidden md:flex md:gap-5 {{ main_menu_class }}"{% if header_layout == 'center' %} id="MenuToggle"{% endif %}>
+    <nav class="header__menu hidden md:flex" role="navigation" aria-label="Primary">
       {%- render 'header-nav-desktop', section: section, main_menu: main_menu, limit: link_count, context: 'start' -%}
     </nav>
   </div>
@@ -60,8 +60,8 @@
   -%}
   
   {%- if header_layout == 'center-split' -%}
-    <div class="header__navigation header__navigation--split hidden lg:flex lg:gap-5 lg:justify-start">
-      <nav class="header__menu hidden lg:flex" role="navigation" aria-label="Secondary">
+    <div class="header__navigation header__navigation--split hidden md:flex md:gap-5 md:justify-start">
+      <nav class="header__menu hidden md:flex" role="navigation" aria-label="Secondary">
         {%- render 'header-nav-desktop', section: section, main_menu: main_menu, offset: link_count, context: 'end' -%}
       </nav>
     </div>

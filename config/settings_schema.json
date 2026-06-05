@@ -1063,6 +1063,13 @@
         "label": "t:settings_schema.cart.settings.cart_type.label"
       },
       {
+        "type": "checkbox",
+        "id": "cart_drawer_show_utilities",
+        "label": "Show order note, shipping & discount in cart drawer",
+        "default": false,
+        "info": "Utility row above checkout. Off by default on AirTulip to save vertical space."
+      },
+      {
         "type": "select",
         "id": "cart_icon",
         "label": "t:settings_schema.cart.settings.cart_icon.label",
@@ -1131,6 +1138,27 @@
         "label": "Subscription price note (optional)",
         "default": "Subscription price shown. One-time price on product page.",
         "info": "Shown under the upsell price. Cart add is one-time unless you use Shopify selling plans (see theme docs). Appstle subscription widgets do not run inside the cart drawer."
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_lifetime_warranty_enabled",
+        "label": "Show lifetime warranty callout on filter upsells",
+        "default": true
+      },
+      {
+        "visible_if": "{{ settings.cart_upsell_lifetime_warranty_enabled == true }}",
+        "type": "textarea",
+        "id": "cart_upsell_lifetime_warranty_text",
+        "label": "Lifetime warranty callout text",
+        "default": "Your AirTulip includes a 1-year warranty. Subscribe to filter delivery for lifetime coverage while your subscription stays active."
+      },
+      {
+        "visible_if": "{{ settings.cart_upsell_lifetime_warranty_enabled == true }}",
+        "type": "text",
+        "id": "cart_upsell_lifetime_warranty_handles",
+        "label": "Filter upsell product handles",
+        "default": "replacement-filter-set",
+        "info": "Comma-separated handles. Products whose handle contains \"filter\" also qualify."
       },
       {
         "type": "header",

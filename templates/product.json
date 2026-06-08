@@ -325,7 +325,7 @@
         "highlighted_scribble": "circle",
         "color_text": "#171717",
         "color_supporting_text": "#394a60",
-        "color_background": "#fafafa",
+        "color_background": "#f2f2f2",
         "gradient_background": "",
         "color_highlight": "",
         "gradient_highlight": "",
@@ -735,6 +735,7 @@
       "type": "full-bleed-overlay-cta",
       "name": "Full-bleed overlay CTA",
       "settings": {
+        "image_asset": "",
         "image_position": "center center",
         "video": "shopify://files/videos/Air Tulip Video.mp4",
         "video_url": "",

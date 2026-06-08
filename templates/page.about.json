@@ -99,89 +99,6 @@
         "rounded": false
       }
     },
-    "about_press": {
-      "type": "logo-list",
-      "blocks": {
-        "press_1": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/shark-tank-logo-png_seeklogo-447416_1.png",
-            "height": 60,
-            "link": "https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961"
-          }
-        },
-        "press_2": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/images_1.png",
-            "height": 60,
-            "link": "https://www.forbes.com/sites/forbes-personal-shopper/article/air-quality-and-sleep/"
-          }
-        },
-        "press_3": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/apartment-therapy-logo-vector_1.png",
-            "height": 60,
-            "link": "https://www.apartmenttherapy.com/air-tulip-air-purifying-headboard-review-37481462"
-          }
-        },
-        "press_4": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/design-milk-logo-vector.png",
-            "height": 60,
-            "link": "https://design-milk.com/this-headboard-cleans-the-air-near-you-as-you-sleep/"
-          }
-        },
-        "press_5": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Fast_Company_logo_high_res.png",
-            "height": 60,
-            "link": "https://www.fastcompany.com/90781651/this-clever-headboard-is-an-air-filter-in-disguise"
-          }
-        }
-      },
-      "block_order": [
-        "press_1",
-        "press_2",
-        "press_3",
-        "press_4",
-        "press_5"
-      ],
-      "settings": {
-        "layout": "marquee",
-        "grid_horizontal": 70,
-        "direction": "left",
-        "speed": 5,
-        "heading": "As Seen On",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_external": false,
-        "button_icon": true,
-        "highlighted_text": "none",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 52,
-        "padding_bottom": 52,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
     "about_problem": {
       "type": "split-text",
       "blocks": {
@@ -285,12 +202,12 @@
         "media_span_percent": 58,
         "media_shade": false,
         "image_heading_fallback": "AirTulip laminar airflow diagram showing clean air zone over sleeping person",
-        "color_background": "#fafafa",
+        "color_background": "#f2f2f2",
         "gradient_background": "",
         "color_heading": "#171717",
         "color_supporting_text": "#394a60",
-        "content_column_background": "#fafafa",
-        "mobile_stack_background": "#fafafa",
+        "content_column_background": "rgba(0,0,0,0)",
+        "mobile_stack_background": "rgba(0,0,0,0)",
         "heading_line_height_pct": 100,
         "desktop_text_align": "left",
         "content_alignment_mobile": "left",
@@ -302,6 +219,89 @@
         "rounded": true,
         "padding_top": 60,
         "padding_bottom": 60
+      }
+    },
+    "about_press": {
+      "type": "logo-list",
+      "blocks": {
+        "press_1": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/shark-tank-logo-png_seeklogo-447416_1.png",
+            "height": 60,
+            "link": "https://abc.com/episode/0c007adc-1d90-4582-b5ab-a6064c91e1af/playlist/PL553044961"
+          }
+        },
+        "press_2": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/images_1.png",
+            "height": 60,
+            "link": "https://www.forbes.com/sites/forbes-personal-shopper/article/air-quality-and-sleep/"
+          }
+        },
+        "press_3": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/apartment-therapy-logo-vector_1.png",
+            "height": 60,
+            "link": "https://www.apartmenttherapy.com/air-tulip-air-purifying-headboard-review-37481462"
+          }
+        },
+        "press_4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/design-milk-logo-vector.png",
+            "height": 60,
+            "link": "https://design-milk.com/this-headboard-cleans-the-air-near-you-as-you-sleep/"
+          }
+        },
+        "press_5": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Fast_Company_logo_high_res.png",
+            "height": 60,
+            "link": "https://www.fastcompany.com/90781651/this-clever-headboard-is-an-air-filter-in-disguise"
+          }
+        }
+      },
+      "block_order": [
+        "press_1",
+        "press_2",
+        "press_3",
+        "press_4",
+        "press_5"
+      ],
+      "settings": {
+        "layout": "marquee",
+        "grid_horizontal": 70,
+        "direction": "left",
+        "speed": 5,
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "rgba(0,0,0,0)",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 52,
+        "padding_bottom": 52,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
       }
     },
     "about_bts": {
@@ -352,6 +352,131 @@
         "gradient_background": "",
         "padding_top": 80,
         "padding_bottom": 80
+      }
+    },
+    "about_product_explorer": {
+      "type": "product-hotspot-explorer",
+      "blocks": {
+        "hs_breathing_zone": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Easy to use control",
+            "text": "<p>Filtered air exits across the headboard fabric as <strong>laminar, low-turbulence flow</strong> aimed at where you breathe—not just into the room corners like a floor purifier.</p>",
+            "panel_media_type": "none",
+            "panel_image": "shopify://shop_images/airtulip_couple_sleeping_with_pure_air_from_airtulip_headboard.jpg",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 57,
+            "position_y": 10,
+            "featured": false
+          }
+        },
+        "hs_hepa": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "HEPA H14 + carbon filtration",
+            "text": "<p>Dual industrial <strong>HEPA-H14</strong> cassettes (single on Twin) plus full-width activated carbon for particulates, odors, and VOCs—serviceable metal filter trays, not disposable gimmicks.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 13,
+            "position_y": 54,
+            "featured": false
+          }
+        },
+        "hs_acoustics": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Bedside-quiet engineering",
+            "text": "<p>Custom fan paths, curved acoustic channels, and biomimicry-inspired blade design target roughly <strong>26 dB(A) Whisper</strong> and <strong>30 dB(A) Night</strong> modes—engineered for sleep, not showroom CFM.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 57,
+            "position_y": 38,
+            "featured": false
+          }
+        },
+        "hs_upholstery": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Bespoke upholstery",
+            "text": "<p>Each headboard is <strong>made to order</strong> in Brooklyn and Detroit with your fabric and channel selections—pair with the custom design form below for contrasting wraps, shelving, or alternate fronts.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 45,
+            "position_y": 59,
+            "featured": false
+          }
+        },
+        "hs_legs": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Two leg heights included",
+            "text": "<p>Ships with <strong>two leg sets</strong> to match your mattress height across Twin, Queen, and King footprints—roughly 8-week build lead time with proactive milestone updates.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 61,
+            "position_y": 75,
+            "featured": false
+          }
+        },
+        "hotspot_iiC3hc": {
+          "type": "hotspot",
+          "settings": {
+            "heading": "Easy filter service",
+            "text": "<p>Easy release proprietary buckles integrated into a built-in wooden shelf surface. Release the buckles to replace the <strong>HEPA H14</strong> filters inside the unit.</p>",
+            "panel_media_type": "none",
+            "panel_image_alt": "",
+            "panel_video_url": "",
+            "position_x": 27,
+            "position_y": 19,
+            "featured": false
+          }
+        }
+      },
+      "block_order": [
+        "hs_breathing_zone",
+        "hs_hepa",
+        "hs_acoustics",
+        "hs_upholstery",
+        "hs_legs",
+        "hotspot_iiC3hc"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/airtulip_sleep_headboard_exploded_view_41fc1cb2-5fbb-4084-a166-a9ab8b4d607f.jpg",
+        "image_aspect_ratio": "landscape",
+        "align_sidebar_to_image": true,
+        "heading": "Inside Your Clean-Air Headboard",
+        "heading_size": "title-lg tracking-heading",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "heading_max_width": "full",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "subheading": "",
+        "description": "<p>Explore how laminar delivery, industrial filtration, and American hand assembly work together—without leaving the product page.</p>",
+        "hint": "Hover or tap each point to explore",
+        "details_heading": "",
+        "button_label": "",
+        "button_link": "shopify://pages/about",
+        "button_external": false,
+        "button_icon": true,
+        "pin_size": 16,
+        "sync_sidebar_on_hover": true,
+        "panel_width": 280,
+        "panel_media_ratio": "landscape",
+        "panel_media_rounded": true,
+        "color_text": "#171717",
+        "color_background": "rgba(0,0,0,0)",
+        "gradient_background": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
       }
     },
     "about_pillars": {
@@ -536,8 +661,8 @@
         "gradient_background": "",
         "color_heading": "#0a1628",
         "color_supporting_text": "#394a60",
-        "content_column_background": "#fafafa",
-        "mobile_stack_background": "#fafafa",
+        "content_column_background": "rgba(0,0,0,0)",
+        "mobile_stack_background": "rgba(0,0,0,0)",
         "heading_line_height_pct": 100,
         "desktop_text_align": "left",
         "content_alignment_mobile": "left",
@@ -708,7 +833,7 @@
         "highlighted_text": "none",
         "highlighted_scribble": "circle",
         "color_text": "",
-        "color_background": "#f2f2f2",
+        "color_background": "rgba(0,0,0,0)",
         "gradient_background": "",
         "color_highlight": "",
         "gradient_highlight": "",
@@ -762,6 +887,74 @@
         "cta_external": false,
         "cta_alignment": "center",
         "cta_alignment_mobile": "center",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "about_health": {
+      "type": "split-text",
+      "blocks": {
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "heading": "You Breathe 2,600 Gallons of Air While You Sleep.",
+            "heading_size": "title-md-lg tracking-heading",
+            "heading_tag": "h2"
+          }
+        },
+        "t1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Your body is completely still for 7–9 hours. Your lungs are not. While you sleep, you inhale 2,600 gallons of whatever air is immediately around your pillow—with no pause, no filter of your own, no break.</p><p>PM2.5 fine particles reach deep into your lungs. PM0.3 ultrafine particles pass through lung tissue into the bloodstream and trigger systemic inflammation. Dust mite proteins, mold spores, pet dander, and VOCs—all inhaled continuously, all night, every night.</p><p>This is why reducing exposure in a generic room sense is not enough. The only air that matters during sleep is the air within centimeters of your face. <strong>AirTulip controls exactly that air—and nothing else needs to be clean.</strong></p>",
+            "text_size": "subtext-md"
+          }
+        },
+        "b1": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Shop AirTulip Sleep",
+            "button_link": "shopify://products/sleep-air-purifier-headboard",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_icon": true,
+            "button_external": false
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "t1",
+        "b1"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/NLactorsInBedPixelmator.jpg",
+        "image_asset": "",
+        "video_url": "",
+        "video_description": "",
+        "split_video_autoplay": true,
+        "split_video_loop": true,
+        "video_url_mobile": "",
+        "media_flush_edge": false,
+        "media_side": "right",
+        "media_span_percent": 60,
+        "media_shade": false,
+        "image_heading_fallback": "Couple sleeping with AirTulip headboard delivering clean air",
+        "color_background": "#f2f2f2",
+        "gradient_background": "",
+        "color_heading": "#171717",
+        "color_supporting_text": "#394a60",
+        "content_column_background": "rgba(0,0,0,0)",
+        "mobile_stack_background": "rgba(0,0,0,0)",
+        "heading_line_height_pct": 100,
+        "desktop_text_align": "left",
+        "content_alignment_mobile": "left",
+        "split_overlay_stack_gap_px": 28,
+        "media_aspect_ratio_mobile": "square",
+        "media_aspect_ratio_desktop": "square",
+        "min_height_px": 520,
+        "min_height_px_mobile": 340,
+        "rounded": true,
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -831,8 +1024,8 @@
         "heading_tag": "h2",
         "subheading": "",
         "description": "<p>Every material, every filter grade, every acoustic treatment, every assembly step exists because it earned its place. This is a precision instrument for health—not a consumer appliance.</p>",
-        "button_label": "",
-        "button_link": "",
+        "button_label": "Shop Airtulip Sleep",
+        "button_link": "shopify://products/sleep-air-purifier-headboard",
         "button_external": false,
         "button_icon": true,
         "highlighted_text": "none",
@@ -852,89 +1045,23 @@
         "full_width": false,
         "rounded": false
       }
-    },
-    "about_health": {
-      "type": "split-text",
-      "blocks": {
-        "h1": {
-          "type": "heading",
-          "settings": {
-            "heading": "You Breathe 2,600 Gallons of Air While You Sleep.",
-            "heading_size": "title-md-lg tracking-heading",
-            "heading_tag": "h2"
-          }
-        },
-        "t1": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Your body is completely still for 7–9 hours. Your lungs are not. While you sleep, you inhale 2,600 gallons of whatever air is immediately around your pillow—with no pause, no filter of your own, no break.</p><p>PM2.5 fine particles reach deep into your lungs. PM0.3 ultrafine particles pass through lung tissue into the bloodstream and trigger systemic inflammation. Dust mite proteins, mold spores, pet dander, and VOCs—all inhaled continuously, all night, every night.</p><p>This is why reducing exposure in a generic room sense is not enough. The only air that matters during sleep is the air within centimeters of your face. <strong>AirTulip controls exactly that air—and nothing else needs to be clean.</strong></p>",
-            "text_size": "subtext-md"
-          }
-        },
-        "b1": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop AirTulip Sleep",
-            "button_link": "shopify://products/sleep-air-purifier-headboard",
-            "button_style": "primary",
-            "button_size": "md",
-            "button_icon": true,
-            "button_external": false
-          }
-        }
-      },
-      "block_order": [
-        "h1",
-        "t1",
-        "b1"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/NLactorsInBedPixelmator.jpg",
-        "image_asset": "",
-        "video_url": "",
-        "video_description": "",
-        "split_video_autoplay": true,
-        "split_video_loop": true,
-        "video_url_mobile": "",
-        "media_flush_edge": false,
-        "media_side": "right",
-        "media_span_percent": 60,
-        "media_shade": false,
-        "image_heading_fallback": "Couple sleeping with AirTulip headboard delivering clean air",
-        "color_background": "#f2f2f2",
-        "gradient_background": "",
-        "color_heading": "#171717",
-        "color_supporting_text": "#394a60",
-        "content_column_background": "rgba(0,0,0,0)",
-        "mobile_stack_background": "rgba(0,0,0,0)",
-        "heading_line_height_pct": 100,
-        "desktop_text_align": "left",
-        "content_alignment_mobile": "left",
-        "split_overlay_stack_gap_px": 28,
-        "media_aspect_ratio_mobile": "square",
-        "media_aspect_ratio_desktop": "square",
-        "min_height_px": 520,
-        "min_height_px_mobile": 340,
-        "rounded": true,
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
     }
   },
   "order": [
     "main",
     "about_hero",
-    "about_press",
     "about_problem",
     "about_solution",
+    "about_press",
     "about_bts",
+    "about_product_explorer",
     "about_pillars",
     "about_quiet",
     "about_founder",
     "about_proof",
     "about_reviews",
     "about_cta",
-    "about_build",
-    "about_health"
+    "about_health",
+    "about_build"
   ]
 }

@@ -6,6 +6,7 @@
   @param {object} section - Section object with settings
   @param {boolean} [section_full_width] - Use page-width container
   @param {string} [section_button] - Additional button HTML to append
+  @param {boolean} [show_button] - Render section CTA in header (default true). Set false to place button elsewhere in the section.
 
   @example
   {% render 'section-heading',
@@ -20,10 +21,15 @@
   unless heading_max_width == blank or heading_max_width == 'full'
     assign heading_width_class = 'section-heading__title--' | append: heading_max_width
   endunless
+  if show_button == false
+    assign render_section_button = false
+  else
+    assign render_section_button = true
+  endif
 -%}
 
-{%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.description != blank or section.settings.button_label != blank -%}
-  <div class="{% if section_full_width %}page-width {% endif %}title-wrapper{% if section.settings.heading_size == 'title-xl' %} title-wrapper-lg{% endif %} leading-none gap-4 lg:gap-8 flex flex-col {{ section.settings.heading_alignment }} md:justify-between relative z-1">
+{%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.description != blank or section.settings.button_label != blank and render_section_button -%}
+  <div class="{% if section_full_width %}page-width {% endif %}title-wrapper{% if section.settings.heading_size == 'title-xl' %} title-wrapper-lg{% endif %} leading-none gap-4 lg:gap-8 flex flex-col {{ section.settings.heading_alignment }}{% if render_section_button and section.settings.button_label != blank %} md:justify-between{% endif %} relative z-1">
     {%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.description != blank -%}
       <div class="grid gap-4">
         {%- if section.settings.subheading != blank -%}
@@ -63,7 +69,7 @@
       </div>
     {%- endif -%}
 
-    {%- if section.settings.button_label != blank -%}
+    {%- if render_section_button and section.settings.button_label != blank -%}
       <p>
         {%- render 'button',
           style: 'secondary',

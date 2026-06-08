@@ -14,7 +14,7 @@
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
-    {%- render 'section-heading', section: section -%}
+    {%- render 'section-heading', section: section, show_button: false -%}
 
     <slider-element id="Slider-{{ section.id }}" class="grid slider{% if section.settings.swipe_on_mobile %} slider--tablet{% endif %}" selector=".card-grid>.card"{% if section.settings.swipe_on_mobile %} tabindex="0"{% endif %}>
       <div class="multicolumn with-{{ section.blocks.size }} card-grid card-grid--{{ section.settings.columns }} mobile:card-grid--{{ section.settings.columns_mobile }} grid relative z-1">
@@ -89,6 +89,26 @@
         {%- endfor -%}
       </div>
     </slider-element>
+
+    {%- if section.settings.button_label != blank -%}
+      {%- liquid
+        assign mc_cta_align = 'center'
+        if section.settings.heading_alignment contains 'text-right'
+          assign mc_cta_align = 'right'
+        elsif section.settings.heading_alignment contains 'text-left'
+          assign mc_cta_align = 'left'
+        endif
+      -%}
+      <div class="multicolumn__cta rich-text text-center md:text-{{ mc_cta_align }} relative z-1" style="margin-top: var(--sp-8);">
+        {%- render 'button',
+          style: 'secondary',
+          label: section.settings.button_label,
+          link: section.settings.button_link,
+          external: section.settings.button_external,
+          show_icon: section.settings.button_icon
+        -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 

@@ -86,7 +86,7 @@
   endif
 
   capture fb_vid_class
-    echo 'banner__image block w-full h-full fboc-vm'
+    echo 'block w-full h-full fboc-vm'
     if section.settings.fb_video_autoplay
       echo ' pointer-events-none'
     endif
@@ -144,11 +144,36 @@
     inset: 0;
   }
 
-  #shopify-section-{{ section.id }} .fboc-visual__media img {
+  #shopify-section-{{ section.id }} .fboc-visual__media picture {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__media .fboc-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: {{ section.settings.image_position }};
+    visibility: visible;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-visual__media :is(picture .fboc-img, > .fboc-img, > svg.fboc-img) {
+    position: absolute;
+    inset: 0;
+    max-width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-cta-wrap {
+    margin-top: var(--sp-8);
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .fboc-cta-wrap {
+      margin-top: var(--sp-10);
+    }
   }
 
   #shopify-section-{{ section.id }} .fboc-visual__media--video video-media {
@@ -265,29 +290,56 @@
             description: section.settings.video_description,
             cover_image: fb_cover_desk,
             show_play_button: fb_show_vid_btn,
+            class: fb_vid_class
+          -%}
         {%- elsif section.settings.image != blank -%}
           {%- capture sizes -%}100vw{%- endcapture -%}
-          {%- if section.settings.image_mobile != blank -%}
-            <source
-              media="(max-width: 767px)"
-              srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1200x' }} 1200w"
-              width="{{ section.settings.image_mobile.width }}"
-              height="{{ section.settings.image_mobile.height }}"
-            >
-          {%- endif -%}
-          {{
-            section.settings.image
-            | image_url: width: section.settings.image.width
-            | image_tag:
-              loading: loading,
-              fetchpriority: fetchpriority,
-              sizes: sizes,
-              widths: '400,600,800,1000,1200,1400,1600,1800,2000,2400,2800,3200,3600,3840',
-              is: lazyimg,
-              class: 'banner__image'
-          }}
+          {%- assign fb_img_alt = section.settings.image.alt | default: section.settings.top_heading | default: 'AirTulip Sleep' | escape -%}
+          <picture>
+            {%- if section.settings.image_mobile != blank -%}
+              <source
+                media="(max-width: 767px)"
+                srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1200x' }} 1200w"
+                sizes="100vw"
+                width="{{ section.settings.image_mobile.width }}"
+                height="{{ section.settings.image_mobile.height }}"
+              >
+            {%- endif -%}
+            {{
+              section.settings.image
+              | image_url: width: section.settings.image.width
+              | image_tag:
+                loading: loading,
+                fetchpriority: fetchpriority,
+                sizes: sizes,
+                widths: '400,600,800,1000,1200,1400,1600,1800,2000,2400,2800,3200,3600,3840',
+                is: lazyimg,
+                class: 'fboc-img',
+                alt: fb_img_alt
+            }}
+          </picture>
+        {%- elsif section.settings.image_asset != blank -%}
+          {%- liquid
+            assign fb_asset_file = section.settings.image_asset | strip
+            assign fb_asset_img_class = 'fboc-img'
+            if lazyimg != blank
+              assign fb_asset_img_class = fb_asset_img_class | append: ' ' | append: lazyimg
+            endif
+          -%}
+          <img
+            src="{{ fb_asset_file | asset_url }}"
+            srcset="{{ fb_asset_file | asset_url }} 1x"
+            sizes="100vw"
+            alt="{{ section.settings.top_heading | default: 'AirTulip Sleep' | escape }}"
+            class="{{ fb_asset_img_class }}"
+            loading="{{ loading }}"
+            {% if fetchpriority != 'auto' %}fetchpriority="{{ fetchpriority }}"{% endif %}
+            width="2000"
+            height="1200"
+            decoding="async"
+          >
         {%- else -%}
-          {{- 'lifestyle-1' | placeholder_svg_tag: 'banner__image banner__overlay placeholder' -}}
+          {{- 'lifestyle-1' | placeholder_svg_tag: 'fboc-img placeholder' -}}
         {%- endif -%}
       </div>
 
@@ -320,7 +372,7 @@
 
   {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
     <div class="page-width">
-      <div class="rich-text md:text-{{ section.settings.cta_alignment }} text-{{ section.settings.cta_alignment_mobile }} pt-8 md:pt-10">
+      <div class="fboc-cta-wrap rich-text md:text-{{ section.settings.cta_alignment }} text-{{ section.settings.cta_alignment_mobile }}">
         {%- render 'button',
           label: section.settings.cta_label,
           link: section.settings.cta_link,
@@ -351,6 +403,12 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Theme asset image",
+      "info": "Filename from theme /assets (e.g. photo.webp). Used when Image above is empty and no video is set."
     },
     {
       "type": "image_picker",

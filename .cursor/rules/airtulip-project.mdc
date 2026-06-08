@@ -76,8 +76,13 @@ Sections and snippets pull these in with `stylesheet_tag` when needed (non-exhau
 - **Commands:** `npm run dev` and `npm run storefront` both run `shopify theme dev --store=airtulip.myshopify.com` (local preview + hot reload against that shop). `npm run pull` runs `shopify theme pull` for the same store.
 - **Important for the agent:** The developer runs these locally. **Do not** start `shopify theme dev` or `npm run dev` / `npm run storefront` unless they explicitly ask you to run the dev server.
 
+## Agent deploy boundary (non-negotiable)
+
+**See `.cursor/rules/airtulip-no-theme-push.mdc`.** The agent must **NEVER** run `shopify theme push`, `shopify theme pull`, `shopify theme publish`, or any remote theme write — especially **not** to live theme `#180129235234`. Only the developer pushes/pulls from terminal. Agent work stays in Git/files on disk.
+
 ## Conventions when editing
 
+- **Heading copy:** See **`.cursor/rules/airtulip-heading-capitalization.mdc`** — Title Case (capitalize the first letter of every word) for headings the agent writes; not for body text.
 - Prefer **existing RoarTheme patterns** (section schema, spacing, `{% render %}`, `{% liquid %}` blocks) over one-off hacks.
 - Respect **OS2** structure: JSON templates + section/`block` schemas; avoid breaking `settings_schema` / translation keys unnecessarily.
 - After substantive Liquid/CSS/JS changes, **Theme Check** / visual verification is on the preview the merchant runs locally or on staging.

@@ -12,6 +12,14 @@
     "image_with_text_overlay_xAGVpd": {
       "type": "image-with-text-overlay",
       "blocks": {
+        "overlay_logo_MEEKq8": {
+          "type": "overlay_logo",
+          "settings": {
+            "image": "shopify://shop_images/yahoo_logo.webp",
+            "link": "",
+            "logo_custom_width": 132
+          }
+        },
         "overlay_logo_UFeMQ8": {
           "type": "overlay_logo",
           "settings": {
@@ -111,6 +119,7 @@
         }
       },
       "block_order": [
+        "overlay_logo_MEEKq8",
         "overlay_logo_UFeMQ8",
         "overlay_logo_ngdRPb",
         "overlay_logo_K6Dicg",
@@ -314,6 +323,7 @@
       "type": "full-bleed-overlay-cta",
       "name": "Full-bleed overlay CTA",
       "settings": {
+        "image_asset": "",
         "image_position": "center center",
         "video": "shopify://files/videos/AirTulip Sleep Laser Footage Optimized.mp4",
         "video_url": "",

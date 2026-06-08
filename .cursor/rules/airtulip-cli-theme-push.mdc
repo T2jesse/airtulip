@@ -5,9 +5,13 @@ alwaysApply: true
 
 # Airtulip — `shopify theme push` / CLI schema compatibility
 
+## Agent boundary
+
+**Agents must NOT run `shopify theme push` or any remote deploy.** See **`.cursor/rules/airtulip-no-theme-push.mdc`**. This file is reference for **the developer** when they push from terminal.
+
 ## Why this rule exists
 
-**Shopify CLI** (e.g. 3.88.x) validates `{% schema %}` JSON when you run **`shopify theme push`** or rely on full theme sync to a **development** theme. That validation can be **stricter** than the **online theme editor** on the same store.
+**Shopify CLI** (e.g. 3.88.x) validates `{% schema %}` JSON when **the developer** runs **`shopify theme push`** or relies on full theme sync to a **development** theme. That validation can be **stricter** than the **online theme editor** on the same store.
 
 **RoarTheme Concept** (this codebase) used **`visible_if`** on some setting types the CLI **rejects**. When validation failed, entire section files **did not upload** — notably **`sections/main-product.liquid`**.
 

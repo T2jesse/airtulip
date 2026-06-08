@@ -1,0 +1,41 @@
+---
+description: Airtulip — agents must NEVER run shopify theme push/pull/dev or deploy to Shopify
+alwaysApply: true
+---
+
+# Airtulip — DO NOT push or deploy themes (agent hard stop)
+
+## Absolute rule — read every session
+
+**The developer owns ALL Shopify CLI deploy operations.** The agent must **NEVER**:
+
+- Run **`shopify theme push`** (any flags: `--live`, `--allow-live`, `-d`, `--development`, `--only`, `--theme=`, etc.)
+- Run **`shopify theme pull`**
+- Run **`shopify theme dev`**, **`npm run dev`**, or **`npm run storefront`**
+- Run **`shopify theme publish`**
+- Run **`shopify theme delete`**, **`shopify theme duplicate`**, or any command that **writes to a remote Shopify theme**
+- Push to the **live / published** theme under any circumstances unless the user gives an **explicit one-time written exception** naming the exact theme ID and command
+
+**Local Git edits only.** The developer runs terminal push/pull and uses **local preview** (`shopify theme dev`) to verify. The agent edits files in this repo and stops there.
+
+## Why this exists
+
+Pushing to the wrong theme — especially the **live** storefront theme — can change what customers see immediately. That is never the agent’s job on this project.
+
+## What agents SHOULD do instead
+
+- Edit Liquid, JSON templates, `assets/`, `config/`, etc. in the repo
+- Tell the developer which files changed and what to push when they are ready
+- If verification is needed, describe what to check in **their** local preview URL — do not start the dev server yourself unless explicitly asked
+
+## Live theme on this store (reference only — do not push)
+
+| Role | Theme ID | Name (approx.) |
+|------|----------|----------------|
+| **LIVE (published)** | `#180129235234` | Updated copy of AirTulip Website (Main) in Concept… |
+| **Development (current CLI dev)** | `#187564491042` | Development (a14dc9-JFX-G16) |
+
+## Related rules
+
+- **`.cursor/rules/airtulip-cli-theme-push.mdc`** — schema/`visible_if` notes for when **the developer** runs `theme push` (not for agents to run it)
+- **`.cursor/rules/airtulip-project.mdc`** — overall project context

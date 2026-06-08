@@ -33,8 +33,51 @@
     font-weight: 600;
   }
 
+  /*
+    Section heading — match split-text .mc__title sizing (fixed desktop size, not fluid vw clamp).
+  */
+  #shopify-section-{{ section.id }} .title-wrapper .heading {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: var(--font-heading-letter-spacing);
+    text-transform: var(--font-heading-text-transform);
+    word-break: break-word;
+    line-height: 1.24;
+    background-image: none;
+    mix-blend-mode: normal;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading *,
+  #shopify-section-{{ section.id }} .title-wrapper .heading ::marker {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading .particle-heading__fill {
+    background-image: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading.title-md-lg {
+    font-size: calc((var(--title-md) + var(--title-lg)) * 0.5);
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg-xl {
+    font-size: calc((var(--title-lg) + var(--title-xl)) * 0.5);
+  }
+
   @media screen and (min-width: 1024px) {
-    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg {
+    #shopify-section-{{ section.id }} .title-wrapper .heading,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-md,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-md-lg,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg-xl,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-xl {
       font-size: 58px;
       line-height: 1.05;
     }
@@ -131,26 +174,15 @@
     {
       "type": "select",
       "id": "heading_size",
-      "options": [
-        {
-          "value": "title-sm",
-          "label": "t:sections.global.settings.heading_size.options__1.label"
-        },
-        {
-          "value": "title-md",
-          "label": "t:sections.global.settings.heading_size.options__2.label"
-        },
-        {
-          "value": "title-lg tracking-heading",
-          "label": "t:sections.global.settings.heading_size.options__3.label"
-        },
-        {
-          "value": "title-xl tracking-heading",
-          "label": "t:sections.global.settings.heading_size.options__4.label"
-        }
-      ],
+      "label": "Size",
       "default": "title-md",
-      "label": "t:sections.global.settings.heading_size.label"
+      "options": [
+        { "value": "title-md", "label": "Medium" },
+        { "value": "title-md-lg tracking-heading", "label": "Medium–large" },
+        { "value": "title-lg tracking-heading", "label": "Large" },
+        { "value": "title-lg-xl tracking-heading", "label": "Large–extra large" },
+        { "value": "title-xl tracking-heading", "label": "Extra large" }
+      ]
     },
     {
       "type": "select",
@@ -200,47 +232,13 @@
     {
       "type": "select",
       "id": "heading_tag",
-      "options": [
-        {
-          "value": "h1",
-          "label": "t:sections.global.settings.heading_tag.options__1.label"
-        },
-        {
-          "value": "h2",
-          "label": "t:sections.global.settings.heading_tag.options__2.label"
-        },
-        {
-          "value": "h3",
-          "label": "t:sections.global.settings.heading_tag.options__3.label"
-        },
-        {
-          "value": "h4",
-          "label": "t:sections.global.settings.heading_tag.options__4.label"
-        },
-        {
-          "value": "h5",
-          "label": "t:sections.global.settings.heading_tag.options__5.label"
-        },
-        {
-          "value": "h6",
-          "label": "t:sections.global.settings.heading_tag.options__6.label"
-        },
-        {
-          "value": "div",
-          "label": "t:sections.global.settings.heading_tag.options__7.label"
-        },
-        {
-          "value": "span",
-          "label": "t:sections.global.settings.heading_tag.options__8.label"
-        },
-        {
-          "value": "p",
-          "label": "t:sections.global.settings.heading_tag.options__9.label"
-        }
-      ],
+      "label": "HTML tag",
       "default": "h2",
-      "label": "t:sections.global.settings.heading_tag.label",
-      "info": "t:sections.global.settings.heading_tag.info"
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ]
     },
     {
       "type": "text",

@@ -94,6 +94,56 @@
     }
   }
 
+  /*
+    Section heading — match split-text .mc__title sizing (fixed desktop size, not fluid vw clamp).
+  */
+  #shopify-section-{{ section.id }} .title-wrapper .heading {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: var(--font-heading-letter-spacing);
+    text-transform: var(--font-heading-text-transform);
+    word-break: break-word;
+    line-height: 1.24;
+    background-image: none;
+    mix-blend-mode: normal;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading *,
+  #shopify-section-{{ section.id }} .title-wrapper .heading ::marker {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading .particle-heading__fill {
+    background-image: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading.title-md-lg {
+    font-size: calc((var(--title-md) + var(--title-lg)) * 0.5);
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg-xl {
+    font-size: calc((var(--title-lg) + var(--title-xl)) * 0.5);
+  }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .title-wrapper .heading,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-md,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-md-lg,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg-xl,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-xl {
+      font-size: 58px;
+      line-height: 1.05;
+    }
+  }
+
   /* One Flickity cell = one review; width controls how many are visible. */
   #shopify-section-{{ section.id }} .top-testimonials-carousel__track .top-testimonials__slide {
     padding-inline-end: var(--tt-slide-gap);
@@ -456,26 +506,15 @@
     {
       "type": "select",
       "id": "heading_size",
-      "options": [
-        {
-          "value": "title-sm",
-          "label": "Small"
-        },
-        {
-          "value": "title-md",
-          "label": "Medium"
-        },
-        {
-          "value": "title-lg tracking-heading",
-          "label": "Large"
-        },
-        {
-          "value": "title-xl tracking-heading",
-          "label": "Extra large"
-        }
-      ],
+      "label": "Size",
       "default": "title-md",
-      "label": "Heading size"
+      "options": [
+        { "value": "title-md", "label": "Medium" },
+        { "value": "title-md-lg tracking-heading", "label": "Medium–large" },
+        { "value": "title-lg tracking-heading", "label": "Large" },
+        { "value": "title-lg-xl tracking-heading", "label": "Large–extra large" },
+        { "value": "title-xl tracking-heading", "label": "Extra large" }
+      ]
     },
     {
       "type": "select",
@@ -500,47 +539,13 @@
     {
       "type": "select",
       "id": "heading_tag",
-      "options": [
-        {
-          "value": "h1",
-          "label": "H1"
-        },
-        {
-          "value": "h2",
-          "label": "H2"
-        },
-        {
-          "value": "h3",
-          "label": "H3"
-        },
-        {
-          "value": "h4",
-          "label": "H4"
-        },
-        {
-          "value": "h5",
-          "label": "H5"
-        },
-        {
-          "value": "h6",
-          "label": "H6"
-        },
-        {
-          "value": "div",
-          "label": "div"
-        },
-        {
-          "value": "span",
-          "label": "span"
-        },
-        {
-          "value": "p",
-          "label": "p"
-        }
-      ],
+      "label": "HTML tag",
       "default": "h2",
-      "label": "Heading tag",
-      "info": "Specify heading code types for SEO and search engines for crawling purposes."
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ]
     },
     {
       "type": "text",

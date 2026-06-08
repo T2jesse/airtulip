@@ -1,0 +1,400 @@
+{%- comment -%}
+  Behind-the-scenes image collage — flex panels expand horizontally on hover or click.
+  JS: assets/behind-scenes-collage.js (no Flickity; CSS flex transitions).
+{%- endcomment -%}
+{%- liquid
+  assign bts_expand = section.settings.expand_grow | default: 8
+  assign bts_height_mob = section.settings.collage_height_mobile | default: 360
+  assign bts_height_desk = section.settings.collage_height_desktop | default: 520
+  assign bts_gap = section.settings.panel_gap | default: 16
+-%}
+<style>
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --bts-collage-height: {{ bts_height_mob }}px;
+    --bts-collage-gap: {{ bts_gap }}px;
+    --bts-expand-grow: {{ bts_expand }};
+    {%- render 'section-variables', section: section -%}
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      --bts-collage-height: {{ bts_height_desk }}px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: var(--font-heading-letter-spacing);
+    text-transform: var(--font-heading-text-transform);
+    word-break: break-word;
+    line-height: 1.24;
+    background-image: none;
+    mix-blend-mode: normal;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading *,
+  #shopify-section-{{ section.id }} .title-wrapper .heading ::marker {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading .particle-heading__fill {
+    background-image: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading.title-md-lg {
+    font-size: calc((var(--title-md) + var(--title-lg)) * 0.5);
+  }
+
+  #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg-xl {
+    font-size: calc((var(--title-lg) + var(--title-xl)) * 0.5);
+  }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .title-wrapper .heading,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-md,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-md-lg,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg-xl,
+    #shopify-section-{{ section.id }} .title-wrapper .heading.title-xl {
+      font-size: 58px;
+      line-height: 1.05;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .bts-collage {
+    display: block;
+    width: 100%;
+    margin-top: var(--sp-8);
+  }
+
+  #shopify-section-{{ section.id }} .bts-collage__track {
+    display: flex;
+    align-items: stretch;
+    gap: var(--bts-collage-gap);
+    width: 100%;
+    height: var(--bts-collage-height);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #shopify-section-{{ section.id }} .bts-collage__panel {
+    flex: 1 1 0;
+    min-width: 3.5rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--rounded-block);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: rgb(var(--color-placeholder) / 0.35);
+    transition: flex-grow 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+      flex-shrink 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+      flex-basis 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .bts-collage__panel:focus-visible {
+    outline: 2px solid rgb(var(--color-keyboard-focus));
+    outline-offset: 3px;
+  }
+
+  #shopify-section-{{ section.id }} .bts-collage__media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .bts-collage__media img,
+  #shopify-section-{{ section.id }} .bts-collage__media svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    #shopify-section-{{ section.id }} .bts-collage__track:not(.has-active) .bts-collage__panel:hover {
+      flex-grow: var(--bts-expand-grow);
+    }
+  }
+
+  #shopify-section-{{ section.id }} .bts-collage__track.has-active .bts-collage__panel.is-expanded {
+    flex-grow: var(--bts-expand-grow);
+  }
+
+  #shopify-section-{{ section.id }} .bts-collage__track.has-active .bts-collage__panel:not(.is-expanded) {
+    flex-grow: 0.65;
+  }
+</style>
+
+<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
+  <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
+    {%- render 'section-heading', section: section -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <behind-scenes-collage class="bts-collage relative z-1">
+        <div class="bts-collage__track" data-bts-track role="list">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign bts_alt = block.settings.image_alt
+              if bts_alt == blank and block.settings.image != blank
+                assign bts_alt = block.settings.image.alt
+              endif
+              if bts_alt == blank
+                assign bts_alt = 'Behind the scenes at AirTulip'
+              endif
+            -%}
+            <button
+              type="button"
+              class="bts-collage__panel"
+              data-bts-panel
+              role="listitem"
+              aria-expanded="false"
+              aria-label="{{ bts_alt | escape }}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="bts-collage__media media media--height block w-full h-full overflow-hidden">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1600
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: '(max-width: 767px) 33vw, 50vw',
+                      widths: '400,600,800,1000,1200,1400,1600',
+                      alt: bts_alt,
+                      class: 'bts-collage__img'
+                  }}
+                {%- else -%}
+                  {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder' }}
+                {%- endif -%}
+              </span>
+            </button>
+          {%- endfor -%}
+        </div>
+      </behind-scenes-collage>
+    {%- endif -%}
+  </div>
+</div>
+
+<script src="{{ 'behind-scenes-collage.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Behind-the-scenes collage",
+  "tag": "section",
+  "class": "shopify-section--behind-scenes-collage",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Behind The Scenes"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Size",
+      "default": "title-lg tracking-heading",
+      "options": [
+        { "value": "title-md", "label": "Medium" },
+        { "value": "title-md-lg tracking-heading", "label": "Medium–large" },
+        { "value": "title-lg tracking-heading", "label": "Large" },
+        { "value": "title-lg-xl tracking-heading", "label": "Large–extra large" },
+        { "value": "title-xl tracking-heading", "label": "Extra large" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "text-center md:items-center",
+      "options": [
+        { "value": "text-left md:items-end md:flex-row", "label": "Left" },
+        { "value": "text-center md:items-center", "label": "Center" },
+        { "value": "text-right md:items-end md:flex-row-reverse", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "HTML tag",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Laser labs, acoustic chambers, and hand assembly—see how each AirTulip Sleep headboard is built.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Collage"
+    },
+    {
+      "type": "range",
+      "id": "collage_height_desktop",
+      "min": 320,
+      "max": 720,
+      "step": 10,
+      "unit": "px",
+      "label": "Collage height (desktop)",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "collage_height_mobile",
+      "min": 240,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "label": "Collage height (mobile)",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "panel_gap",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between panels",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "expand_grow",
+      "min": 4,
+      "max": 14,
+      "step": 1,
+      "label": "Expanded panel width",
+      "default": 8,
+      "info": "Higher values make the active image take more horizontal space."
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "Show divider",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text color"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background color"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "Background gradient"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "info": "Optional. Uses the image alt from the file manager when empty."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Behind-the-scenes collage",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ],
+      "settings": {
+        "heading": "Behind The Scenes: Where AirTulip Sleep Is Made",
+        "heading_size": "title-lg tracking-heading",
+        "description": "<p>Laser labs, acoustic chambers, and hand assembly in New York and Detroit—see how each headboard is built to a standard, not a price point.</p>",
+        "collage_height_desktop": 520,
+        "collage_height_mobile": 360,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  ]
+}
+{% endschema %}

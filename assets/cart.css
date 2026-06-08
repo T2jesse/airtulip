@@ -268,6 +268,10 @@ body.has-modal-opening .newsletter-bar {
   border-block-start: 1px solid rgb(var(--color-border-light));
 }
 
+.cart-drawer-upsell-item {
+  gap: var(--sp-4);
+}
+
 .cart-drawer-upsell-warranty {
   padding-block: var(--sp-2d5);
   padding-inline: var(--sp-1d5);
@@ -298,9 +302,9 @@ body.has-modal-opening .newsletter-bar {
 .cart-drawer-upsells .horizontal-product {
   padding-block: var(--sp-3);
   padding-inline: var(--sp-1d5);
-  border: 1px solid rgb(var(--color-border-light));
-  border-radius: var(--rounded-block);
-  background-color: rgb(var(--color-background));
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
 }
 
 .cart-drawer-upsell-card__actions {
@@ -365,6 +369,3 @@ body.has-modal-opening .newsletter-bar {
   opacity: 0.65;
 }
 
-[data-rounded-block=round] .cart-drawer-upsells .horizontal-product {
-  border-radius: var(--rounded-block);
-}

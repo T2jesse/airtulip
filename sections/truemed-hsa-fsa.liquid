@@ -1,0 +1,324 @@
+{%- liquid
+  assign clr_body = section.settings.color_supporting_text
+  if clr_body == blank or clr_body == 'rgba(0,0,0,0)'
+    assign clr_body = '#394a60'
+  endif
+
+  assign show_section = true
+  if section.settings.require_product_tag != blank
+    assign has_required_tag = false
+    for tag in product.tags
+      if tag == section.settings.require_product_tag
+        assign has_required_tag = true
+        break
+      endif
+    endfor
+    unless has_required_tag
+      assign show_section = false
+    endunless
+  endif
+
+  assign widget_element_id = section.settings.widget_element_id | default: 'truemed-prequalify' | strip
+  assign widget_style = 'font-size: 16px;'
+
+  if section.settings.dark_mode
+    assign widget_style = widget_style | append: ' color: #ffffff;'
+    assign widget_attrs = 'id="' | append: widget_element_id | append: '" dark-mode'
+  else
+    assign widget_attrs = 'id="' | append: widget_element_id | append: '"'
+  endif
+
+  assign widget_attrs = widget_attrs | append: ' style="' | append: widget_style | append: '"'
+  assign widget_attrs = widget_attrs | append: ' icon-height="' | append: section.settings.icon_height | append: '"'
+  assign widget_attrs = widget_attrs | append: ' data-public-id="' | append: section.settings.public_qualification_id | append: '"'
+
+  if section.settings.shopify_tags_mode != 'none'
+    assign widget_attrs = widget_attrs | append: ' shopify-tags="' | append: section.settings.shopify_tags_mode | append: '"'
+  endif
+-%}
+
+{%- if show_section -%}
+  <style>
+    #shopify-section-{{ section.id }} {
+      --section-padding-top: {{ section.settings.padding_top }}px;
+      --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+      {%- render 'section-variables', section: section -%}
+    }
+
+    #shopify-section-{{ section.id }} .title-wrapper .description.rte.description-copy {
+      color: {{ clr_body }};
+      -webkit-text-fill-color: {{ clr_body }};
+    }
+
+    #shopify-section-{{ section.id }} .title-wrapper .description.rte.description-copy :is(p, li, span, a) {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      color: inherit;
+      -webkit-text-fill-color: inherit;
+    }
+
+    #shopify-section-{{ section.id }} .title-wrapper .description.rte.description-copy :is(strong, b) {
+      font-family: inherit;
+      font-weight: 600;
+    }
+
+    /* title-wrapper normally reserves space before section body (e.g. columns) */
+    #shopify-section-{{ section.id }} .title-wrapper {
+      margin-block-end: 0;
+    }
+
+    #shopify-section-{{ section.id }} .title-wrapper .description.rte.description-copy :is(p:last-child, :last-child) {
+      margin-block-end: 0;
+    }
+
+    #shopify-section-{{ section.id }} .truemed-hsa-fsa__widget {
+      margin-block-start: var(--sp-2);
+      min-height: 1.5rem;
+      flex-shrink: 0;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    @media screen and (min-width: 1024px) {
+      #shopify-section-{{ section.id }} .title-wrapper .heading.title-lg {
+        font-size: 58px;
+        line-height: 1.05;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .truemed-hsa-fsa__widget :is(a, button, span, p, div) {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+  </style>
+
+  <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% render 'section-rounded', section: section %}">
+    <div class="page-width relative flex flex-col items-center">
+      {%- render 'section-heading', section: section -%}
+
+      <div class="truemed-hsa-fsa__widget flex items-center">
+        <div {{ widget_attrs }}></div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "HSA / FSA (TrueMed)",
+  "tag": "section",
+  "class": "truemed-hsa-fsa-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "TrueMed widget (HSA/FSA logos). Script loads on product pages from layout/theme.liquid."
+    },
+    {
+      "type": "text",
+      "id": "public_qualification_id",
+      "label": "TrueMed public qualification ID",
+      "default": "tm_qual_r9u205ahnk"
+    },
+    {
+      "type": "text",
+      "id": "widget_element_id",
+      "label": "Widget element ID",
+      "default": "truemed-prequalify"
+    },
+    {
+      "type": "range",
+      "id": "icon_height",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "TrueMed logo height",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "shopify_tags_mode",
+      "label": "Widget visibility (Shopify tags)",
+      "options": [
+        { "value": "none", "label": "Always show" },
+        { "value": "display-if-eligible", "label": "Only if tagged truemed-eligible" },
+        { "value": "display-unless-ineligible", "label": "Hide if tagged truemed-ineligible" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "text",
+      "id": "require_product_tag",
+      "label": "Hide section unless product has tag",
+      "info": "Optional."
+    },
+    {
+      "type": "checkbox",
+      "id": "dark_mode",
+      "label": "TrueMed widget dark mode",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.settings.header__heading.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.global.settings.heading.label",
+      "default": "Pay with HSA / FSA"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "title-sm", "label": "t:sections.global.settings.heading_size.options__1.label" },
+        { "value": "title-md", "label": "t:sections.global.settings.heading_size.options__2.label" },
+        { "value": "title-lg tracking-heading", "label": "t:sections.global.settings.heading_size.options__3.label" },
+        { "value": "title-xl tracking-heading", "label": "t:sections.global.settings.heading_size.options__4.label" }
+      ],
+      "default": "title-lg tracking-heading",
+      "label": "t:sections.global.settings.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "t:sections.global.settings.heading_width.label",
+      "default": "full",
+      "options": [
+        { "value": "small", "label": "t:sections.global.settings.heading_width.options__1.label" },
+        { "value": "medium", "label": "t:sections.global.settings.heading_width.options__2.label" },
+        { "value": "large", "label": "t:sections.global.settings.heading_width.options__3.label" },
+        { "value": "full", "label": "No max width" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.global.settings.heading_alignment.label",
+      "options": [
+        { "value": "text-left md:items-end md:flex-row", "label": "t:sections.global.settings.heading_alignment.options__1.label" },
+        { "value": "text-center md:items-center", "label": "t:sections.global.settings.heading_alignment.options__2.label" },
+        { "value": "text-right md:items-end md:flex-row-reverse", "label": "t:sections.global.settings.heading_alignment.options__3.label" }
+      ],
+      "default": "text-center md:items-center"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        { "value": "h2", "label": "t:sections.global.settings.heading_tag.options__2.label" },
+        { "value": "h3", "label": "t:sections.global.settings.heading_tag.options__3.label" }
+      ],
+      "default": "h2",
+      "label": "t:sections.global.settings.heading_tag.label"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.global.settings.subheading.label"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.global.settings.description.label",
+      "default": "<p>Eligible customers may use HSA or FSA funds at checkout with TrueMed.</p>"
+    },
+    {
+      "type": "select",
+      "id": "highlighted_text",
+      "label": "t:sections.global.settings.highlighted_text.label",
+      "options": [
+        { "value": "none", "label": "t:sections.global.settings.highlighted_text.options__1.label" },
+        { "value": "text", "label": "t:sections.global.settings.highlighted_text.options__2.label" },
+        { "value": "full_text", "label": "t:sections.global.settings.highlighted_text.options__3.label" },
+        { "value": "half_text", "label": "t:sections.global.settings.highlighted_text.options__4.label" },
+        { "value": "underline", "label": "t:sections.global.settings.highlighted_text.options__5.label" },
+        { "value": "stencil", "label": "t:sections.global.settings.highlighted_text.options__6.label" },
+        { "value": "scribble", "label": "t:sections.global.settings.highlighted_text.options__7.label" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "highlighted_scribble",
+      "label": "t:sections.global.settings.highlighted_scribble.label",
+      "options": [
+        { "value": "circle", "label": "t:sections.global.settings.highlighted_scribble.options__1.label" },
+        { "value": "basic-underline", "label": "t:sections.global.settings.highlighted_scribble.options__2.label" },
+        { "value": "sketch-underline", "label": "t:sections.global.settings.highlighted_scribble.options__3.label" },
+        { "value": "squiggle-underline", "label": "t:sections.global.settings.highlighted_scribble.options__4.label" },
+        { "value": "squiggle-underline-2", "label": "t:sections.global.settings.highlighted_scribble.options__5.label" }
+      ],
+      "default": "circle"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.settings.header__colors.content"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.global.settings.color_text.label",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "color_supporting_text",
+      "label": "Supporting text",
+      "default": "#394a60"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.global.settings.color_background.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.settings.header__section.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.settings.padding_top.label",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.settings.padding_bottom.label",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.global.settings.divider.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded",
+      "label": "t:sections.global.settings.rounded.label",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "HSA / FSA (TrueMed)"
+    }
+  ]
+}
+{% endschema %}

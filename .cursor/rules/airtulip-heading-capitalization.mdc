@@ -1,0 +1,52 @@
+---
+description: AirTulip — Title Case for all agent-written headings (storefront copy)
+alwaysApply: true
+---
+
+# AirTulip — heading capitalization (Title Case)
+
+When you **write or edit heading text** in this theme, capitalize the **first letter of every word**. This applies to headings only—not body copy, richtext paragraphs, button labels, or schema info strings unless they are clearly a heading field.
+
+## Scope — what counts as a heading
+
+- Section/block settings named like `heading`, `title`, `top_heading`, `bottom_heading`, `overlay_heading`, `subheading` when used as a visible headline (h1–h6 or theme `.heading` classes)
+- JSON template values in `templates/*.json` and section presets that populate headline fields
+- Liquid-visible headlines in `sections/`, `blocks/`, and `snippets/`
+- Marketing page copy you add for heroes, split-text headlines, multicolumn titles, CTAs with headline styling
+
+**Do not** apply this rule to long-form body text, FAQ answers, product descriptions, or `description` / `text` richtext fields.
+
+## Rule
+
+- **Title Case every word** in headings the agent creates or rewrites.
+- Keep existing merchant-edited headings unchanged unless the task is to rewrite that heading.
+
+## Exceptions (keep canonical form)
+
+| Keep as-is | Examples |
+|------------|----------|
+| Brand / product names | AirTulip, AirTulip Sleep |
+| Acronyms & grades | H14, HEPA, dB(A), PM2.5 |
+| Already-styled trademarks | TrueMed, Shark Tank |
+| Numbers and symbols | 1,000×, 26, U.S. |
+
+When a proper noun is mid-heading, still capitalize its first letter if the brand style allows (e.g. **Shop AirTulip Sleep**).
+
+## Examples
+
+| Avoid | Use |
+|-------|-----|
+| Stop breathing the room. Start breathing clean. | Stop Breathing The Room. Start Breathing Clean. |
+| Built to a standard, not a price point. | Built To A Standard, Not A Price Point. |
+| Scientifically proven results | Scientifically Proven Results |
+| Over 1,000× cleaner | Over 1,000× Cleaner |
+
+Body copy under the heading stays in normal sentence case:
+
+- Heading: **Particles Per Breath Drop To Cleanroom-Level Performance While You Sleep.**
+- Body: *Particles per breath drop to cleanroom-level performance while you sleep.*
+
+## Related rules
+
+- **`.cursor/rules/airtulip-brand-content.mdc`** — product names, science claims, tone
+- **`.cursor/rules/airtulip-project.mdc`** — overall theme context

@@ -127,26 +127,15 @@
     {
       "type": "select",
       "id": "heading_size",
-      "options": [
-        {
-          "value": "title-sm",
-          "label": "t:sections.global.settings.heading_size.options__1.label"
-        },
-        {
-          "value": "title-md",
-          "label": "t:sections.global.settings.heading_size.options__2.label"
-        },
-        {
-          "value": "title-lg tracking-heading",
-          "label": "t:sections.global.settings.heading_size.options__3.label"
-        },
-        {
-          "value": "title-xl tracking-heading",
-          "label": "t:sections.global.settings.heading_size.options__4.label"
-        }
-      ],
+      "label": "Size",
       "default": "title-md",
-      "label": "t:sections.global.settings.heading_size.label"
+      "options": [
+        { "value": "title-md", "label": "Medium" },
+        { "value": "title-md-lg tracking-heading", "label": "Medium–large" },
+        { "value": "title-lg tracking-heading", "label": "Large" },
+        { "value": "title-lg-xl tracking-heading", "label": "Large–extra large" },
+        { "value": "title-xl tracking-heading", "label": "Extra large" }
+      ]
     },
     {
       "type": "select",
@@ -171,47 +160,13 @@
     {
       "type": "select",
       "id": "heading_tag",
-      "options": [
-        {
-          "value": "h1",
-          "label": "t:sections.global.settings.heading_tag.options__1.label"
-        },
-        {
-          "value": "h2",
-          "label": "t:sections.global.settings.heading_tag.options__2.label"
-        },
-        {
-          "value": "h3",
-          "label": "t:sections.global.settings.heading_tag.options__3.label"
-        },
-        {
-          "value": "h4",
-          "label": "t:sections.global.settings.heading_tag.options__4.label"
-        },
-        {
-          "value": "h5",
-          "label": "t:sections.global.settings.heading_tag.options__5.label"
-        },
-        {
-          "value": "h6",
-          "label": "t:sections.global.settings.heading_tag.options__6.label"
-        },
-        {
-          "value": "div",
-          "label": "t:sections.global.settings.heading_tag.options__7.label"
-        },
-        {
-          "value": "span",
-          "label": "t:sections.global.settings.heading_tag.options__8.label"
-        },
-        {
-          "value": "p",
-          "label": "t:sections.global.settings.heading_tag.options__9.label"
-        }
-      ],
+      "label": "HTML tag",
       "default": "h2",
-      "label": "t:sections.global.settings.heading_tag.label",
-      "info": "t:sections.global.settings.heading_tag.info"
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ]
     },
     {
       "type": "text",

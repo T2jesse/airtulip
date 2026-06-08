@@ -84,6 +84,7 @@
         "highlighted_text": "none",
         "highlighted_scribble": "circle",
         "color_text": "",
+        "color_supporting_text": "#394a60",
         "color_background": "",
         "gradient_background": "",
         "color_highlight": "",
@@ -122,7 +123,7 @@
         "link_list-2": {
           "type": "link_list",
           "settings": {
-            "heading": "Product",
+            "heading": "PRODUCT",
             "menu": "learn",
             "container_width": 50,
             "opened": false

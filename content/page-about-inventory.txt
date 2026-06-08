@@ -1,0 +1,542 @@
+================================================================================
+AIRTULIP — ABOUT PAGE INVENTORY
+Source: templates/page.about.json (live theme #180129235234)
+Live URL: https://airtulip.co/pages/about
+Generated for rebuild planning — sections, copy, images, CTAs
+
+NOTE: Opening intro paragraph may render twice on live site (main-page H1 area +
+rich_text_HtB7tD both carry similar sacred-sleep copy). Confirm in theme preview.
+
+JSON template file in repo: templates/page.about.json (pulled from live theme)
+================================================================================
+
+SUMMARY
+----------------------------------------
+Total sections: 24
+Template: page.about
+
+SECTION ORDER (top to bottom):
+   1. [main] -> main-page
+   2. [rich_text_HtB7tD] -> rich-text
+   3. [image_with_text_MnCnb8] -> image-with-text
+   4. [rich_text_BPTF46] -> rich-text
+   5. [video_NVW66W] -> video
+   6. [image_with_text_4ATJaP] -> image-with-text
+   7. [rich_text_PFVANd] -> rich-text
+   8. [image_with_text_6fxPjB] -> image-with-text
+   9. [image_with_text_33pzqd] -> image-with-text
+  10. [image_with_text_tQn8E3] -> image-with-text
+  11. [image_with_text_zyc8Ar] -> image-with-text
+  12. [image_with_text_PteBaa] -> image-with-text
+  13. [image_with_text_E3Qjnf] -> image-with-text
+  14. [image_with_text_UgxQf4] -> image-with-text
+  15. [image_with_text_fac9ck] -> image-with-text
+  16. [lookbook_FrBbin] -> lookbook
+  17. [rich_text_bWipJy] -> rich-text
+  18. [custom_liquid_6UTgJL] -> custom-liquid
+  19. [rich_text_TjEi4N] -> rich-text
+  20. [custom_liquid_gikaM7] -> custom-liquid
+  21. [rich_text_Mmcy6N] -> rich-text
+  22. [image_with_text_9K6yFm] -> image-with-text
+  23. [image_with_text_UmitTz] -> image-with-text
+  24. [image_with_text_99KKQ4] -> image-with-text
+
+SECTION TYPE COUNTS:
+  - image-with-text: 13
+  - rich-text: 6
+  - custom-liquid: 2
+  - main-page: 1
+  - video: 1
+  - lookbook: 1
+
+CTA BUTTONS ON PAGE:
+  - [rich_text_PFVANd/button_zfhjaE] block: "Shop Now" -> products/sleep-air-purifier-headboard
+  - [image_with_text_33pzqd/button_TrYKQa] block: "Shop Now" -> products/sleep-air-purifier-headboard
+  - [image_with_text_zyc8Ar/button_MJ3U7T] block: "Invest in AirTulip" -> pages/invest
+  - [image_with_text_fac9ck/button_ynHjQy] block: "Shop Now" -> products/sleep-air-purifier-headboard
+  - [rich_text_Mmcy6N/button_wwrRaR] block: "Shop Now" -> products/sleep-air-purifier-headboard
+  - [image_with_text_99KKQ4/button_QbnPci] block: "Shop Now" -> products/sleep-air-purifier-headboard
+  Total CTAs: 6
+
+================================================================================
+SECTION-BY-SECTION DETAIL
+================================================================================
+
+## 1. main
+Type: main-page
+Settings:
+  heading_size: title-md
+  heading_alignment: text-center
+  heading_tag: h1
+  padding_top: 12
+  padding_bottom: 8
+  narrow: True
+
+## 2. rich_text_HtB7tD
+Type: rich-text
+Settings:
+  heading_size: title-md
+  heading_alignment: text-left md:items-end md:flex-row
+  heading_tag: h2
+  text_alignment: center
+  text_alignment_mobile: center
+  padding_top: 8
+  padding_bottom: 8
+  narrow: True
+Blocks (2):
+  - [text_LfUkbV] type=text
+      text: At AirTulip, we believe your sleep should be sacred. That’s why we’ve engineered the cleanest, quietest, and most precise sleep environment on earth—using aerospace science to turn every night into an opportunity for healing, recovery, and peak performance.
+  - [heading_A8PzL7] type=heading
+      heading: Sleep in a cleanroom-quality bubble. No noise. No drafts. No compromise.
+
+## 3. image_with_text_MnCnb8
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: image_first
+  image_width: medium
+  image_height: 400px
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/custom_resized_55ade92c-4426-42ee-b623-600d6d8bdf75.png
+Blocks (2):
+  - [heading_XdEaeA] type=heading
+      heading: Less turbulence means fewer particles, fewer triggers, and deeper rest.
+  - [text_WmdYKJ] type=text
+      text: Ordinary air moves chaotically—stirring up dust, allergens, and pollutants. Laminar flow moves with precision, creating an invisible shield around your body as you sleep.
+
+## 4. rich_text_BPTF46
+Type: rich-text
+Settings:
+  heading_size: title-md
+  heading_alignment: text-left md:items-end md:flex-row
+  heading_tag: h2
+  text_alignment: left
+  text_alignment_mobile: left
+  padding_top: 8
+  padding_bottom: 8
+  narrow: True
+Blocks (1):
+  - [text_bGwjfi] type=text
+      text: We built AirTulip using scientific tools from aerospace and physics, backed by decades of research and modern simulation techniques.
+
+## 5. video_NVW66W
+Type: video
+Settings:
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  rounded: True
+  video: files/videos/AirTulip Sleep Laser Footage (Cropped).mp4
+  video_url: https://www.youtube.com/watch?v=_9VUPq3SxOc
+
+## 6. image_with_text_4ATJaP
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: text_first
+  image_width: medium
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/unnamed.jpg
+Blocks (1):
+  - [text_3HhpN4] type=text
+      text: At the heart of AirTulip is controlled laminar airflow — a stream of ultra-low turbulence air that flows in a single direction. Unlike chaotic flow from fans or HVAC systems, laminar airflow creates a stable barrier that prevents outside pollutants from entering your breathing zone while you sleep.
+
+## 7. rich_text_PFVANd
+Type: rich-text
+Settings:
+  heading_size: title-md
+  heading_alignment: text-left md:items-end md:flex-row
+  heading_tag: h2
+  text_alignment: left
+  text_alignment_mobile: left
+  padding_top: 8
+  padding_bottom: 8
+  narrow: True
+Blocks (2):
+  - [text_PNPqCc] type=text
+      text: This principle, used in cleanrooms, ICUs, and aerospace labs, has never been applied like this in the bedroom. Making it silent, elegant, and bedroom-safe required building a new kind of system — and testing it with the same rigor used in aviation and building physics. AirTulip wasn’t adapted from existing products — it was engineered from scratch. We’ve filed multiple patent applications to protect the unique technology behind our clean zone delivery.
+  - [button_zfhjaE] type=button
+      button: Shop Now -> products/sleep-air-purifier-headboard
+
+## 8. image_with_text_6fxPjB
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: image_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/173398_0123-min.jpg
+Blocks (2):
+  - [heading_Xp6kDL] type=heading
+      heading: Our Journey
+  - [text_x3WXnh] type=text
+      text: AirTulip appeared on SHARK TANK , showing the world what clean air can truly look and feel like. A silent, focused airflow — visualized in smoke, measured in real-time, built into a headboard designed for recovery. But it didn’t start there.
+
+## 9. image_with_text_33pzqd
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: text_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/IMG_3311.jpg
+Blocks (2):
+  - [text_q46hQ7] type=text
+      text: Before Shark Tank, we caught the attention of early users and believers — including NFL Pro Bowler Matt Judon , who used AirTulip to support his sleep and athletic recovery.
+  - [button_TrYKQa] type=button
+      button: Shop Now -> products/sleep-air-purifier-headboard
+
+## 10. image_with_text_tQn8E3
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: image_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/unnamed_1.png
+Blocks (1):
+  - [text_LXpaQN] type=text
+      text: We first launched on Kickstarter , where hundreds of backers helped us bring AirTulip from prototype to production. That support validated a deeper shift: people were ready for something new. Not just a purifier — but a system that truly changes how air behaves around the body. The idea was born during the pandemic in New York. With air quality top of mind, we built test rigs from scratch, used lasers and fog to visualize flow, and applied aerospace tools and cleanroom principles to create a protective breathing zone for the bedroom.
+
+## 11. image_with_text_zyc8Ar
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: text_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/AirTulip_at_dentist_fair.jpg
+Blocks (2):
+  - [text_6rMDyB] type=text
+      text: We’ve kept it hands-on ever since — designing, testing, and building each unit in New York and Detroit , personally controlling every single detail. Today, AirTulip is more than a product. It’s part of a mission to raise awareness, shift expectations, and give people back control over something invisible — but vital.
+  - [button_MJ3U7T] type=button
+      button: Invest in AirTulip -> pages/invest
+
+## 12. image_with_text_PteBaa
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: text_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/173398_0099-min.jpg
+Blocks (3):
+  - [heading_nbMLVY] type=heading
+      heading: Founder Story
+  - [text_4W6zjW] type=text
+      text: AirTulip began with a question: why do we spend a third of our lives breathing dirty, uncontrolled air—especially while we sleep? During the height of the pandemic in New York, we started experimenting. Using aerospace tools, lasers, and fog, we visualized airflow in bedrooms the way cleanrooms and jet labs do. What we found confirmed our intuition: even high-end purifiers weren’t protecting the most critical space—your personal breathing zone. That’s when the idea for AirTulip was born: a clean-air system built not just to filter, but to control. We engineered it from scratch—applying decades...
+  - [text_WCrMiA] type=text
+      text: I’m an aerospace engineer and physicist with a PhD in aeroacoustics. I’ve worked with airflow at the highest levels — from Porsche and Ferrari to NASA — specializing in how to shape and silence it with precision. But long before that, I grew up in a family business that built cleanrooms and industrial air systems. I learned early on how air behaves, how to control it, and how important it is in places where performance and purity matter. During the pandemic in New York, I had a moment of clarity: most people spend a third of their life breathing uncontrolled, polluted air — especially while sl...
+
+## 13. image_with_text_E3Qjnf
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: image_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/unnamed_2.png
+Blocks (2):
+  - [heading_x9g8MT] type=heading
+      heading: How we make AirTulip
+  - [text_beF4K9] type=text
+      text: To make that possible, we drew from decades of research and cutting-edge industry tools used across aerospace and environmental engineering. We didn’t build a better air purifier. We re-engineered how air works—just for sleep. To engineer and validate this level of precision, we turned to the same tools used in high-performance labs and jet engine development. We visualized airflow using laser-based systems from LaVision , typically reserved for combustion research and wind tunnels. We applied flow visualization principles from TU Delft’s Aerodynamics department by Prof Fulvio Scarano , treati...
+
+## 14. image_with_text_UgxQf4
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: text_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/custom_resized_d0ae31bb-594c-4818-918a-5dc39992bcea.png
+Blocks (1):
+  - [text_jxE4Xb] type=text
+      text: Our particle-free zone was tested in professional chambers from the Building Physics group at TU Eindhoven , where airflow behavior around the sleeping body was modeled with thermal mannequins and smoke tracers. We custom-designed our fans using aerospace software —so you get powerful airflow with whisper-level silence.
+
+## 15. image_with_text_fac9ck
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: image_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/unnamed_3.png
+Blocks (3):
+  - [heading_TtPcmV] type=heading
+      heading: Owls, Jet Engines, and You
+  - [text_hMHKbK] type=text
+      text: And we didn’t stop at aerospace. Inspired by the silent flight of owls , we applied biomimicry to our fan blade edges, incorporating serrated geometries that reduce turbulence and noise — just like an owl’s feathers dampen sound mid-flight. This cross-industry approach let us build something new: not just a better purifier, but a deep-tech product that shapes the air around your body with aerospace precision.
+  - [button_ynHjQy] type=button
+      button: Shop Now -> products/sleep-air-purifier-headboard
+
+## 16. lookbook_FrBbin
+Type: lookbook
+Settings:
+  heading: The Four Pillars of AirTulip's Deep Tech
+  description: <p>We're not copying a category - we're inventing a new one. One where you can see, feel, and measure the air that helps you recover. Here's how we built the cleanest air zone ever made for the bedroom:</p>
+  heading_size: title-md
+  heading_alignment: text-center md:items-center
+  heading_tag: h2
+  padding_top: 8
+  padding_bottom: 8
+  overlay_opacity: 30
+  heading_position: none
+  image: shop_images/custom_resized_55ade92c-4426-42ee-b623-600d6d8bdf75.png
+Blocks (4):
+  - [content_KbyLQE] type=content
+      heading: Aerodynamics
+      text: Technology University Delft-inspired flow control CFD modeling and pressure tuning
+      icon_image: shop_images/wind_2.svg
+  - [content_wdmyrK] type=content
+      heading: Measurement
+      text: Laser imaging (LaVision) Particle sensors and flow meters
+      icon_image: shop_images/crop.svg
+  - [content_baRhjB] type=content
+      heading: Simulation & Design
+      text: CFturbo fan blade generation 3D-printed airflow systems
+      icon_image: shop_images/pen-tool.svg
+  - [content_8TVEKJ] type=content
+      heading: Real-World Testing
+      text: Technology University Eindhoven airflow test chambers Smoke + thermal mannequin trials
+      icon_image: shop_images/activity_1.svg
+
+## 17. rich_text_bWipJy
+Type: rich-text
+Settings:
+  heading_size: title-md
+  heading_alignment: text-left md:items-end md:flex-row
+  heading_tag: h2
+  text_alignment: left
+  text_alignment_mobile: left
+  padding_top: 8
+  padding_bottom: 8
+  narrow: True
+Blocks (2):
+  - [heading_Bbj6M8] type=heading
+      heading: What’s in the Air You Breathe - Why it matters?
+  - [text_PmBii6] type=text
+      text: You breathe 2,600 gallons of air every night. Most of it is polluted. If that air contains dust, smoke, allergens, or ultrafine particles, you’re inhaling millions of microscopic intruders while lying still, hour after hour. Most people think air quality is a daytime issue — traffic, pollution, city smog. But the truth is, you breathe more air while you sleep than at any other time of day. And unlike food or water, there’s no pause button. Your lungs are always working. What’s in the air matters.
+
+## 18. custom_liquid_6UTgJL
+Type: custom-liquid
+Settings:
+  padding_top: 8
+  padding_bottom: 8
+  Embedded images (custom liquid):
+    - https://cdn.shopify.com/s/files/1/0684/5684/1506/files/unnamed_4.png?v=1744392669
+
+## 19. rich_text_TjEi4N
+Type: rich-text
+Settings:
+  heading_size: title-md
+  heading_alignment: text-left md:items-end md:flex-row
+  heading_tag: h2
+  text_alignment: left
+  text_alignment_mobile: left
+  padding_top: 8
+  padding_bottom: 8
+  narrow: True
+Blocks (2):
+  - [heading_QMTgwX] type=heading
+      heading: The Problem: Fine and Ultrafine Particles
+  - [text_xm8zUH] type=text
+      text: Air isn’t just clean or dirty — it’s full of particles of different sizes. And the smaller they are, the more damage they do. PM10 (pollen, coarse dust): Gets trapped in your nose and throat; PM2.5 (fine dust, mold spores): Reaches deep into your lungs; PM0.3 and smaller (ultrafine particles, wildfire smoke, viruses): Bypass your body's defenses, enter the bloodstream, and trigger inflammation. You can inhale hundreds of millions of these particles in a single night, especially in bedrooms without proper filtration or air control. They’ve been linked to: Higher rates of asthma , allergies , an...
+
+## 20. custom_liquid_gikaM7
+Type: custom-liquid
+Settings:
+  padding_top: 8
+  padding_bottom: 8
+  Embedded images (custom liquid):
+    - https://cdn.shopify.com/s/files/1/0684/5684/1506/files/AirTulip_Clean_Air_Zone.png?v=1744393908
+
+## 21. rich_text_Mmcy6N
+Type: rich-text
+Settings:
+  heading_size: title-md
+  heading_alignment: text-left md:items-end md:flex-row
+  heading_tag: h2
+  text_alignment: left
+  text_alignment_mobile: left
+  padding_top: 8
+  padding_bottom: 8
+  narrow: True
+Blocks (5):
+  - [heading_9pnRaD] type=heading
+      heading: Why the AirTulip Clean Zone Matters
+  - [text_bbdANy] type=text
+      text: 1. We create a clean air zone. AirTulip doesn’t just reduce airborne particles — it controls how air moves. By using precise laminar airflow, we form a clean-air shield around your head and upper body, isolating your breathing zone and continuously pushing polluted air outward. It’s not about cleaning the whole room — it’s about protecting you where it matters most: while you sleep. Think of it as a personal cleanroom effect , embedded in a headboard. 2. Clean air have been shown to support better health and recovery. Scientific literature has shown that reducing exposure to airborne particula...
+  - [button_wwrRaR] type=button
+      button: Shop Now -> products/sleep-air-purifier-headboard
+  - [heading_pEjmia] type=heading
+      heading: Build Differently
+  - [text_7rbXJr] type=text
+      text: Every unit is hand-built in the U.S.—crafted in limited batches and individually tuned for performance. Owning an AirTulip isn’t like owning a product. It’s like owning a precision instrument for health—made just for you. Everyone from athletes to asthmatics benefits from clean air.
+
+## 22. image_with_text_9K6yFm
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: image_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/unnamed_5_1.png
+Blocks (2):
+  - [heading_xXzNUr] type=heading
+      heading: Designed to Move Air Right — And Keep It Quiet
+  - [text_E67qj7] type=text
+      text: We use additive manufacturing (3D printing) to create organic, aerodynamic fan blades and flow channels that simply aren’t possible with traditional methods. Inspired by the serrated feathers of owl wings , our impellers reduce turbulence and tonal noise at the source. This allows for more air movement, less disturbance — and no trade-off between power and silence
+
+## 23. image_with_text_UmitTz
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: text_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 8
+  image: shop_images/unnamed_6.png
+Blocks (2):
+  - [heading_3r7BAw] type=heading
+      heading: Medical-Grade Filters, Bedroom Ready
+  - [text_YwMcMn] type=text
+      text: Most consumer air purifiers stop at HEPA H13 , which captures 99.95% of 0.3 micron particles. We use true H14-rated filters , the same standard required in medical cleanrooms and pharmaceutical manufacturing — capturing 99.995% at 0.3 microns. That difference matters when you’re breathing it for eight hours a night. And because laminar flow requires consistent pressure, our filter system is designed to maintain performance even as the filters load — not just on day one. Strength, Silence, and Structure To maintain shape under airflow pressure without vibration, we use a structural honeycomb co...
+
+## 24. image_with_text_99KKQ4
+Type: image-with-text
+Settings:
+  text_alignment: left
+  text_alignment_mobile: left
+  layout: image_first
+  image_width: small
+  image_height: adapt
+  padding_top: 8
+  padding_bottom: 32
+  image: shop_images/Gordon_in_the_Newlab_workshop_New_york.png
+Blocks (3):
+  - [heading_VMYTeq] type=heading
+      heading: Built Like a Supercar, Tuned for Sleep
+  - [text_NERbPB] type=text
+      text: Even the outer fabrics and upholstery are tested. We measure their airflow resistance to ensure they perform well. Once approved, each shell is sealed, the airflow path validated, and the unit run-tested for performance and sound. We don’t guess. We don’t assume. We test. Every AirTulip unit is: Built-in the USA: Brooklyn and Detroit; Hand-assembled, sealed, and individually signed off; Tuned for airflow quality, pressure, and acoustic performance; Designed with long-life modular components for easy service and future upgrades. This is not mass production. It’s low-volume, high-integrity manuf...
+  - [button_QbnPci] type=button
+      button: Shop Now -> products/sleep-air-purifier-headboard
+
+================================================================================
+NARRATIVE ARC (current story flow)
+================================================================================
+
+1. PAGE TITLE
+  main-page — H1 About AirTulip
+
+2. OPENING PITCH
+  rich-text — Sacred sleep intro + cleanroom bubble headline (centered)
+
+3. LAMINAR FLOW INTRO
+  image-with-text — Turbulence/particles + laminar shield + image
+
+4. SCIENCE PREAMBLE
+  rich-text — Aerospace tools paragraph
+
+5. VIDEO
+  video — Laser footage MP4 + YouTube fallback
+
+6. LAMINAR EXPLAINER
+  image-with-text — Controlled laminar airflow definition
+
+7. PATENTS + SHOP CTA
+  rich-text — Cleanroom/ICU context, patents, Shop Now
+
+8-11. OUR JOURNEY
+  4x image-with-text — Shark Tank, Matt Judon, Kickstarter/NYC, NY+Detroit + Invest CTA
+
+12. FOUNDER STORY
+  image-with-text — Long narrative + Arjen bio (duplicates journey)
+
+13-15. HOW WE MAKE IT
+  3x image-with-text — LaVision/TU Delft, TU Eindhoven, Owls + Shop
+
+16. FOUR PILLARS
+  lookbook — Hotspot grid (Aerodynamics, Measurement, Simulation, Testing)
+
+17-22. HEALTH SCIENCE
+  rich-text + custom images — Air quality, particles, clean zone, Build Differently
+
+23-25. ENGINEERING
+  3x image-with-text — 3D printing, H14 filters, manufacturing + Shop
+
+================================================================================
+REBUILD OBSERVATIONS
+================================================================================
+
+- LENGTH: 24 sections — very long; Shark Tank, Matt Judon, Kickstarter repeat 2-3 times.
+- STRUCTURE: Mostly image-with-text + rich-text; no chapter nav or progressive disclosure.
+- CTAs: 6x "Shop Now" + 1x "Invest in AirTulip" scattered mid-page.
+- DUPLICATION: Founder Story repeats Our Journey almost verbatim.
+- CUSTOM LIQUID: 2 hardcoded CDN images — not theme-editor friendly.
+- IMAGE REUSE: custom_resized_55ade92c... used in laminar intro AND Four Pillars lookbook.
+- LOOKBOOK: Four Pillars hotspot UI may be hard to scan on mobile.
+- PADDING: Most sections use padding 8px top/bottom — very tight.
+- MISSING: Consolidated timeline, product specs, subscription/warranty in one place.
+- STRENGTHS: Strong science partners, health education, credible founder story.
+- SUGGESTED CHAPTERS: Hero | Science | How it works | Proof | Founder | Build | Health | CTA
+
+================================================================================
+ALL IMAGES & MEDIA (deduplicated)
+================================================================================
+
+  [image_with_text_MnCnb8] image: shop_images/custom_resized_55ade92c-4426-42ee-b623-600d6d8bdf75.png
+  [video_NVW66W] video: files/videos/AirTulip Sleep Laser Footage (Cropped).mp4
+  [video_NVW66W] video_url: https://www.youtube.com/watch?v=_9VUPq3SxOc
+  [image_with_text_4ATJaP] image: shop_images/unnamed.jpg
+  [image_with_text_6fxPjB] image: shop_images/173398_0123-min.jpg
+  [image_with_text_33pzqd] image: shop_images/IMG_3311.jpg
+  [image_with_text_tQn8E3] image: shop_images/unnamed_1.png
+  [image_with_text_zyc8Ar] image: shop_images/AirTulip_at_dentist_fair.jpg
+  [image_with_text_PteBaa] image: shop_images/173398_0099-min.jpg
+  [image_with_text_E3Qjnf] image: shop_images/unnamed_2.png
+  [image_with_text_UgxQf4] image: shop_images/custom_resized_d0ae31bb-594c-4818-918a-5dc39992bcea.png
+  [image_with_text_fac9ck] image: shop_images/unnamed_3.png
+  [lookbook_FrBbin/content_KbyLQE] icon_image: shop_images/wind_2.svg
+  [lookbook_FrBbin/content_wdmyrK] icon_image: shop_images/crop.svg
+  [lookbook_FrBbin/content_baRhjB] icon_image: shop_images/pen-tool.svg
+  [lookbook_FrBbin/content_8TVEKJ] icon_image: shop_images/activity_1.svg
+  [custom_liquid_6UTgJL] embedded: https://cdn.shopify.com/s/files/1/0684/5684/1506/files/unnamed_4.png?v=1744392669
+  [custom_liquid_gikaM7] embedded: https://cdn.shopify.com/s/files/1/0684/5684/1506/files/AirTulip_Clean_Air_Zone.png?v=1744393908
+  [image_with_text_9K6yFm] image: shop_images/unnamed_5_1.png
+  [image_with_text_UmitTz] image: shop_images/unnamed_6.png
+  [image_with_text_99KKQ4] image: shop_images/Gordon_in_the_Newlab_workshop_New_york.png

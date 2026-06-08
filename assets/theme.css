@@ -3624,8 +3624,16 @@ button.shopify-payment-button__button--unbranded {
   font-size: calc(2 * var(--title-md));
 }
 
+.title-md-lg {
+  font-size: calc((var(--title-md) + var(--title-lg)) * 0.5);
+}
+
 .title-lg {
   font-size: var(--title-lg);
+}
+
+.title-lg-xl {
+  font-size: calc((var(--title-lg) + var(--title-xl)) * 0.5);
 }
 
 .title-lg2x {

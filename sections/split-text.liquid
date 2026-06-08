@@ -824,14 +824,9 @@
                 endif
               -%}
               <img
-                src="{{ asset_file | asset_img_url: width: 1200 }}"
+                src="{{ asset_file | asset_url }}"
                 srcset="
-                  {{- asset_file | asset_img_url: width: 375 }} 375w,
-                  {{- asset_file | asset_img_url: width: 550 }} 550w,
-                  {{- asset_file | asset_img_url: width: 720 }} 720w,
-                  {{- asset_file | asset_img_url: width: 940 }} 940w,
-                  {{- asset_file | asset_img_url: width: 1210 }} 1210w,
-                  {{- asset_file | asset_img_url: width: 1600 }} 1600w
+                  {{- asset_file | asset_url }} 1x
                 "
                 sizes="{{ sizes_primary }}"
                 alt="{{ alt_primary }}"

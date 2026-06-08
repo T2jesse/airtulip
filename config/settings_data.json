@@ -118,6 +118,7 @@
     "share_email": true,
     "cart_upsell_dual_purchase": true,
     "cart_upsell_onetime_label": "One-time",
+    "cart_upsell_add_to_cart_label": "Add [1] to Cart",
     "cart_upsell_subscribe_label": "Subscribe",
     "cart_upsell_prefer_subscription_price": false,
     "cart_upsell_add_as_subscription": false,

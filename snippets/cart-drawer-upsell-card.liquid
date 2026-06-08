@@ -14,6 +14,7 @@
   @param {boolean} [prefer_subscription] - Single-button mode: show subscription price
   @param {boolean} [add_as_subscription] - Single-button mode: POST selling_plan
   @param {string} [subscribe_label]
+  @param {string} [add_to_cart_label]
   @param {string} [onetime_label]
   @param {string} [subscription_note]
 {%- enddoc -%}
@@ -85,6 +86,8 @@
   if dual_purchase and upsell_variant.selling_plan_allocations.size > 0
     assign use_dual_purchase = true
   endif
+
+  assign upsell_add_to_cart_label = add_to_cart_label | default: 'Add [1] to Cart'
 -%}
 
 <div class="horizontal-product cart-drawer-upsell-card flex gap-4 md:gap-5 w-full{% if use_dual_purchase %} cart-drawer-upsell-card--dual items-start{% else %} items-center{% endif %}">
@@ -206,10 +209,10 @@
               type="submit"
               class="button button--secondary button--small w-full"
               is="hover-button"
-              aria-label="{{ 'products.product.add_to_cart' | t | escape }}: {{ product.title | escape }}"
+              aria-label="{{ upsell_add_to_cart_label | escape }}: {{ product.title | escape }}"
             >
               <span class="btn-fill" data-fill></span>
-              <span class="btn-text">{{ 'products.product.add_to_cart' | t }}</span>
+              <span class="btn-text">{{ upsell_add_to_cart_label | escape }}</span>
             </button>
           {%- endform -%}
 
@@ -253,10 +256,10 @@
             class="button button--primary button--small w-full"
             is="hover-button"
             data-variant-id="{{ upsell_variant.id }}"
-            aria-label="{{ 'products.product.add_to_cart' | t | escape }}: {{ product.title | escape }}"
+            aria-label="{{ upsell_add_to_cart_label | escape }}: {{ product.title | escape }}"
           >
             <span class="btn-fill" data-fill></span>
-            <span class="btn-text">{{ 'products.product.add_to_cart' | t }}</span>
+            <span class="btn-text">{{ upsell_add_to_cart_label | escape }}</span>
           </button>
         {%- endform -%}
       {%- endif -%}

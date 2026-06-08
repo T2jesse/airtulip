@@ -155,13 +155,6 @@
           "type": "shop_pay_installments",
           "settings": {}
         },
-        "liquid_f9YK6r": {
-          "type": "liquid",
-          "name": "HSA FSA Snippet",
-          "settings": {
-            "liquid": "<div id=\"truemed-prequalify\" style=\"font-size: 14px;\" icon-height=\"12\" data-public-id=\"tm_qual_r9u205ahnk\"></div>\n<script src=\"https://static.truemed.com/widgets/product-page-widget.min.js\" defer></script>"
-          }
-        },
         "pdp_product_tabs": {
           "type": "tabbed_content",
           "settings": {
@@ -206,7 +199,6 @@
         "buy_buttons",
         "affirm_pay_over_time_messaging_product_block_BiBYHe",
         "shop_pay_installments_7pLmQe",
-        "liquid_f9YK6r",
         "pdp_product_tabs",
         "sticky_buy_button"
       ],
@@ -230,6 +222,33 @@
         "padding_bottom": 52,
         "divider": false,
         "full_width": true,
+        "rounded": false
+      }
+    },
+    "pdp_truemed_hsa": {
+      "type": "truemed-hsa-fsa",
+      "settings": {
+        "public_qualification_id": "tm_qual_r9u205ahnk",
+        "widget_element_id": "truemed-prequalify",
+        "icon_height": 20,
+        "shopify_tags_mode": "none",
+        "require_product_tag": "",
+        "dark_mode": false,
+        "heading": "Pay with HSA / FSA",
+        "heading_size": "title-lg tracking-heading",
+        "heading_max_width": "full",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "<p>Eligible customers may use HSA or FSA funds at checkout with TrueMed.</p>",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "#171717",
+        "color_supporting_text": "#394a60",
+        "color_background": "#ffffff",
+        "padding_top": 24,
+        "padding_bottom": 60,
+        "divider": false,
         "rounded": false
       }
     },
@@ -378,6 +397,8 @@
         "desktop_text_align": "left",
         "content_alignment_mobile": "left",
         "split_overlay_stack_gap_px": 24,
+        "media_aspect_ratio_mobile": "auto",
+        "media_aspect_ratio_desktop": "auto",
         "min_height_px": 460,
         "min_height_px_mobile": 280,
         "rounded": true,
@@ -1106,6 +1127,7 @@
   "order": [
     "countdown_timer_ynng3X",
     "main-product",
+    "pdp_truemed_hsa",
     "pdp_trust_signals",
     "pdp_value_split",
     "pdp_product_explorer",

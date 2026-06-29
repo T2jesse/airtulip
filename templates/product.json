@@ -246,7 +246,7 @@
         "color_text": "#171717",
         "color_supporting_text": "#394a60",
         "color_background": "#ffffff",
-        "padding_top": 24,
+        "padding_top": 60,
         "padding_bottom": 60,
         "divider": false,
         "rounded": false

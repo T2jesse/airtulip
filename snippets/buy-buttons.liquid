@@ -62,6 +62,8 @@
     is: 'product-form'
   -%}
     <input type="hidden" name="id" value="{{ active_variant.id }}" disabled />
+    {%- comment -%} Appstle widget radios live outside this form; JS syncs selection here. {%- endcomment -%}
+    <input type="hidden" name="selling_plan" value="" data-appstle-selling-plan-input />
 
     {%- liquid
       if gift_card_recipient_feature_active

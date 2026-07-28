@@ -13,6 +13,7 @@ alwaysApply: true
 - **Installed apps (admin):** See **`.cursor/rules/airtulip-apps.mdc`** — inventory + overlap notes; apps affect live theme behavior beyond this Git repo.
 - **Shopify CLI `theme push`:** See **`.cursor/rules/airtulip-cli-theme-push.mdc`** — `visible_if` schema patches required for RoarTheme Concept to upload via CLI (avoid PDP 404 on dev themes).
 - **Merchant product & storefront copy:** See **`.cursor/rules/airtulip-brand-content.mdc`** — AirTulip positioning, science story, pricing/subscription snapshot, policies (for headings, badges, FAQs, marketing sections).
+- **Meeting recaps & open client tasks:** See **`content/meeting-notes.md`** — Fireflies notes, subscription/shipping investigations, QA checklists.
 - **Theme product & styling (vendor baseline):** See **Theme product & CSS foundations** below.
 
 ## Theme product & CSS foundations

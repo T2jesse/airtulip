@@ -16,18 +16,62 @@ Use this list when debugging **extra scripts**, **layout shifts**, **checkout/su
 | Subscriptions *(Shopify native)* |
 | Utterbond Subscriptions |
 | PayWhirl Subscriptions |
-| Appstle Subscription |
+| **Appstle Subscription** *(active on filter PDP — see below)* |
 | Translate & Adapt *(Shopify native)* |
 | Judge.me Reviews |
 | GA Ultimate Trust Badges Icons |
 | BEE Logo showcase |
 | Klaviyo: Email Marketing & SMS |
 | Data Feed Watch Shopping Feeds |
-| Shipping & Delivery - ShipZip |
+| **Shipping & Delivery - ShipZip** |
 | Mailchimp: Email & SMS |
 | UpPromote Affiliate |
 | PageFly Page Builder |
 | Messaging *(Shopify native)* |
+
+## Subscription stack (storefront reality)
+
+| Surface | App | Repo touchpoint |
+|---------|-----|-----------------|
+| **Replacement filter PDP** | **Appstle** | `templates/product.filter-replacement.json` — `appstle-subscription-product-page-widget` block; global embed `appstle-subscription-helper` in `config/settings_data.json` |
+| Cart drawer upsells | Native Shopify `selling_plan_allocations` | `snippets/cart-drawer-upsell-*.liquid`, `assets/cart.js` — Appstle widget **does not** run in drawer (`settings_schema.json` note) |
+| Headboard PDP | No Appstle block on default `product.json` | Filter subscription is separate product/template |
+
+**Renewal shipping / billing** is configured in **Appstle admin** (shipping profiles, selling plans) and **Shopify Settings → Shipping and delivery** — not theme Liquid. Meeting notes: `content/meeting-notes.md`.
+
+## Shopify CLI store connector (for live app/subscription queries)
+
+Agents and developers should use **Shopify CLI store auth** so `shopify store execute` can read products, orders, and subscription contracts without guessing from Git alone.
+
+**Store:** `airtulip.myshopify.com` (also in `shopify.theme.toml` → `[environments.development]`)
+
+**One-time auth** (developer runs locally — opens browser):
+
+```bash
+shopify store auth --store airtulip.myshopify.com --scopes read_products,read_orders,read_shipping,read_customers,read_fulfillments,read_discounts,read_purchase_options,read_locations,read_price_rules,read_draft_orders
+```
+
+**Currently authenticated (2026-07-27):** `jesse@t2products.com` with the scopes above.
+
+**Note:** `read_own_subscription_contracts` is a **protected** Subscription API scope (Partner app + Shopify approval). CLI store auth will fail with `missing_shopify_permission` if you include it. For subscription **contracts**, use the **Appstle merchant portal** or an approved custom app. CLI can still read **selling plans** via `read_products` + `read_purchase_options` on the filter product.
+
+**Also protected (optional, request in Partner Dashboard if needed):** `read_all_orders` (orders older than 60 days — useful for long-running renewals).
+
+**Invalid scopes to avoid:** `read_delivery_profiles` (use `read_shipping` instead).
+
+**Verify:**
+
+```bash
+shopify store execute --store airtulip.myshopify.com --query "{ shop { name } }"
+```
+
+**Example — filter product selling plans:**
+
+```bash
+shopify store execute --store airtulip.myshopify.com --query "{ product(handle: \"replacement-filter-set\") { title sellingPlanGroups { name sellingPlans { id name } } } }"
+```
+
+Re-run `shopify store auth` with additional scopes if a query fails for missing scope. Theme dev/push remains developer-owned (`npm run dev` / staging publish) — CLI here is for **read/query** and app settings investigation.
 
 ## Redundancy / consolidation (worth confirming with the merchant)
 
@@ -38,6 +82,7 @@ Use this list when debugging **extra scripts**, **layout shifts**, **checkout/su
 ## Theme repo touchpoints
 
 - **PageFly:** Can add **alternate templates** and heavy **CSS/JS**; repo already includes `snippets/pagefly-main-js.liquid` and PageFly-related locale keys. When editing layout or performance, check whether PageFly pages bypass standard JSON templates.
+- **Appstle (filters):** Product form sync — `assets/appstle-selling-plan-sync.js`, hidden `selling_plan` in `snippets/buy-buttons.liquid`. See `content/meeting-notes.md`.
 - **Judge.me, Klaviyo, trust badges, etc.:** Often add storefront snippets or rely on app blocks — if something “mysterious” appears in the DOM, check app embeds before patching `theme.js` / `theme.css`.
 
 ## When working on this project

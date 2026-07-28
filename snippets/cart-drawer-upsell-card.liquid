@@ -203,30 +203,30 @@
 
       {%- if use_dual_purchase -%}
         <div class="cart-drawer-upsell-card__forms grid gap-2">
+          {%- form 'product', product, id: subscribe_form_id, is: 'product-form', class: 'cart-drawer-upsell-card__form' -%}
+            <input type="hidden" name="id" value="{{ upsell_variant.id }}" class="cart-drawer-upsell-card__subscribe-id">
+            <input type="hidden" name="selling_plan" value="{{ upsell_selling_plan_id }}" class="cart-drawer-upsell-card__subscribe-plan">
+            <button
+              type="submit"
+              class="button button--primary button--small w-full"
+              is="hover-button"
+              aria-label="{{ subscribe_label | default: 'Subscribe' | escape }}: {{ product.title | escape }}"
+            >
+              <span class="btn-fill" data-fill></span>
+              <span class="btn-text">{{ subscribe_label | default: 'Subscribe' | escape }}</span>
+            </button>
+          {%- endform -%}
+
           {%- form 'product', product, id: onetime_form_id, is: 'product-form', class: 'cart-drawer-upsell-card__form' -%}
             <input type="hidden" name="id" value="{{ upsell_variant.id }}" class="cart-drawer-upsell-card__onetime-id">
             <button
               type="submit"
               class="button button--secondary button--small w-full"
               is="hover-button"
-              aria-label="{{ upsell_add_to_cart_label | escape }}: {{ product.title | escape }}"
+              aria-label="{{ onetime_label | default: 'One-time' | escape }}: {{ product.title | escape }}"
             >
               <span class="btn-fill" data-fill></span>
-              <span class="btn-text">{{ upsell_add_to_cart_label | escape }}</span>
-            </button>
-          {%- endform -%}
-
-          {%- form 'product', product, id: subscribe_form_id, is: 'product-form', class: 'cart-drawer-upsell-card__form' -%}
-            <input type="hidden" name="id" value="{{ upsell_variant.id }}" class="cart-drawer-upsell-card__subscribe-id">
-            <input type="hidden" name="selling_plan" value="{{ upsell_selling_plan_id }}" class="cart-drawer-upsell-card__subscribe-plan">
-            <button
-              type="submit"
-              class="button button--secondary button--small w-full"
-              is="hover-button"
-              aria-label="{{ subscribe_label | default: 'Subscribe' | escape }}: {{ product.title | escape }}"
-            >
-              <span class="btn-fill" data-fill></span>
-              <span class="btn-text">{{ subscribe_label | default: 'Subscribe' | escape }}</span>
+              <span class="btn-text">{{ onetime_label | default: 'One-time' | escape }}</span>
             </button>
           {%- endform -%}
         </div>

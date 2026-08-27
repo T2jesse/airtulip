@@ -14,6 +14,18 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
+        "announcement_RgAjJN": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "text": "Labor Day Sale $300 off applied automatically in cart.",
+            "link": "",
+            "hide_icon_mobile": true,
+            "text_mobile": "",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
         "announcement_dQtrRm": {
           "type": "announcement",
           "settings": {
@@ -40,6 +52,7 @@
         }
       },
       "block_order": [
+        "announcement_RgAjJN",
         "announcement_dQtrRm",
         "announcement-2"
       ],

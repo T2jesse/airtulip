@@ -84,6 +84,15 @@
   }
   {%- endif -%}
 
+  /* The marquee is absolutely positioned over the image. Keep mobile copy and
+     its CTA in the remaining safe area instead of underneath the logo cards. */
+  @media screen and (max-width: 767px) {
+    #shopify-section-{{ section.id }} .banner__content > .page-width {
+      box-sizing: border-box;
+      padding-block-end: calc(var(--iwto-logo-plate-h, 44px) + (var(--iwto-strip-pad-y, 16px) * 2) + var(--sp-4));
+    }
+  }
+
   {%- endif -%}
 
   #shopify-section-{{ section.id }} .banner__eyebrow-row {

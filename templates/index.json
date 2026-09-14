@@ -138,7 +138,7 @@
         "content_position": "md:items-center md:justify-start",
         "text_alignment": "left",
         "image_height_mobile": "auto",
-        "content_position_mobile": "items-end justify-start",
+        "content_position_mobile": "items-start justify-start",
         "text_alignment_mobile": "left",
         "eyebrow_color": "#ffffff",
         "eyebrow_label_1": "LIFETIME WARRANTY",

@@ -872,16 +872,7 @@
                 {% when 'button' %}
                   {% if block.settings.button_label != blank %}
                     <div class="mc__btn">
-                      {%- render 'button',
-                        label: block.settings.button_label,
-                        link: block.settings.button_link,
-                        size: block.settings.button_size | default: 'md',
-                        style: block.settings.button_style | default: 'primary',
-                        external: block.settings.button_external,
-                        show_icon: block.settings.button_icon,
-                        classes: 'mc-btn',
-                        shopify_attributes: block.shopify_attributes
-                      -%}
+                      {%- render 'button', label: block.settings.button_label, link: block.settings.button_link, size: block.settings.button_size, default: 'primary', style: block.settings.button_style, external: block.settings.button_external, show_icon: block.settings.button_icon, classes: 'mc-btn', shopify_attributes: block.shopify_attributes -%}
                     </div>
                   {% endif %}
 
@@ -1645,3 +1636,26 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'button',
+                            label: block.settings.button_label,
+                            link: block.settings.button_link,
+                            size: block.settings.button_size | default: 'md',
+                            style: block.settings.button_style | default: 'primary',
+                            external: block.settings.button_external,
+                            show_icon: block.settings.button_icon,
+                            classes: 'mc-btn',
+                            shopify_attributes: block.shopify_attributes
+                          -%}
+  to: "{%- render 'button', label: block.settings.button_label, link: block.settings.button_link,
+    size: block.settings.button_size, default: 'primary', style: block.settings.button_style,
+    external: block.settings.button_external, show_icon: block.settings.button_icon,
+    classes: 'mc-btn', shopify_attributes: block.shopify_attributes -%}"
+  position: 27505..27834
+{% endcomment %}

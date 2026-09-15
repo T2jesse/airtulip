@@ -4,8 +4,26 @@ Thumbs.db
 .env
 .env.*
 
+# Local browser, assistant, and office-conversion state
+/.headless-preview-profile/
+/.codex/
+/.agents/
+/soffice_*/
+/tmp-*
+
+# Local operating instructions and authoring material, not theme source
+/AGENTS.md
+/.cursor/rules/*.docx
+/content/
+/recovery-from-transcript/
+/tmp-tab-icons.json
+
+# Generated image-conversion output; keep reusable source tools if needed
+/tools/webp-converted/
+
 # Node (npm scripts wrapper; add dependencies only if needed)
 node_modules/
 
 # Stray business/docs files sometimes included in theme ZIP exports
 /*.pdf
+/*.docx

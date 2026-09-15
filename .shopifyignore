@@ -1,0 +1,24 @@
+# Repository and local tooling
+/.git/
+/.github/
+/.cursor/
+/.codex/
+/.agents/
+/.headless-preview-profile/
+/soffice_*/
+
+# Local documentation, recovery, and development utilities
+/AGENTS.md
+/content/
+/recovery-from-transcript/
+/tools/
+/tmp-*
+/tmp-tab-icons.json
+
+# Environment and package-manager state
+/.env
+/.env.*
+/node_modules/
+/*.log
+/*.pdf
+/*.docx

@@ -252,10 +252,42 @@
       margin-top: auto;
     }
   }
+  #shopify-section-{{ section.id }} .fboc-copy--outside {
+    color: rgb(var(--color-foreground));
+    padding: clamp(var(--sp-6), 3vw, var(--sp-10)) 0;
+  }
+
+  #shopify-section-{{ section.id }} .fboc-copy--outside .fboc-overlay-heading.heading {
+    color: inherit;
+    font-weight: {{ fb_heading_fw }};
+    font-size: calc(var(--title-md) * {{ fb_heading_scale }});
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .fboc-copy--outside .fboc-overlay-heading.heading {
+      font-size: calc(44px * {{ fb_heading_scale }});
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    #shopify-section-{{ section.id }} .fboc-copy--outside {
+      text-align: left;
+    }
+  }
 </style>
 
 <div class="section section--padding{% if section.settings.contain_width %} section--rounded relative{% endif %}">
   <div class="{% if section.settings.contain_width %}page-width {% endif %}relative">
+    {%- if section.settings.text_outside_media and has_top -%}
+      <div class="fboc-copy--outside max-w-lg lg:max-w-xl">
+        {%- if section.settings.top_heading != blank -%}
+          <h3 class="fboc-overlay-heading heading leading-tight tracking-heading m-0">{{ section.settings.top_heading | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.top_text != blank -%}
+          <div class="rte description-copy leading-normal mt-4 opacity-90">{{ section.settings.top_text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
     <div class="fboc-visual{% if section.settings.contain_width %} fboc-visual--rounded{% endif %}">
       <div class="fboc-visual__media media media--height banner__media relative overflow-hidden block w-full h-full{% if fb_use_video %} fboc-visual__media--video{% endif %}">
         {%- if fb_use_video -%}
@@ -343,10 +375,11 @@
         {%- endif -%}
       </div>
 
-      {%- if overlay_a > 0 -%}
+      {%- if overlay_a > 0 and section.settings.text_outside_media != true -%}
         <div class="fboc-visual__dim banner__overlay absolute top-0 left-0 w-full h-full" aria-hidden="true"></div>
       {%- endif -%}
 
+      {%- unless section.settings.text_outside_media -%}
       {%- if has_top or has_bottom -%}
         <div class="fboc-visual__layers fboc-visual__layers--stack w-full h-full">
           <div class="fboc-tl max-w-lg lg:max-w-xl">
@@ -367,7 +400,18 @@
           </div>
         </div>
       {%- endif -%}
+      {%- endunless -%}
     </div>
+    {%- if section.settings.text_outside_media and has_bottom -%}
+      <div class="fboc-copy--outside max-w-lg lg:max-w-xl ml-auto text-right">
+        {%- if section.settings.bottom_heading != blank -%}
+          <h3 class="fboc-overlay-heading heading leading-tight tracking-heading m-0">{{ section.settings.bottom_heading | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.bottom_text != blank -%}
+          <div class="rte description-copy leading-normal mt-4 opacity-90">{{ section.settings.bottom_text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 
   {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
@@ -620,6 +664,12 @@
       "id": "overlay_text_shadow_color",
       "label": "Shadow color",
       "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_outside_media",
+      "label": "Show text above and below media",
+      "default": false
     },
     {
       "type": "header",

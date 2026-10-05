@@ -8,6 +8,8 @@
   @param {string} product_id - Product identifier for component targeting
   @param {string} section_id - Section identifier for namespacing
   @param {string} [gallery_layout] - Desktop layout ('scroll', 'thumbnail', 'columns', 'dots')
+  @param {string} [gallery_image_sizes] - Responsive slot widths matching the section layout
+  @param {string} [gallery_preview_sizes] - Slot widths for the scroll layout's large preview
   @param {string} [mobile_layout] - Mobile layout configuration
   @param {string} [thumbnail_position] - Thumbnail placement ('beside', 'below')
   @param {boolean} [mobile_thumbnail] - Show thumbnails on mobile
@@ -42,6 +44,7 @@
   assign featured_media = product_variant.featured_media | default: product.featured_media
 -%}
 {%- capture sizes -%}(max-width: 740px) calc(100vw - 40px), (max-width: 999px) calc(100vw - 64px), min(580px, 30vw){%- endcapture -%}
+{%- assign sizes = gallery_image_sizes | default: sizes | strip -%}
 
 <media-gallery
   id="ProductGallery-{{ section_id }}-{{ product_id }}"
@@ -55,7 +58,7 @@
   {%- if gallery_layout == 'scroll' -%}
     {%- if featured_media != null -%}
       {%- liquid
-        assign featured_media_sizes = sizes
+        assign featured_media_sizes = gallery_preview_sizes | default: sizes | strip
         unless product_variant.metafields.theme.gang_media.value != blank and product_variant.metafields.theme.gang_media.list?
           assign gang_media_active = false
           assign gang_connect_alt = ''

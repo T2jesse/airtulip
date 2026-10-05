@@ -22,7 +22,27 @@
   if section.settings.info_max_width_enable and info_max_width_px > 0
     assign info_max_width_active = true
   endif
+
+  assign gallery_fraction = section.settings.media_size | divided_by: 100.0
+  assign gallery_width_cap = settings.page_width
+  if section.settings.full_width
+    assign gallery_width_cap = 10000
+  endif
+  if info_max_width_active
+    assign gallery_width_cap = gallery_width_cap | at_most: info_max_width_px
+  endif
 -%}
+
+{%- capture gallery_tablet_width -%}calc((min(100vw - 40px, {{ gallery_width_cap }}px) - {{ section.settings.columns_gap }}px) * {{ gallery_fraction }} * 0.75){%- endcapture -%}
+{%- capture gallery_desktop_width -%}calc((min(100vw - 72px, {{ gallery_width_cap }}px) - {{ section.settings.columns_gap }}px) * {{ gallery_fraction }}){%- endcapture -%}
+{%- capture gallery_wide_width -%}calc((min(100vw - 96px, {{ gallery_width_cap }}px) - {{ section.settings.columns_gap }}px) * {{ gallery_fraction }}){%- endcapture -%}
+{%- capture gallery_image_sizes -%}
+  (max-width: 767px) {% if section.settings.mobile_layout == 'partial' %}calc((100vw - 40px) * 0.75){% else %}calc(100vw - 40px){% endif %},
+  (max-width: 1023px) {{ gallery_tablet_width }},
+  (max-width: 1279px) {% if section.settings.gallery_layout == 'columns' or section.settings.gallery_layout == 'scroll' %}calc(({{ gallery_desktop_width }} - 16px) / 2){% else %}{{ gallery_desktop_width }}{% endif %},
+  {% if section.settings.gallery_layout == 'columns' %}calc(({{ gallery_wide_width }} - 20px) / 2){% elsif section.settings.gallery_layout == 'scroll' %}calc(({{ gallery_wide_width }} - 20px) / 1.55 * 0.55){% elsif section.settings.gallery_layout == 'thumbnail' and section.settings.thumbnail_position == 'beside' %}calc({{ gallery_wide_width }} - 128px){% else %}{{ gallery_wide_width }}{% endif %}
+{%- endcapture -%}
+{%- capture gallery_preview_sizes -%}(max-width: 1279px) {{ gallery_desktop_width }}, calc(({{ gallery_wide_width }} - 20px) / 1.55){%- endcapture -%}
 
 <style>
   #shopify-section-{{ section.id }} {
@@ -161,6 +181,8 @@
             product: product,
             product_id: product.id,
             section_id: section.id,
+            gallery_image_sizes: gallery_image_sizes,
+            gallery_preview_sizes: gallery_preview_sizes,
             gallery_layout: section.settings.gallery_layout,
             thumbnail_position: section.settings.thumbnail_position,
             image_ratio: section.settings.image_ratio,

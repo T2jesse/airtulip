@@ -345,6 +345,7 @@
         "overlay_text_shadow_offset_x": 0,
         "overlay_text_shadow_opacity": 45,
         "overlay_text_shadow_color": "#000000",
+        "text_outside_media": true,
         "top_heading": "Isolate Your Breathing Zone",
         "top_text": "<p>Cleanroom-grade air in your breathing zone, 100% validated against ordinary purifiers.</p>",
         "bottom_heading": "Pure Air, Delivered Directly to You",

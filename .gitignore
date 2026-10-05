@@ -8,11 +8,23 @@ Thumbs.db
 /.headless-preview-profile/
 /.codex/
 /.agents/
+/.cursor/
+/output/
+/tmp/
+/temp/
+/.cache/
 /soffice_*/
 /tmp-*
+*.tmp
+*.bak
+*.pyc
+__pycache__/
 
 # Local operating instructions and authoring material, not theme source
 /AGENTS.md
+*.md
+*.mdc
+*.mdx
 /.cursor/rules/*.docx
 /content/
 /recovery-from-transcript/

@@ -9,3 +9,9 @@ store = "airtulip.myshopify.com"
 
 # Optional: pin a remote theme id or name (e.g. staging) instead of the default dev theme:
 # theme = "000000000000"
+
+# Canonical local preview target. No production theme ID or account override.
+[environments.dev]
+store = "airtulip.myshopify.com"
+host = "127.0.0.1"
+port = 18745

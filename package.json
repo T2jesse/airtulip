@@ -3,8 +3,16 @@
   "private": true,
   "description": "Shopify Online Store theme for airtulip.com (Concept / RoarTheme)",
   "scripts": {
-    "dev": "shopify theme dev --store=airtulip.myshopify.com",
-    "storefront": "shopify theme dev --store=airtulip.myshopify.com",
-    "pull": "shopify theme pull --store=airtulip.myshopify.com"
+    "dev": "npm run storefront",
+    "storefront": "node scripts/storefront.mjs",
+    "pull": "shopify theme pull --store=airtulip.myshopify.com",
+    "storefront:dry-run": "node scripts/storefront.mjs --dry-run",
+    "storefront:unattended": "node scripts/storefront.mjs --unattended"
+  },
+  "engines": {
+    "node": "22.23.1"
+  },
+  "devDependencies": {
+    "@shopify/cli": "4.9.0"
   }
 }

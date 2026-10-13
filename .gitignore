@@ -4,6 +4,9 @@ Thumbs.db
 .env
 .env.*
 
+# Private Basecamp project configuration stays local in this public repository.
+/.basecamp/config.json
+
 # Local browser, assistant, and office-conversion state
 /.headless-preview-profile/
 /.codex/
@@ -39,3 +42,6 @@ node_modules/
 # Stray business/docs files sometimes included in theme ZIP exports
 /*.pdf
 /*.docx
+
+# Share project instructions; retain all other local-document and state exclusions.
+!AGENTS.md

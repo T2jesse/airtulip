@@ -1,0 +1,61 @@
+{%- doc -%}
+  Returns true unless a known headboard media color differs from the selected color.
+  Uses explicit color tags, variant featured-media assignments, and the verified
+  Pearl fabric asset. Untagged, unassigned media remain unchanged for review;
+  filenames and appearance are not used to guess their color.
+
+  @param {object} product - Product object
+  @param {object} product_variant - Selected variant
+  @param {object} media - Media to check
+{%- enddoc -%}
+{%- liquid
+  assign visible = true
+  if product.handle == 'sleep-air-purifier-headboard'
+    assign color_index = nil
+    for option in product.options_with_values
+      assign option_name = option.name | handleize
+      if option_name == 'color' or option_name == 'colour'
+        assign color_index = option.position | minus: 1
+        break
+      endif
+    endfor
+
+    if color_index != nil
+      assign selected_color = product_variant.options[color_index] | handleize
+      assign media_colors = ''
+      assign media_group = media.alt | split: '#' | last | downcase
+      if media.alt contains '#'
+        assign connections = media_group | split: ','
+        for connection in connections
+          assign connection = connection | strip
+          assign option_name = connection | split: '_' | first
+          if option_name == 'color' or option_name == 'colour'
+            assign media_color = connection | remove_first: option_name | remove_first: '_' | handleize
+            assign media_colors = media_colors | append: '|' | append: media_color | append: '|'
+          endif
+        endfor
+      endif
+
+      if media_colors == blank
+        for variant in product.variants
+          if variant.featured_media.id == media.id
+            assign media_color = variant.options[color_index] | handleize
+            assign media_colors = media_colors | append: '|' | append: media_color | append: '|'
+          endif
+        endfor
+      endif
+
+      if media_colors == blank and media.src contains '/airtulip-headboard-pearl-fabric-texture-close-up.webp'
+        assign media_colors = '|pearl|'
+      endif
+
+      assign selected_connection = '|' | append: selected_color | append: '|'
+      if media_colors != blank
+        unless media_colors contains selected_connection
+          assign visible = false
+        endunless
+      endif
+    endif
+  endif
+  echo visible
+-%}

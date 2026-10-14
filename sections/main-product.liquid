@@ -179,6 +179,7 @@
         <div class="product__gallery-container{% if section.settings.enable_sticky_info %} md:sticky{% endif %} flex flex-col gap-0 md:gap-8 relative w-full">
           {%- render 'product-media-gallery',
             product: product,
+            selected_variant: pdp_variant,
             product_id: product.id,
             section_id: section.id,
             gallery_image_sizes: gallery_image_sizes,

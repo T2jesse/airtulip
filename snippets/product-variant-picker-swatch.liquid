@@ -4,6 +4,9 @@
   Creates a self-contained form for selecting and adding product variants to bundles with inventory awareness.
 
   @param {object} product - Shopify product object with variants and option data
+  @param {object} [selected_variant] - Variant resolved by the parent section
+  @param {string} [default_option_value] - Initial default option preference
+  @param {string} [option_values_order] - Preferred option display order
   @param {string} product_id - Unique product identifier for element targeting
   @param {string} section_id - Section identifier for form namespacing
   @param {boolean} [show_variant_labels] - Show variant label
@@ -24,7 +27,9 @@
     {%- liquid
       assign option_display_selected = option.selected_value
       if product.selected_variant == blank and default_option_value != blank
-        assign option_display_selected = default_option_value
+        assign option_index = option.position | minus: 1
+        assign initial_variant = selected_variant | default: product.selected_or_first_available_variant
+        assign option_display_selected = initial_variant.options[option_index]
       endif
 
       assign is_color = false

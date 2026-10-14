@@ -4,6 +4,7 @@
   Displays product images, videos, and 3D models in various responsive layouts. Supports variant-specific media switching, image zoom, video autoplay, and mobile-optimized views. Integrates with Shopify's native media APIs and XR experiences.
 
   @param {object} product - Shopify product object with media collection
+  @param {object} [selected_variant] - Variant resolved by the parent section
   @param {string} product_form_id - Form ID for variant media switching
   @param {string} product_id - Product identifier for component targeting
   @param {string} section_id - Section identifier for namespacing
@@ -33,15 +34,32 @@
 {%- enddoc -%}
 
 {%- liquid
+  assign product_variant = selected_variant | default: product.selected_or_first_available_variant
+  assign gallery_media = product.media
+  if product.handle == 'sleep-air-purifier-headboard'
+    assign gallery_media = product.media | where: 'id', 0
+    for media in product.media
+      capture color_visible
+        render 'product-media-color-visible', product: product, product_variant: product_variant, media: media
+      endcapture
+      if color_visible == 'true'
+        assign matching_media = product.media | where: 'id', media.id
+        assign gallery_media = gallery_media | concat: matching_media
+      endif
+    endfor
+  endif
   assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
   
-  assign media_count = product.media.size
-  if hide_variants and media_count > 1
+  assign media_count = gallery_media.size
+  if hide_variants and media_count > 1 and product.handle != 'sleep-air-purifier-headboard'
     assign media_count = media_count | minus: variant_images.size | plus: 1
   endif
   
-  assign product_variant = product.selected_or_first_available_variant
   assign featured_media = product_variant.featured_media | default: product.featured_media
+  assign featured_in_gallery = gallery_media | where: 'id', featured_media.id | first
+  if featured_in_gallery == blank
+    assign featured_media = gallery_media | first
+  endif
 -%}
 {%- capture sizes -%}(max-width: 740px) calc(100vw - 40px), (max-width: 999px) calc(100vw - 64px), min(580px, 30vw){%- endcapture -%}
 {%- assign sizes = gallery_image_sizes | default: sizes | strip -%}
@@ -158,7 +176,7 @@
             -%}
           {%- endif -%}
 
-          {%- for media in product.media -%}
+          {%- for media in gallery_media -%}
             {%- if media.id != featured_media.id -%}
               {%- render 'product-media',
                 product: product,
@@ -216,12 +234,14 @@
                 image_fill: image_fill,
                 image_ratio: image_ratio,
                 image_ratio_mobile: image_ratio_mobile,
-                position: 0
+                position: 1
               -%}
             {%- endif -%}
     
-            {%- for media in product.media -%}
+            {%- assign thumbnail_index = 1 -%}
+            {%- for media in gallery_media -%}
               {%- if media.id != featured_media.id -%}
+                {%- assign thumbnail_index = thumbnail_index | plus: 1 -%}
                 {%- render 'product-thumbnail',
                   product: product,
                   product_variant: product_variant,
@@ -232,7 +252,7 @@
                   image_fill: image_fill,
                   image_ratio: image_ratio,
                   image_ratio_mobile: image_ratio_mobile,
-                  position: forloop.index
+                  position: thumbnail_index
                 -%}
               {%- endif -%}
             {%- endfor -%}

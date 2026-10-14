@@ -15826,6 +15826,10 @@ video-media:not([playing]) .deferred-poster .play-button .icon:last-child:not(:o
   background-color: var(--product-tabs-inactive-background, #f5f5f5);
 }
 
+.product-tabs--lateral .product-tabs__tab .btn-text {
+  min-height: 1.125rem;
+}
+
 .product-tabs--lateral .product-tabs__tab .btn-fill {
   display: none !important;
 }

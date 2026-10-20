@@ -1,0 +1,64 @@
+.air-science{--science-ink:#171717;--science-slate:#394a60;--science-teal:#24545a;color:var(--science-ink);background:#fff}
+.air-science h1,.air-science h2,.air-science h3{font-family:inherit;font-weight:650;letter-spacing:-.045em;line-height:1.06;margin:0}
+.air-science h1{font-size:clamp(42px,5.3vw,82px);max-width:930px}
+.air-science h2{font-size:clamp(32px,3.5vw,52px)}
+.air-science h3{font-size:clamp(21px,2vw,27px);letter-spacing:-.025em;line-height:1.2}
+.air-science p{font-size:16px;line-height:1.65;max-width:65ch;margin:20px 0 0}
+.air-science .air-science__lead{font-size:clamp(19px,1.8vw,24px);line-height:1.5}
+.air-science figure{margin:0}.air-science a{ text-underline-offset:5px}
+.air-science a:focus-visible,.air-science summary:focus-visible{outline:3px solid #51949b;outline-offset:5px}
+.air-science__hero{padding-top:70px}.air-science__hero-copy{padding-bottom:48px}
+.air-science .air-science__eyebrow{font-size:15px;margin:0 0 20px;color:var(--science-teal);font-weight:600}
+.air-science__hero-copy .air-science__lead{max-width:670px}
+.air-science__button{display:inline-flex;align-items:center;justify-content:center;min-height:52px;border-radius:99px;padding:14px 26px;background:var(--science-ink);color:white;margin-top:28px;text-decoration:none;font-weight:600;font-size:15px}
+.air-science__button:hover{background:var(--science-teal)}
+.air-science__hero-image{position:relative;background:#050605}
+.air-science__hero-image img{width:100%;max-height:640px;object-fit:cover;display:block}
+.air-science .air-science__hero-image figcaption{position:absolute;bottom:20px;left:4%;color:#fff;background:rgba(0,0,0,.7);padding:10px 14px;font-size:13px;max-width:90%;border-radius:8px}
+.air-science__nav{display:flex;justify-content:center;gap:32px;padding:24px;flex-wrap:wrap;border-bottom:1px solid #d8e0e1;font-size:14px}
+.air-science__nav a{text-decoration:none}.air-science__nav a:hover{text-decoration:underline}
+.air-science__space{padding-top:96px;padding-bottom:96px}
+.air-science__intro,.air-science__split,.air-science__university{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.air-science__intro{align-items:start}.air-science__intro p:first-child{margin-top:0}
+.air-science__steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;list-style:none;padding:0;margin:0}
+.air-science__steps li{border-top:1px solid #aebfc1;padding-top:20px}
+.air-science__steps span{display:block;font-size:15px;color:var(--science-teal);margin-bottom:28px}
+.air-science__photo{display:block;width:100%;height:auto;border-radius:22px}
+.air-science__filter{aspect-ratio:1.2;object-fit:cover}
+.air-science__lab{background:#edf2f3}
+.air-science__lab figure{margin-top:44px}
+.air-science figcaption{font-size:13px;line-height:1.5;margin-top:14px;color:var(--science-slate)}
+.air-science__measurements{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:44px}
+.air-science__university{align-items:start}
+.air-science__text-link{display:inline-block;margin-top:28px;font-weight:600}
+.air-science__note{border-left:3px solid #6c9196;padding:8px 0 8px 24px;margin-top:32px}
+.air-science__note h3{font-size:20px}.air-science__note p{margin-top:12px}
+.air-science .air-science__citation{font-size:13px;color:var(--science-slate);line-height:1.6}
+.air-science__bedroom{display:grid;grid-template-columns:1.2fr 1fr;gap:72px;padding:42px;background:#edf2f3;border-radius:22px;margin-top:42px}
+.air-science__archive-title{margin-top:64px!important}
+.air-science__applications{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:26px}
+.air-science__applications img{aspect-ratio:1.5;object-fit:cover}
+.air-science__applications figcaption{margin-top:24px}
+.air-science__applications p{margin-top:12px}
+.air-science__faq{background:#f5f7f7}
+.air-science__faq .air-science__split{align-items:start}
+.air-science details{border-bottom:1px solid #c8d5d7;padding:22px 0}
+.air-science details:first-child{padding-top:0}
+.air-science summary{cursor:pointer;font-size:18px;line-height:1.4;font-weight:600}
+.air-science details p{padding-bottom:4px}
+.air-science__end{text-align:center;padding-top:90px;padding-bottom:100px}
+.air-science__end p{margin:24px auto 0}
+.air-science [id]{scroll-margin-top:120px}
+@media(max-width:749px){
+ .air-science__hero{padding-top:40px}.air-science__hero-copy{padding-bottom:32px}
+ .air-science__hero-image img{min-height:270px;object-fit:cover;object-position:center}
+ .air-science .air-science__hero-image figcaption{position:static;margin:0;padding:12px 20px;background:#101510;max-width:none;border-radius:0}
+ .air-science__nav{gap:14px 22px;padding:20px}
+ .air-science__space{padding-top:56px;padding-bottom:56px}
+ .air-science__intro,.air-science__split,.air-science__university,.air-science__bedroom{grid-template-columns:1fr;gap:28px}
+ .air-science__steps,.air-science__measurements{grid-template-columns:1fr;gap:30px}
+ .air-science__steps span{margin-bottom:12px}
+ .air-science__bedroom{padding:26px}
+ .air-science__applications{grid-template-columns:1fr;gap:36px}
+ .air-science__end{padding-top:60px;padding-bottom:64px}
+}

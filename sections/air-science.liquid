@@ -1,0 +1,99 @@
+{{ 'air-science.css' | asset_url | stylesheet_tag }}
+{%- assign thesis_url = 'https://research.tue.nl/en/publications/indoor-air-quality-in-daycare-centers-assessing-and-mitigating-in/' -%}
+<section class="air-science" aria-label="{{ 'air_science.label' | t | escape }}">
+  {% if section.settings.part == 'story' %}
+    <header class="air-science__hero">
+      <div class="page-width air-science__hero-copy">
+        <p class="air-science__eyebrow">{{ 'air_science.label' | t }}</p>
+        <h1>{{ 'air_science.hero_title' | t }}</h1>
+        <p class="air-science__lead">{{ 'air_science.hero_text' | t }}</p>
+        <a class="air-science__button" href="#how-it-works">{{ 'air_science.explore' | t }}</a>
+      </div>
+      <figure class="air-science__hero-image">
+        <img src="{{ 'science-airflow.webp' | asset_url }}" width="1600" height="824" fetchpriority="high" alt="{{ 'air_science.airflow_alt' | t | escape }}">
+        <figcaption>{{ 'air_science.airflow_caption' | t }}</figcaption>
+      </figure>
+    </header>
+    <nav class="air-science__nav" aria-label="{{ 'air_science.nav_label' | t | escape }}">
+      <a href="#how-it-works">{{ 'air_science.nav_flow' | t }}</a>
+      <a href="#in-the-lab">{{ 'air_science.nav_lab' | t }}</a>
+      <a href="#air-quality-study">{{ 'air_science.nav_research' | t }}</a>
+      <a href="#everyday-air">{{ 'air_science.nav_use' | t }}</a>
+      <a href="#science-questions">{{ 'air_science.nav_faq' | t }}</a>
+    </nav>
+    <div class="page-width">
+      <div class="air-science__intro air-science__space" id="how-it-works">
+        <h2>{{ 'air_science.flow_title' | t }}</h2>
+        <div><p class="air-science__lead">{{ 'air_science.flow_text' | t }}</p><p>{{ 'air_science.flow_detail' | t }}</p></div>
+      </div>
+      <ol class="air-science__steps">
+        {% for step in (1..3) %}
+          {% assign title_key = 'air_science.step_' | append: step | append: '_title' %}
+          {% assign text_key = 'air_science.step_' | append: step | append: '_text' %}
+          <li><span aria-hidden="true">0{{ step }}</span><h3>{{ title_key | t }}</h3><p>{{ text_key | t }}</p></li>
+        {% endfor %}
+      </ol>
+      <div class="air-science__split air-science__space">
+        <img class="air-science__photo air-science__filter" src="{{ 'science-filters.webp' | asset_url }}" width="1600" height="1066" loading="lazy" alt="{{ 'air_science.filter_alt' | t | escape }}">
+        <div class="air-science__copy"><h2>{{ 'air_science.filter_title' | t }}</h2><p>{{ 'air_science.filter_text' | t }}</p><p>{{ 'air_science.filter_detail' | t }}</p></div>
+      </div>
+    </div>
+    <div class="air-science__lab" id="in-the-lab">
+      <div class="page-width air-science__space">
+        <div class="air-science__intro"><h2>{{ 'air_science.lab_title' | t }}</h2><p class="air-science__lead">{{ 'air_science.lab_text' | t }}</p></div>
+        <figure><img class="air-science__photo" src="{{ 'science-laboratory.webp' | asset_url }}" width="1600" height="934" loading="lazy" alt="{{ 'air_science.lab_alt' | t | escape }}"><figcaption>{{ 'air_science.lab_caption' | t }}</figcaption></figure>
+        <div class="air-science__measurements">
+          {% for item in (1..3) %}
+            {% assign title_key = 'air_science.measure_' | append: item | append: '_title' %}
+            {% assign text_key = 'air_science.measure_' | append: item | append: '_text' %}
+            <div><h3>{{ title_key | t }}</h3><p>{{ text_key | t }}</p></div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <article class="page-width air-science__space air-science__university">
+      <div><p class="air-science__eyebrow">{{ 'air_science.university_label' | t }}</p><h2>{{ 'air_science.university_title' | t }}</h2><a class="air-science__text-link" href="{{ thesis_url }}">{{ 'air_science.read_thesis' | t }}</a></div>
+      <div><p class="air-science__lead">{{ 'air_science.university_text' | t }}</p><p>{{ 'air_science.university_method' | t }}<sup><a href="#science-source-thesis">1</a></sup></p><aside class="air-science__note"><h3>{{ 'air_science.university_limit_title' | t }}</h3><p>{{ 'air_science.university_limit' | t }}</p></aside><p id="science-source-thesis" class="air-science__citation">1. Zheng, H. (2024). <a href="{{ thesis_url }}">Indoor Air Quality in Daycare Centers</a>. Eindhoven University of Technology. Appendix H, pp. 307–314.</p></div>
+    </article>
+  {% else %}
+    <div class="page-width air-science__space" id="everyday-air">
+      <div class="air-science__intro"><h2>{{ 'air_science.use_title' | t }}</h2><p class="air-science__lead">{{ 'air_science.use_text' | t }}</p></div>
+      <div class="air-science__bedroom"><div><h3>{{ 'air_science.bedroom_title' | t }}</h3><p>{{ 'air_science.bedroom_text' | t }}</p><a class="air-science__button" href="{{ section.settings.product_url }}">{{ 'air_science.product_cta' | t }}</a></div><div><h3>{{ 'air_science.routine_title' | t }}</h3><p>{{ 'air_science.routine_text' | t }}</p></div></div>
+      <h3 class="air-science__archive-title">{{ 'air_science.archive_title' | t }}</h3>
+      <div class="air-science__applications">
+        {% assign settings = 'office,dental' | split: ',' %}
+        {% for setting in settings %}
+          {% assign alt_key = 'air_science.' | append: setting | append: '_alt' %}
+          {% assign heading_key = 'air_science.' | append: setting | append: '_title' %}
+          {% assign text_key = 'air_science.' | append: setting | append: '_text' %}
+          {% assign image_name = 'science-' | append: setting | append: '.webp' %}
+          <figure><img class="air-science__photo" src="{{ image_name | asset_url }}" width="1600" height="1066" loading="lazy" alt="{{ alt_key | t | escape }}"><figcaption><h3>{{ heading_key | t }}</h3><p>{{ text_key | t }}</p></figcaption></figure>
+        {% endfor %}
+      </div>
+      <p class="air-science__citation">{{ 'air_science.archive_note' | t }}</p>
+    </div>
+    <div class="air-science__faq" id="science-questions">
+      <div class="page-width air-science__space air-science__split">
+        <div><h2>{{ 'air_science.faq_title' | t }}</h2><p>{{ 'air_science.faq_text' | t }}</p></div>
+        <div>
+          {% for question in (1..4) %}
+            {% assign question_key = 'air_science.question_' | append: question %}
+            {% assign answer_key = 'air_science.answer_' | append: question %}
+            <details><summary>{{ question_key | t }}</summary><p>{{ answer_key | t }}</p></details>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="page-width air-science__end"><h2>{{ 'air_science.end_title' | t }}</h2><p>{{ 'air_science.end_text' | t }}</p><a class="air-science__button" href="{{ section.settings.product_url }}">{{ 'air_science.product_cta' | t }}</a></div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "AirTulip Science",
+  "settings": [
+    {"type":"select","id":"part","label":"Page section","default":"story","options":[{"value":"story","label":"Engineering and university research"},{"value":"applications","label":"Applications and questions"}]},
+    {"type":"url","id":"product_url","label":"Product link"}
+  ],
+  "presets":[{"name":"AirTulip Science"}]
+}
+{% endschema %}

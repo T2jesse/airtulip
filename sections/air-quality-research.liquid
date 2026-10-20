@@ -1,0 +1,270 @@
+{%- liquid
+  assign detailed = false
+  if section.settings.layout == 'detailed'
+    assign detailed = true
+  endif
+  assign paper_url = 'https://www.nature.com/articles/s44528-026-00030-5'
+  assign cambridge_url = 'https://www.cam.ac.uk/research/news/sleep-app-tracks-link-between-air-pollution-and-a-bad-nights-sleep'
+-%}
+
+<section
+  class="air-research{% if detailed %} air-research--detailed{% endif %}"
+  id="{{ section.settings.anchor | default: section.id | escape }}"
+  aria-labelledby="ResearchHeading-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="air-research__spread">
+      <figure class="air-research__figure">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '480, 800, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw', class: 'air-research__image' }}
+        {%- else -%}
+          <img
+            class="air-research__image"
+            src="{{ 'air-quality-bedroom-dusk.webp' | asset_url }}"
+            alt="{{ 'air_research.image_alt' | t | escape }}"
+            width="1536"
+            height="1024"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </figure>
+      <div class="air-research__copy">
+        <p class="air-research__publication">{{ 'air_research.publication' | t }}</p>
+        <h2 class="heading" id="ResearchHeading-{{ section.id }}">
+          {%- if detailed -%}
+            {{ 'air_research.detail_heading' | t }}
+          {%- else -%}
+            {{ 'air_research.heading' | t }}
+          {%- endif -%}
+        </h2>
+        <p class="air-research__intro">{{ 'air_research.intro' | t }}<sup><a href="#ResearchSource-{{ section.id }}-1" aria-label="{{ 'air_research.source_one' | t | escape }}">1</a></sup></p>
+        <div class="air-research__finding">
+          <p class="air-research__number">2.4<span>%</span></p>
+          <div>
+            <p class="air-research__finding-title">{{ 'air_research.finding_title' | t }}</p>
+            <p>{{ 'air_research.finding_context' | t }}<sup><a href="#ResearchSource-{{ section.id }}-1" aria-label="{{ 'air_research.source_one' | t | escape }}">1</a></sup></p>
+          </div>
+        </div>
+        <p class="air-research__scope">{{ 'air_research.scope' | t }}</p>
+        {%- unless detailed -%}
+          <a class="air-research__button" href="{{ section.settings.detail_url | default: '/pages/about#air-quality-study' }}">
+            {{ 'air_research.read_more' | t }}
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        {%- endunless -%}
+      </div>
+    </div>
+
+    {%- if detailed -%}
+      <div class="air-research__study">
+        <div class="air-research__study-heading">
+          <h3 class="heading">{{ 'air_research.method_heading' | t }}</h3>
+          <p>{{ 'air_research.method_intro' | t }}<sup><a href="#ResearchSource-{{ section.id }}-1" aria-label="{{ 'air_research.source_one' | t | escape }}">1</a></sup></p>
+        </div>
+        <ol class="air-research__method">
+          <li>
+            <h4>{{ 'air_research.method_air' | t }}</h4>
+            <p>{{ 'air_research.method_air_text' | t }}</p>
+          </li>
+          <li>
+            <h4>{{ 'air_research.method_cough' | t }}</h4>
+            <p>{{ 'air_research.method_cough_text' | t }}</p>
+          </li>
+          <li>
+            <h4>{{ 'air_research.method_compare' | t }}</h4>
+            <p>{{ 'air_research.method_compare_text' | t }}</p>
+          </li>
+        </ol>
+      </div>
+      <div class="air-research__details">
+        <div>
+          <h3 class="heading">{{ 'air_research.particles_heading' | t }}</h3>
+          <p>{{ 'air_research.particles_text' | t }}<sup><a href="#ResearchSource-{{ section.id }}-1" aria-label="{{ 'air_research.source_one' | t | escape }}">1</a></sup></p>
+          <h3 class="heading">{{ 'air_research.lower_heading' | t }}</h3>
+          <p>{{ 'air_research.lower_text' | t }}<sup><a href="#ResearchSource-{{ section.id }}-1" aria-label="{{ 'air_research.source_one' | t | escape }}">1</a></sup></p>
+        </div>
+        <aside class="air-research__limits">
+          <h3 class="heading">{{ 'air_research.limits_heading' | t }}</h3>
+          <p>{{ 'air_research.limits_text' | t }}</p>
+          <p>{{ 'air_research.product_limit' | t }}</p>
+          <details>
+            <summary>{{ 'air_research.estimate_heading' | t }}</summary>
+            <p>{{ 'air_research.estimate_text' | t }}</p>
+          </details>
+        </aside>
+      </div>
+    {%- endif -%}
+
+    <footer class="air-research__sources">
+      {%- unless detailed -%}
+        <p class="air-research__caveat">{{ 'air_research.short_limit' | t }}</p>
+      {%- endunless -%}
+      <ol>
+        <li id="ResearchSource-{{ section.id }}-1">
+          {{ 'air_research.citation' | t }}
+          <a href="{{ paper_url }}" target="_blank" rel="noopener">{{ 'air_research.paper_link' | t }}<span class="sr-only"> ({{ 'air_research.new_tab' | t }})</span></a>
+        </li>
+        {%- if detailed -%}
+          <li id="ResearchSource-{{ section.id }}-2">
+            {{ 'air_research.cambridge_citation' | t }}
+            <a href="{{ cambridge_url }}" target="_blank" rel="noopener">{{ 'air_research.cambridge_link' | t }}<span class="sr-only"> ({{ 'air_research.new_tab' | t }})</span></a>
+          </li>
+        {%- endif -%}
+      </ol>
+    </footer>
+  </div>
+</section>
+
+{% stylesheet %}
+  .air-research {
+    --research-ink: #171717;
+    --research-muted: #394a60;
+    --research-teal: #24545a;
+    --research-line: #d8e0e1;
+    padding-block: clamp(56px, 6vw, 104px);
+    background: rgb(var(--color-background));
+    color: var(--research-ink);
+    scroll-margin-top: 130px;
+  }
+  .air-research__spread {
+    display: grid;
+    grid-template-columns: 1.08fr 1fr;
+    gap: clamp(32px, 5vw, 88px);
+    align-items: center;
+  }
+  .air-research__figure { margin: 0; min-width: 0; }
+  .air-research__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1.06;
+    object-fit: cover;
+    object-position: 44% center;
+    border-radius: 24px;
+  }
+  .air-research__publication {
+    color: var(--research-teal);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 22px;
+  }
+  .air-research h2 {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(34px, 3.6vw, 60px);
+    letter-spacing: var(--font-heading-letter-spacing);
+    line-height: 1.06;
+    margin: 0;
+    max-width: 13ch;
+    text-wrap: balance;
+  }
+  .air-research__intro {
+    margin: 24px 0 0;
+    color: var(--research-muted);
+    font-size: clamp(16px, 1.2vw, 19px);
+    line-height: 1.65;
+    max-width: 48ch;
+  }
+  .air-research sup { margin-left: 3px; font-size: 11px; }
+  .air-research sup a { text-decoration: underline; text-underline-offset: 2px; }
+  .air-research__finding {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 22px;
+    padding-block: 24px;
+    margin-top: 24px;
+    border-block: 1px solid var(--research-line);
+  }
+  .air-research__number {
+    font-size: clamp(54px, 5vw, 80px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -.065em;
+    color: var(--research-teal);
+    margin: 0;
+    white-space: nowrap;
+  }
+  .air-research__number span { font-size: .48em; letter-spacing: -.03em; }
+  .air-research__finding-title { font-weight: 600; font-size: 17px; margin: 0 0 6px; line-height: 1.3; }
+  .air-research__finding-title + p { font-size: 14px; line-height: 1.6; color: var(--research-muted); margin: 0; }
+  .air-research__scope { font-size: 14px; color: var(--research-muted); margin: 18px 0 24px; line-height: 1.6; }
+  .air-research__button {
+    display: inline-flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 16px 28px;
+    border-radius: var(--buttons-radius, 999px);
+    background: var(--research-ink);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .air-research__button:hover { background: var(--research-teal); }
+  .air-research a:focus-visible, .air-research summary:focus-visible { outline: 2px solid var(--research-teal); outline-offset: 5px; }
+  .air-research__sources { margin-top: 32px; color: var(--research-muted); font-size: 12px; line-height: 1.65; }
+  .air-research__caveat { margin: 0 0 8px; }
+  .air-research__sources ol { list-style: decimal; padding-left: 18px; margin: 0; }
+  .air-research__sources li { scroll-margin-top: 150px; }
+  .air-research__sources li + li { margin-top: 8px; }
+  .air-research__sources a { text-decoration: underline; text-underline-offset: 3px; }
+  .air-research__study { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--research-line); }
+  .air-research__study-heading { display: grid; grid-template-columns: 1fr 1.6fr; gap: 32px; align-items: start; }
+  .air-research h3 { font-size: clamp(23px, 2vw, 30px); letter-spacing: -.025em; line-height: 1.2; margin: 0 0 16px; }
+  .air-research__study-heading p, .air-research__details p { font-size: 16px; line-height: 1.7; color: var(--research-muted); margin: 0 0 20px; }
+  .air-research__method { list-style: decimal-leading-zero; display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; padding-left: 24px; margin: 32px 0 0; }
+  .air-research__method li { padding-left: 8px; }
+  .air-research__method li::marker { color: var(--research-teal); font-weight: 600; font-size: 14px; }
+  .air-research h4 { font-size: 18px; font-weight: 600; margin: 0 0 12px; line-height: 1.4; }
+  .air-research__method p { font-size: 15px; line-height: 1.7; color: var(--research-muted); margin: 0; }
+  .air-research__details { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 88px); margin-top: 48px; align-items: start; }
+  .air-research__details h3:not(:first-child) { margin-top: 32px; }
+  .air-research__limits { padding: 32px; background: #f0f4f4; border-radius: 20px; }
+  .air-research details { border-top: 1px solid var(--research-line); padding-top: 18px; }
+  .air-research summary { cursor: pointer; font-weight: 600; font-size: 15px; list-style: revert; }
+  .air-research details p { margin: 16px 0 0; font-size: 14px; }
+  @media (max-width: 989px) {
+    .air-research__spread { grid-template-columns: 1fr; gap: 28px; }
+    .air-research__image { aspect-ratio: 3 / 2; border-radius: 18px; object-position: center; }
+    .air-research__copy { max-width: 680px; }
+    .air-research h2 { max-width: 18ch; }
+    .air-research__intro { max-width: 60ch; }
+    .air-research__study-heading, .air-research__details { grid-template-columns: 1fr; gap: 16px; }
+    .air-research__method { gap: 28px; }
+  }
+  @media (max-width: 599px) {
+    .air-research__publication { margin-bottom: 16px; font-size: 13px; }
+    .air-research__finding { gap: 18px; padding-block: 20px; }
+    .air-research__finding-title { font-size: 15px; }
+    .air-research__finding-title + p { font-size: 13px; }
+    .air-research__method { grid-template-columns: 1fr; gap: 24px; margin-top: 16px; }
+    .air-research__study { margin-top: 40px; padding-top: 28px; }
+    .air-research__limits { padding: 24px; }
+    .air-research__details { margin-top: 32px; }
+    .air-research__button { width: 100%; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Air Quality Research",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "feature", "label": "Homepage feature" },
+        { "value": "detailed", "label": "Detailed study" }
+      ],
+      "default": "feature"
+    },
+    { "type": "image_picker", "id": "image", "label": "Editorial image" },
+    { "type": "url", "id": "detail_url", "label": "Detailed study link" },
+    { "type": "text", "id": "anchor", "label": "Section anchor", "default": "air-quality-study" }
+  ],
+  "presets": [{ "name": "Air Quality Research" }]
+}
+{% endschema %}

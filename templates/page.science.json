@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "science_story": {"type":"air-science","settings":{"part":"story"}},
+    "air_quality_study": {"type":"air-quality-research","settings":{"layout":"detailed","anchor":"air-quality-study"}},
+    "science_applications": {"type":"air-science","settings":{"part":"applications","product_url":"/products/sleep-air-purifier-headboard"}}
+  },
+  "order":["science_story","air_quality_study","science_applications"]
+}
+

@@ -9,6 +9,14 @@
  */
 {
   "sections": {
+    "air_quality_research": {
+      "type": "air-quality-research",
+      "settings": {
+        "layout": "feature",
+        "detail_url": "/pages/about#air-quality-study",
+        "anchor": "air-quality-research"
+      }
+    },
     "image_with_text_overlay_xAGVpd": {
       "type": "image-with-text-overlay",
       "blocks": {
@@ -1270,6 +1278,7 @@
     "image_with_text_overlay_xAGVpd",
     "top_testimonials_DeNDcE",
     "full_bleed_overlay_cta_gjNt74",
+    "air_quality_research",
     "homepage_shark_spotlight",
     "multicolumn_with_icons_Di4fLz",
     "logo_list_PN4b9x",

@@ -9,6 +9,13 @@
  */
 {
   "sections": {
+    "air_quality_study": {
+      "type": "air-quality-research",
+      "settings": {
+        "layout": "detailed",
+        "anchor": "air-quality-study"
+      }
+    },
     "main": {
       "type": "main-page",
       "disabled": true,
@@ -1056,6 +1063,7 @@
     "about_bts",
     "about_product_explorer",
     "about_pillars",
+    "air_quality_study",
     "about_quiet",
     "about_founder",
     "about_proof",

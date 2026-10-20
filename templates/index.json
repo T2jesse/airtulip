@@ -13,7 +13,7 @@
       "type": "air-quality-research",
       "settings": {
         "layout": "feature",
-        "detail_url": "/pages/about#air-quality-study",
+        "detail_url": "/pages/science#air-quality-study",
         "anchor": "air-quality-research"
       }
     },

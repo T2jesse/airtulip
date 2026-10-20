@@ -9,6 +9,7 @@
     "accessibility": {
       "skip_to_content": "Skip to content",
       "close": "Close",
+      "custom_design_information": "More information about custom headboard designs",
       "unit_price_separator": "per",
       "vendor": "Vendor:",
       "error": "Error",

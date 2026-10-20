@@ -92,5 +92,9 @@ Saved theme IDs and branch mappings in local documents are historical only. In p
 
 ### Verified capability evidence and limits
 
+- Observation, 2026-10-20: an "another extension UI is open" error occurred on screenshot capture even though no JavaScript dialog was reported. Creating a fresh tab in the same verified Work browser restored an initial DOM snapshot, but screenshot capture failed again. This is partial observation recovery, not a confirmed screenshot fix or proof of a visible popup.
+- On this error, read the advertised browser troubleshooting guidance, retain the verified browser binding, and inspect available dialog/tab state. Do not repeatedly ask the user to dismiss an assumed popup. One fresh-tab attempt in the same profile may establish whether read-only observation still works; preserve user tabs.
+- Test recovery with the capability actually needed. A successful DOM snapshot does not establish that screenshots or interactions recovered. If capture remains blocked, continue independent source checks and report visual QA as pending. Do not loop through new tabs, retry rejected commands, change extension permissions, or switch profiles.
+
 - Historical observation, 2026-10-05: the browser-tab Escape call was blocked; native `sky.press_key` in the verified Work window succeeded, after which the same tab's screenshot API worked. This confirms that recovery in that session only. It is not proof of current native-tool availability, a permanent extension fix or a requirement to use desktop Computer Use first.
 - Current capabilities must be verified from advertised tools and successful observations in each session. A preferred tool, an old tool name or a historical success must not be reported as a currently available or completed check.

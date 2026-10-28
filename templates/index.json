@@ -346,6 +346,7 @@
         "image_asset": "",
         "image_position": "center center",
         "video": "shopify://files/videos/AirTulip Sleep Laser Footage Optimized.mp4",
+        "video_start_time": 5,
         "video_url": "",
         "video_description": "Ambient background video",
         "fb_video_autoplay": true,

@@ -9,6 +9,7 @@
   @param {boolean} [muted] - Mute video audio
   @param {boolean} [autoplay] - Auto-play video
   @param {boolean} [loop] - Loop video playback
+  @param {number} [start_time] - Starting second for hosted video playback and loops
   @param {boolean} [show_play_button] - Show play/pause button overlay
   @param {object} [cover_image] - Fallback poster image
   @param {string} [sizes] - Responsive image sizes
@@ -33,6 +34,7 @@
   assign fetchpriority = fetchpriority | default: 'auto'
   assign lazyimage = lazyimage | default: 'lazy-image'
   assign sizes = sizes | default: 'min(100vw, var(--page-width))'
+  assign start_time = start_time | default: 0
 
   assign video_id = video.id | default: video_url.id
   assign video_alt = video.alt | default: description
@@ -53,6 +55,7 @@
     style="--aspect-ratio: {{ video.aspect_ratio | default: '16 / 9' }};"
     {%- unless video %} host="{{ video_url.type }}"{% endunless -%}
     {%- if autoplay %} autoplay{% endif -%}
+    {%- if video != blank and start_time > 0 %} data-start-time="{{ start_time | escape }}"{% endif -%}
   >
     {{- poster -}}
 

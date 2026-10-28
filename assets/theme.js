@@ -4649,6 +4649,17 @@ class VideoMedia extends DeferredMedia {
       this.closest('.media')?.classList.remove('loading');
 
       const player = this.querySelector('video');
+      const startTime = Number(this.dataset.startTime);
+      if (Number.isFinite(startTime) && startTime > 0) {
+        const skipOpening = () => {
+          if (player.readyState >= 1 && startTime < player.duration && player.currentTime < startTime) {
+            player.currentTime = startTime;
+          }
+        };
+        player.addEventListener('loadedmetadata', skipOpening, { once: true });
+        player.addEventListener('timeupdate', skipOpening);
+        skipOpening();
+      }
       player.addEventListener('play', () => {
         this.setAttribute('playing', '');
         this.removeAttribute('suspended');

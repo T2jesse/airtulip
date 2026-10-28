@@ -124,6 +124,17 @@
             "button_external": false,
             "button_icon": true
           }
+        },
+        "link_founder_call": {
+          "type": "button",
+          "settings": {
+            "button_label": "Talk With Our Founder",
+            "button_link": "https://links.t2consulting.co/widget/booking/Olkf9RVkiRZAHadoesx8?utm_source=airtulip&utm_medium=website&utm_campaign=founder_call&utm_content=homepage_hero",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": false
+          }
         }
       },
       "block_order": [
@@ -136,7 +147,8 @@
         "overlay_logo_zHyk9c",
         "heading_q7Q3W7",
         "text_Dk8PTE",
-        "button_ixYipm"
+        "button_ixYipm",
+        "link_founder_call"
       ],
       "settings": {
         "transparent_header": false,

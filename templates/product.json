@@ -155,6 +155,17 @@
           "type": "shop_pay_installments",
           "settings": {}
         },
+        "pdp_founder_call": {
+          "type": "button",
+          "settings": {
+            "button_label": "Talk With Our Founder",
+            "button_link": "https://links.t2consulting.co/widget/booking/Olkf9RVkiRZAHadoesx8?utm_source=airtulip&utm_medium=website&utm_campaign=founder_call&utm_content=product_purchase",
+            "button_style": "secondary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": false
+          }
+        },
         "pdp_product_tabs": {
           "type": "tabbed_content",
           "settings": {
@@ -199,6 +210,7 @@
         "buy_buttons",
         "affirm_pay_over_time_messaging_product_block_BiBYHe",
         "shop_pay_installments_7pLmQe",
+        "pdp_founder_call",
         "pdp_product_tabs",
         "sticky_buy_button"
       ],

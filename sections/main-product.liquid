@@ -355,6 +355,22 @@
               <div class="product__price grid gap-3 product__price--compare-custom" style="{{ price_compare_style | strip }}" {{ block.shopify_attributes }}>
                 <div class="no-js-hidden" id="Price-{{ section.id }}-{{ product.id }}">
                   {%- render 'product-price', product: product, use_variant: true, variant: pdp_variant, class: 'flex flex-wrap items-baseline gap-2 lg:gap-1d5' -%}
+
+                  {%- if product.handle == 'sleep-air-purifier-headboard' and localization.country.iso_code == 'US' and cart.currency.iso_code == 'USD' and pdp_variant.available -%}
+                    {%- liquid
+                      # Match Shopify's Black Friday Deal. The automatic discount is $500 on one headboard per order.
+                      assign black_friday_discount = 50000
+                      assign black_friday_start = '2026-11-09T00:00:00-05:00' | date: '%s' | times: 1
+                      assign black_friday_end = '2026-11-30T15:38:00-05:00' | date: '%s' | times: 1
+                      assign now_time = 'now' | date: '%s' | times: 1
+                    -%}
+                    {%- if now_time >= black_friday_start and now_time < black_friday_end and pdp_variant.price > black_friday_discount -%}
+                      <div class="text-sm leading-tight">
+                        <p><strong>{{ pdp_variant.price | minus: black_friday_discount | money }}</strong> after the Black Friday discount</p>
+                        <p class="text-opacity">$500 off one headboard per order, applied automatically in cart.</p>
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
                   
                   {%- if product.quantity_price_breaks_configured? -%}
                     <div class="text-opacity text-sm font-medium leading-tight" id="VolumeNote-{{ section.id }}-{{ product.id }}">

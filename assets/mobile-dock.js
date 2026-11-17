@@ -1,4 +1,25 @@
 if (!customElements.get('mobile-dock')) {
+  const positionChatLauncher = () => {
+    const widget = document.querySelector('chat-widget[source="custom-code"]');
+    const shadowRoot = widget?.shadowRoot;
+    if (!shadowRoot || shadowRoot.querySelector('[data-mobile-dock-chat]')) return;
+
+    const style = document.createElement('style');
+    style.setAttribute('data-mobile-dock-chat', '');
+    style.textContent = `
+      @media screen and (max-width: 767px) {
+        #lc_text-widget--btn {
+          translate: 0 calc(0px - var(--mobile-dock-height, 0px) - var(--mobile-sticky-buy-height, 0px));
+        }
+      }
+    `;
+    shadowRoot.append(style);
+  };
+
+  // The widget may finish after the theme has initialized the dock.
+  window.addEventListener('LC_chatWidgetLoaded', positionChatLauncher);
+  positionChatLauncher();
+
   customElements.define(
     'mobile-dock',
     class MobileDock extends HTMLElement {

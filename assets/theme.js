@@ -5392,6 +5392,8 @@ class ProductStickyForm extends HTMLElement {
       ? (this.revealTargetReached && !this.scopeToReached)
       : (this.scopeFromPassed && !this.scopeToReached);
 
+    document.documentElement.style.setProperty('--mobile-sticky-buy-height', shouldShow ? `${this.offsetHeight}px` : '0px');
+
     if (shouldShow) {
       Motion.animate(this.firstElementChild, { opacity: 1, visibility: 'visible', transform: ['translateY(15px)', 'translateY(0)'] }, { duration: 1, easing: [0.16, 1, 0.3, 1] });
     }
@@ -5406,6 +5408,7 @@ class ProductStickyForm extends HTMLElement {
 
   disconnectedCallback() {
     (this.productForm ?? document).removeEventListener('variant:change', this.onVariantChangedListener);
+    document.documentElement.style.removeProperty('--mobile-sticky-buy-height');
   }
 
   onVariantChanged(event) {

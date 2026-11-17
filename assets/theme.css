@@ -15781,6 +15781,22 @@ video-media:not([playing]) .deferred-poster .play-button .icon:last-child:not(:o
   visibility: visible;
 }
 
+@media screen and (max-width: 767px) {
+  .product__anchor-link {
+    position: relative;
+  }
+
+  .product__anchor-help {
+    position: static;
+  }
+
+  .product__anchor-help__tooltip {
+    inset-inline-start: 0;
+    max-width: min(18rem, 100%);
+    transform: none;
+  }
+}
+
 @media screen and (pointer: fine) {
   .product__anchor-help:hover .product__anchor-help__tooltip {
     opacity: 1;

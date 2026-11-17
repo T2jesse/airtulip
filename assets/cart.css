@@ -257,6 +257,10 @@ cart-drawer#CartDrawer.drawer[open] {
   z-index: 99999;
 }
 
+body:has(#CartDrawer:is([active], [open])) chat-widget {
+  display: none;
+}
+
 body.has-modal-open .newsletter-bar,
 body.has-modal-opening .newsletter-bar {
   z-index: 1;
@@ -297,6 +301,7 @@ body.has-modal-opening .newsletter-bar {
 
 .cart-drawer-upsells .horizontal-products {
   gap: var(--sp-4);
+  margin-inline: 0;
 }
 
 .cart-drawer-upsells .horizontal-product {
